@@ -1,0 +1,58 @@
+<form (ngSubmit)="onSubmit()" #f="ngForm">
+	<div class="card card-custom">
+		<div class="card-header">
+			<div class="card-title">{{ title }}</div>
+		</div>
+		<div class="card-body">
+			<div class="form-group row">
+				<div class="col-lg-4 kt-margin-bottom-20-mobile">
+					<input type="file" (change)="fileChangeEvent($event)" name="image" />
+				</div>
+			</div>
+			<div class="separator separator-dashed my-6"></div>
+
+			<div
+				class="row images"
+				*ngIf="banner.image || banner.image_url || imageChangedEvent"
+			>
+				<div
+					class="col-lg-6 kt-margin-bottom-20-mobile"
+					*ngIf="imageChangedEvent"
+				>
+					<h3 *ngIf="imageChangedEvent">Selected Image:</h3>
+					<image-cropper
+						[imageChangedEvent]="imageChangedEvent"
+						[maintainAspectRatio]="true"
+						[aspectRatio]="4 / 2"
+						[cropperMinWidth]="200"
+						format="png"
+						(imageCropped)="imageCropped($event)"
+					></image-cropper>
+				</div>
+				<div class="col-lg-6 kt-margin-bottom-20-mobile">
+					<h3>{{ imageChangedEvent ? 'Cropped Image:' : 'banner' }}</h3>
+					<div class="imagePreview" *ngIf="banner.image">
+						<img [src]="banner.image" class="img-fluid" />
+					</div>
+					<div class="imagePreview" *ngIf="banner.image_url && !banner.image">
+						<img [src]="banner.image_url" class="img-fluid" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card-footer">
+			<button type="button" mat-raised-button mat-dialog-close cdkFocusInitial>
+				Cancel</button
+			>&nbsp;
+			<button
+				type="submit"
+				color="primary"
+				mat-raised-button
+				class="mr-2"
+				[disabled]="f.invalid || (f.pristine && !banner.image)"
+			>
+				{{ mode }}
+			</button>
+		</div>
+	</div>
+</form>

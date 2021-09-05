@@ -1,0 +1,163 @@
+<div
+	class="card card-custom"
+	[ngClass]="{ 'card-body-progress card-body-progress-overlay': viewLoading }"
+>
+	<div class="card-header">
+		<div class="card-title">
+			<h3 class="card-label">{{ getTitle() }}</h3>
+		</div>
+	</div>
+	<form class="form" (ngSubmit)="onSubmit()" #f="ngForm">
+		<div class="card-body">
+			<div class="card-body-progress">
+				<mat-spinner [diameter]="20"></mat-spinner>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-lg-4 kt-margin-bottom-20-mobile my-2">
+					<mat-form-field class="mat-form-field-fluid">
+						<mat-select
+							placeholder="Select Role"
+							name="role"
+							[(ngModel)]="user.role_id"
+							required
+						>
+							<mat-option *ngFor="let role of roles" [value]="role.id">
+								{{ role.name }}
+							</mat-option>
+						</mat-select>
+						<mat-error
+							>Role is
+							<strong>required</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<div
+					*ngIf="user.role_id === 1 && !user.is_super_admin"
+					class="col-lg-4 kt-margin-bottom-20-mobile my-2"
+				>
+					<mat-form-field class="mat-form-field-fluid">
+						<mat-select
+							placeholder="Grant Access"
+							name="access"
+							[(ngModel)]="user.allowed_access"
+							required
+							multiple
+						>
+							<mat-option *ngFor="let page of pages" [value]="page.value">
+								{{ page.name }}
+							</mat-option>
+						</mat-select>
+						<mat-error>
+							<strong>required</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<div class="col-lg-4 kt-margin-bottom-20-mobile my-2">
+					<mat-form-field class="mat-form-field-fluid">
+						<input
+							type="text"
+							matInput
+							placeholder="Name"
+							name="name"
+							[(ngModel)]="user.name"
+							required
+						/>
+						<mat-error
+							>Name is
+							<strong>required</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<div class="col-lg-4 kt-margin-bottom-20-mobile my-2">
+					<mat-form-field class="mat-form-field-fluid">
+						<input
+							type="email"
+							matInput
+							placeholder="Email"
+							name="email"
+							[(ngModel)]="user.email"
+							email
+						/>
+					</mat-form-field>
+				</div>
+				<div class="col-lg-4 kt-margin-bottom-20-mobile my-2">
+					<mat-form-field class="mat-form-field-fluid">
+						<input
+							matInput
+							type="tel"
+							placeholder="Phone"
+							name="phone"
+							[(ngModel)]="user.phone"
+							required
+						/>
+						<mat-error
+							>Phone is
+							<strong>required</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<div
+					*ngIf="mode == 'edit'"
+					class="
+						col-lg-4
+						kt-margin-bottom-20-mobile
+						my-2
+						d-flex
+						align-items-center
+					"
+				>
+					<span class="mx-3">Change Password</span
+					><mat-slide-toggle
+						color="primary"
+						name="passChange"
+						[(ngModel)]="passChange"
+					></mat-slide-toggle>
+				</div>
+				<div
+					class="col-lg-4 kt-margin-bottom-20-mobile my-2"
+					*ngIf="mode !== 'edit' || (mode === 'edit' && passChange)"
+				>
+					<mat-form-field class="mat-form-field-fluid">
+						<input
+							type="password"
+							matInput
+							placeholder="Password"
+							name="password"
+							[(ngModel)]="user.password"
+							required
+						/>
+						<mat-error
+							>Password is
+							<strong>required</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+			</div>
+		</div>
+		<div class="card-footer">
+			<div class="d-flex justify-content-between">
+				<div class="mr-2"></div>
+				<div>
+					<button
+						type="button"
+						mat-raised-button
+						mat-dialog-close
+						cdkFocusInitial
+					>
+						Cancel</button
+					>&nbsp;
+					<button
+						type="button"
+						mat-raised-button
+						color="primary"
+						(click)="onSubmit()"
+						[disabled]="viewLoading || f.invalid || f.pristine || disabled"
+					>
+						Save
+					</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

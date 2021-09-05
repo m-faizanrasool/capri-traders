@@ -1,0 +1,124 @@
+<div
+	class="card card-custom"
+	[ngClass]="{ 'card-body-progress card-body-progress-overlay': viewLoading }"
+>
+	<div class="card-header">
+		<div class="card-title">
+			<h3 class="card-label">{{ getTitle() }}</h3>
+		</div>
+	</div>
+	<form class="form" (ngSubmit)="onSubmit()" #f="ngForm">
+		<div class="card-body">
+			<div class="card-body-progress">
+				<mat-spinner [diameter]="20"></mat-spinner>
+			</div>
+
+			<div class="form-group row">
+				<div class="col kt-margin-bottom-20-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<input
+							type="text"
+							matInput
+							placeholder="Code"
+							name="code"
+							[(ngModel)]="coupon.code"
+							required
+						/>
+						<mat-error
+							>Code is
+							<strong>required</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="separator separator-dashed my-6"></div>
+			<div class="form-group row">
+				<div class="col kt-margin-bottom-20-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<input
+							type="number"
+							matInput
+							placeholder="Discount"
+							name="discount"
+							[(ngModel)]="coupon.discount"
+							required
+						/>
+
+						<mat-error
+							>Discount is
+							<strong>required</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="separator separator-dashed my-6"></div>
+			<div class="form-group row">
+				<div class="col kt-margin-bottom-20-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<input
+							matInput
+							type="number"
+							placeholder="Minimum order"
+							name="minimum_order"
+							[(ngModel)]="coupon.minimum_order"
+							required
+						/>
+						<mat-error
+							>Minimum order is
+							<strong>required</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="separator separator-dashed my-6"></div>
+			<div class="form-group row">
+				<div class="col kt-margin-bottom-20-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<input
+							matInput
+							[matDatepicker]="picker"
+							placeholder="Choose a date"
+							[(ngModel)]="coupon.expiry"
+							name="expiry"
+							[min]="minDate"
+							required
+						/>
+						<mat-datepicker-toggle
+							matSuffix
+							[for]="picker"
+						></mat-datepicker-toggle>
+						<mat-datepicker #picker></mat-datepicker>
+						<mat-error
+							>Date is
+							<strong>required</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+			</div>
+		</div>
+		<div class="card-footer">
+			<div class="d-flex justify-content-between">
+				<div class="mr-2"></div>
+				<div>
+					<button
+						type="button"
+						mat-raised-button
+						mat-dialog-close
+						cdkFocusInitial
+					>
+						Cancel</button
+					>&nbsp;
+					<button
+						type="button"
+						mat-raised-button
+						color="primary"
+						(click)="onSubmit()"
+						[disabled]="viewLoading || f.invalid || f.pristine || disabled"
+					>
+						Save
+					</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
