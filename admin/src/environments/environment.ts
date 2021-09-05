@@ -6,7 +6,7 @@ export const environment = {
 	production: false,
 	appVersion: 'v717demo1',
 	USERDATA_KEY: 'authf649fc9a5f55',
-	apiUrl: 'http://localhost/grocery/api/public/api/',
+	apiUrl: 'http://localhost/capri-traders/api/public/api/',
 };
 
 /*

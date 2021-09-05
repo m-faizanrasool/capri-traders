@@ -45,24 +45,15 @@ Route::middleware(['auth:sanctum', PhoneFormat::class])->group(function () {
     Route::apiResources([
         'banners' => 'App\Http\Controllers\BannerController',
         'brands' => 'App\Http\Controllers\BrandController',
-        'categories' => 'App\Http\Controllers\CategoryController',
-        'addresses' => 'App\Http\Controllers\AddressController',
-        'coupons' => 'App\Http\Controllers\CouponController'
     ]);
 
     Route::get('authenticated-user', 'App\Http\Controllers\UserController@authenticated');
     Route::patch('users', 'App\Http\Controllers\UserController@update');
-
-    Route::prefix('orders/status')->group(function () {
-        Route::post('', 'App\Http\Controllers\OrderController@updateStatus');
-        Route::get('{status}', 'App\Http\Controllers\OrderController@getByStatus');
-    });
 
     Route::post('products/toggle-visibility', 'App\Http\Controllers\ProductController@toggleVisibility');
 
     Route::resources([
         'products' => 'App\Http\Controllers\ProductController',
         'users' => 'App\Http\Controllers\UserController',
-        'orders' => 'App\Http\Controllers\OrderController',
     ]);
 });
