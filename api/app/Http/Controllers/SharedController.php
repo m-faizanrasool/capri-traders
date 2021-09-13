@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
-use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +11,6 @@ class SharedController extends Controller
 {
     public function appHome()
     {
-        $categories = Category::orderBy('name')->get();
         $brands = Brand::orderBy('name')->get();
 
         return response()->json(compact('categories', 'brands'));
@@ -21,14 +19,14 @@ class SharedController extends Controller
     public function products(Request $request)
     {
         $User = $request->user('sanctum');
-        $products = Product::with(['category', 'brand', 'unit']);
+        $products = Product::with(['brand', 'unit']);
         if (!$User || $User->role->key == 'customer') {
             $products = $products->has('vendors')->where('is_visible', 1);
         }
 
         $products->where(function ($q) use ($request) {
             if ($request->categories) {
-                $q->whereIn('category_id', explode(",", $request->categories));
+                $q->whereIn(explode(",", $request->categories));
             }
 
             if ($request->brands) {
@@ -41,9 +39,6 @@ class SharedController extends Controller
             $products->where(function ($q) use ($search) {
                 $q->where('name', 'LIKE', '%' . $search . '%');
                 $q->orWhereHas('brand', function ($q) use ($search) {
-                    $q->where('name', 'LIKE', '%' . $search . '%');
-                });
-                $q->orWhereHas('category', function ($q) use ($search) {
                     $q->where('name', 'LIKE', '%' . $search . '%');
                 });
             });
