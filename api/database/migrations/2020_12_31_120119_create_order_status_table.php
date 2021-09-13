@@ -15,11 +15,9 @@ class CreateOrderStatusTable extends Migration
     {
         Schema::create('order_status', function (Blueprint $table) {
             $table->unsignedBigInteger('order_id');
-			$table->unsignedSmallInteger('status_id');
-			$table->timestamps();
+            $table->timestamps();
 
-			$table->foreign('order_id')->references('id')->on('orders');
-			$table->foreign('status_id')->references('id')->on('statuses');
+            $table->foreign('order_id')->references('id')->on('orders');
         });
     }
 

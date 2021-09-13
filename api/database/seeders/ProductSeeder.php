@@ -16,7 +16,6 @@ class ProductSeeder extends Seeder
     {
         Product::create([
             'id' => 1,
-            'category_id' => 3,
             'brand_id' => 3,
             'unit_id' => 7,
             'name' => 'Kenwood',
@@ -28,7 +27,6 @@ class ProductSeeder extends Seeder
 
         Product::create([
             'id' => 2,
-            'category_id' => 4,
             'brand_id' => 1,
             'unit_id' => 4,
             'name' => 'Coke',
@@ -40,7 +38,6 @@ class ProductSeeder extends Seeder
 
         Product::create([
             'id' => 3,
-            'category_id' => 2,
             'brand_id' => 5,
             'unit_id' => 6,
             'name' => 'Pent',
@@ -52,7 +49,6 @@ class ProductSeeder extends Seeder
 
         Product::create([
             'id' => 4,
-            'category_id' => 5,
             'brand_id' => 2,
             'unit_id' => 2,
             'name' => 'Lays',
@@ -64,7 +60,6 @@ class ProductSeeder extends Seeder
 
         Product::create([
             'id' => 5,
-            'category_id' => 1,
             'brand_id' => 4,
             'unit_id' => 1,
             'name' => 'Salt',
@@ -76,7 +71,6 @@ class ProductSeeder extends Seeder
 
         Product::create([
             'id' => 6,
-            'category_id' => 4,
             'brand_id' => 2,
             'unit_id' => 3,
             'name' => 'Pepsi',
@@ -88,7 +82,6 @@ class ProductSeeder extends Seeder
 
         Product::create([
             'id' => 7,
-            'category_id' => 4,
             'brand_id' => 6,
             'unit_id' => 3,
             'name' => 'water',

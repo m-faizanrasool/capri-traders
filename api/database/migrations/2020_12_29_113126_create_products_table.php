@@ -15,7 +15,6 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedSmallInteger('category_id');
             $table->unsignedSmallInteger('brand_id');
             $table->unsignedSmallInteger('unit_id');
             $table->string('name');
@@ -28,7 +27,6 @@ class CreateProductsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('brand_id')->references('id')->on('brands');
             $table->foreign('unit_id')->references('id')->on('units');
         });
