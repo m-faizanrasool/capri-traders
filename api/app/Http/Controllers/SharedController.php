@@ -46,7 +46,7 @@ class SharedController extends Controller
 
         $total = $products->count();
         $items_per_page = $request->items_per_page ?? 3;
-        $products = $products->offset($request->page_index * $items_per_page)->limit($items_per_page)->orderByRaw('-`order` DESC')->get();
+        $products = $products->offset($request->page_index * $items_per_page)->limit($items_per_page)->orderByRaw('-`created_at` DESC')->get();
         if ($User && $User->role->key == 'admin') {
             $products->append('vendor_ids');
         }

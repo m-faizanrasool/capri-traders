@@ -16,7 +16,7 @@ class ProductController extends Controller
         $units = Unit::all();
         $vendors = Role::firstWhere('key', 'vendor')->users()->select('id', 'name', 'email', 'phone')->get();
 
-        return compact('brands', 'categories', 'units', 'vendors');
+        return compact('brands', 'units', 'vendors');
     }
 
     public function create()
