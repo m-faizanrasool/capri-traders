@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Brand;
-use App\Models\Category;
 use App\Models\Unit;
 use App\Models\Role;
 
@@ -14,7 +13,6 @@ class ProductController extends Controller
     private function _related()
     {
         $brands = Brand::all();
-        $categories = Category::all();
         $units = Unit::all();
         $vendors = Role::firstWhere('key', 'vendor')->users()->select('id', 'name', 'email', 'phone')->get();
 
@@ -29,7 +27,6 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "category_id" => 'required',
             "brand_id" => 'required',
             "unit_id" => 'required',
             "name" => 'required',
@@ -37,7 +34,7 @@ class ProductController extends Controller
             "price" => 'required'
         ]);
 
-        $Product = Product::create(request(['category_id', 'brand_id', 'unit_id', 'name', 'image', 'description', 'unit_quantity', 'price', 'discount','order']));
+        $Product = Product::create(request(['brand_id', 'unit_id', 'name', 'image', 'description', 'unit_quantity', 'price', 'discount','order']));
         $Product->vendors()->sync($request->vendor_ids);
         return response()->json(["message" => 'Product Added Successfully!']);
     }
@@ -45,7 +42,6 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            "category_id" => 'required',
             "brand_id" => 'required',
             "unit_id" => 'required',
             "name" => 'required',
@@ -54,7 +50,7 @@ class ProductController extends Controller
         ]);
 
         $Product = Product::find($id);
-        $Product->fill(request(['category_id', 'brand_id', 'unit_id', 'name', 'description', 'unit_quantity', 'price', 'discount', 'order', 'is_visible']));
+        $Product->fill(request(['brand_id', 'unit_id', 'name', 'description', 'unit_quantity', 'price', 'discount', 'order', 'is_visible']));
         if ($request->image) {
             $Product->image = $request->image;
         }

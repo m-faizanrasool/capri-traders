@@ -43,7 +43,6 @@ Route::middleware(PhoneFormat::class)->post('users/reset-password', 'App\Http\Co
 
 Route::middleware(['auth:sanctum', PhoneFormat::class])->group(function () {
     Route::apiResources([
-        'banners' => 'App\Http\Controllers\BannerController',
         'brands' => 'App\Http\Controllers\BrandController',
     ]);
 

@@ -42,16 +42,6 @@ class Order extends Model
         return $this->hasMany(OrderItem::class)->with('product');
     }
 
-    public function status()
-    {
-        return $this->belongsTo(Status::class);
-    }
-
-    public function statuses()
-    {
-        return $this->belongsToMany(Status::class)->withTimestamps()->latest();
-    }
-
     public function address()
     {
         return $this->belongsTo(Address::class);

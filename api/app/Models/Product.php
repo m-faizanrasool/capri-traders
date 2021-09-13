@@ -12,7 +12,7 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes;
 
-    static $path = 'images/products/';
+    public static $path = 'images/products/';
 
     protected $guarded = [];
     protected $appends = ['image_url'];
@@ -22,7 +22,6 @@ class Product extends Model
         "discount" => 'integer',
         "unit_quantity" => 'float',
         "brand_id" => 'integer',
-        "category_id" => 'integer',
         "unit_id" => 'integer'
     ];
 
@@ -63,11 +62,6 @@ class Product extends Model
         return $this->belongsTo(Brand::class);
     }
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
     public function unit()
     {
         return $this->belongsTo(Unit::class);
@@ -75,6 +69,7 @@ class Product extends Model
 
     public function vendors()
     {
-        return $this->belongsToMany(User::class)->withTimestamps();;
+        return $this->belongsToMany(User::class)->withTimestamps();
+        ;
     }
 }
