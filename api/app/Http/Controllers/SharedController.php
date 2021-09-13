@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\Banner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,11 +12,10 @@ class SharedController extends Controller
 {
     public function appHome()
     {
-        $banners = Banner::select('image')->latest()->limit(3)->get();
         $categories = Category::orderBy('name')->get();
         $brands = Brand::orderBy('name')->get();
 
-        return response()->json(compact('banners', 'categories', 'brands'));
+        return response()->json(compact('categories', 'brands'));
     }
 
     public function products(Request $request)
