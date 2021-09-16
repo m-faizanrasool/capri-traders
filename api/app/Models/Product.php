@@ -18,7 +18,8 @@ class Product extends Model
     protected $appends = ['image_url'];
     protected $hidden = ['image', 'created_at', 'updated_at', 'deleted_at'];
     protected $casts = [
-        "price" => 'integer',
+        "purchase_price" => 'integer',
+        "sale_price" => 'integer',
         "discount" => 'integer',
         "unit_quantity" => 'float',
         "brand_id" => 'integer',
@@ -36,11 +37,6 @@ class Product extends Model
                 Storage::delete(self::$path . $product->getOriginal('image'));
             }
         });
-    }
-
-    public function getVendorIdsAttribute()
-    {
-        return $this->vendors->pluck('id');
     }
 
     public function getImageUrlAttribute()
@@ -65,11 +61,5 @@ class Product extends Model
     public function unit()
     {
         return $this->belongsTo(Unit::class);
-    }
-
-    public function vendors()
-    {
-        return $this->belongsToMany(User::class)->withTimestamps();
-        ;
     }
 }

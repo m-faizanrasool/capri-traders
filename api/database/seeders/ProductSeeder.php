@@ -24,7 +24,7 @@ class ProductSeeder extends Seeder
             'purchase_price' => 72000.00,
             'sale_price' => 72000.00,
             'discount' => 1000.00
-        ])->vendors()->attach(2);
+        ]);
 
         Product::create([
             'id' => 2,
@@ -36,7 +36,7 @@ class ProductSeeder extends Seeder
             'purchase_price' => 40.00,
             'sale_price' => 40.00,
             'discount' => 0.00
-        ])->vendors()->attach(2);
+        ]);
 
         Product::create([
             'id' => 3,
@@ -48,7 +48,7 @@ class ProductSeeder extends Seeder
             'purchase_price' => 1500.00,
             'sale_price' => 1500.00,
             'discount' => 100.00
-        ])->vendors()->attach(2);
+        ]);
 
         Product::create([
             'id' => 4,
@@ -60,7 +60,7 @@ class ProductSeeder extends Seeder
             'purchase_price' => 50.00,
             'sale_price' => 50.00,
             'discount' => 0.00
-        ])->vendors()->attach(2);
+        ]);
 
         Product::create([
             'id' => 5,
@@ -72,7 +72,7 @@ class ProductSeeder extends Seeder
             'purchase_price' => 20.00,
             'sale_price' => 20.00,
             'discount' => 0.00
-        ])->vendors()->attach(2);
+        ]);
 
         Product::create([
             'id' => 6,
@@ -84,7 +84,7 @@ class ProductSeeder extends Seeder
             'purchase_price' => 100.00,
             'sale_price' => 100.00,
             'discount' => 10.00
-        ])->vendors()->attach(2);
+        ]);
 
         Product::create([
             'id' => 7,
@@ -96,6 +96,6 @@ class ProductSeeder extends Seeder
             'purchase_price' => 60.00,
             'sale_price' => 60.00,
             'discount' => 0.00
-        ])->vendors()->attach(2);
+        ]);
     }
 }
