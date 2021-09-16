@@ -21,7 +21,8 @@ class ProductSeeder extends Seeder
             'name' => 'Kenwood',
             'description' => 'Kenwood Inverter AC',
             'unit_quantity' => 1.50,
-            'price' => 72000.00,
+            'purchase_price' => 72000.00,
+            'sale_price' => 72000.00,
             'discount' => 1000.00
         ])->vendors()->attach(2);
 
@@ -32,7 +33,8 @@ class ProductSeeder extends Seeder
             'name' => 'Coke',
             'description' => 'Coke Tinpack',
             'unit_quantity' => 245.00,
-            'price' => 40.00,
+            'purchase_price' => 40.00,
+            'sale_price' => 40.00,
             'discount' => 0.00
         ])->vendors()->attach(2);
 
@@ -43,7 +45,8 @@ class ProductSeeder extends Seeder
             'name' => 'Pent',
             'description' => 'Outfitters pent',
             'unit_quantity' => 1.00,
-            'price' => 1500.00,
+            'purchase_price' => 1500.00,
+            'sale_price' => 1500.00,
             'discount' => 100.00
         ])->vendors()->attach(2);
 
@@ -54,7 +57,8 @@ class ProductSeeder extends Seeder
             'name' => 'Lays',
             'description' => 'Lays French Cheese',
             'unit_quantity' => 50.00,
-            'price' => 50.00,
+            'purchase_price' => 50.00,
+            'sale_price' => 50.00,
             'discount' => 0.00
         ])->vendors()->attach(2);
 
@@ -65,7 +69,8 @@ class ProductSeeder extends Seeder
             'name' => 'Salt',
             'description' => 'National Iodized salt',
             'unit_quantity' => 1.00,
-            'price' => 20.00,
+            'purchase_price' => 20.00,
+            'sale_price' => 20.00,
             'discount' => 0.00
         ])->vendors()->attach(2);
 
@@ -76,7 +81,8 @@ class ProductSeeder extends Seeder
             'name' => 'Pepsi',
             'description' => 'Pepsi 1.5 Litre.',
             'unit_quantity' => 1.50,
-            'price' => 100.00,
+            'purchase_price' => 100.00,
+            'sale_price' => 100.00,
             'discount' => 10.00
         ])->vendors()->attach(2);
 
@@ -87,7 +93,8 @@ class ProductSeeder extends Seeder
             'name' => 'water',
             'description' => 'water',
             'unit_quantity' => 1.50,
-            'price' => 60.00,
+            'purchase_price' => 60.00,
+            'sale_price' => 60.00,
             'discount' => 0.00
         ])->vendors()->attach(2);
     }
