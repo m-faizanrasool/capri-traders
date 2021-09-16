@@ -51,12 +51,6 @@ const routes: Routes = [
 					import('./products/products.module').then((m) => m.ProductsModule),
 			},
 			{
-				path: 'coupons',
-				canActivate: [RoleGuard],
-				loadChildren: () =>
-					import('./coupons/coupons.module').then((m) => m.CouponsModule),
-			},
-			{
 				path: 'orders',
 				canActivate: [RoleGuard],
 				loadChildren: () =>

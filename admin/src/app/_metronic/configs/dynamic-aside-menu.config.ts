@@ -59,14 +59,6 @@ export const DynamicAsideMenuConfig = {
 			svg: './assets/media/svg/icons/Layout/Layout-4-blocks.svg',
 		},
 		{
-			title: 'Coupons',
-			root: true,
-			show: false,
-			icon: 'flaticon2-world',
-			page: '/coupons',
-			svg: './assets/media/svg/icons/Home/Library.svg',
-		},
-		{
 			title: 'Orders',
 			root: true,
 			show: false,
