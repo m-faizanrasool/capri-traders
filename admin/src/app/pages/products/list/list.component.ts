@@ -41,9 +41,9 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
 	displayedColumns = [
 		'name',
 		'brand',
-		'category',
 		'quantity',
-		'price',
+		'purchase_price',
+		'sale_price',
 		'discount',
 		'description',
 		'image',

@@ -13,12 +13,11 @@ import { ProductsService } from 'src/app/services/products.service';
 })
 export class AddProductDialogComponent implements OnInit {
 	product: any = {
-		vendor_ids: '',
 		brand_id: '',
-		category_id: '',
 		name: '',
 		description: '',
-		price: '',
+		purchase_price: '',
+		sale_price: '',
 		unit_id: '',
 		unit_quantity: '',
 		discount: '',
@@ -27,8 +26,6 @@ export class AddProductDialogComponent implements OnInit {
 	productForm: FormGroup;
 
 	brands: any[];
-	categories: any[];
-	vendors: any[] = [];
 	units: any[];
 	mode: string;
 	disabled: boolean;
@@ -50,9 +47,7 @@ export class AddProductDialogComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.brands = this.data.paramsData.brands;
-		this.categories = this.data.paramsData.categories;
 		this.units = this.data.paramsData.units;
-		this.vendors = this.data.paramsData.vendors;
 
 		if (this.data.product) {
 			this.product = { ...this.data.product };

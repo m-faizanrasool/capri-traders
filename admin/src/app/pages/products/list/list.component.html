@@ -49,13 +49,6 @@
 					</mat-cell>
 				</ng-container>
 
-				<ng-container matColumnDef="category">
-					<mat-header-cell *matHeaderCellDef> Category </mat-header-cell>
-					<mat-cell *matCellDef="let element">
-						{{ element.category.name }}
-					</mat-cell>
-				</ng-container>
-
 				<ng-container matColumnDef="quantity">
 					<mat-header-cell *matHeaderCellDef> Quantity </mat-header-cell>
 					<mat-cell *matCellDef="let element">
@@ -63,10 +56,17 @@
 					</mat-cell>
 				</ng-container>
 
-				<ng-container matColumnDef="price">
-					<mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+				<ng-container matColumnDef="purchase_price">
+					<mat-header-cell *matHeaderCellDef> Purchase Price </mat-header-cell>
 					<mat-cell *matCellDef="let element">
-						{{ element.price }}
+						{{ element.purchase_price }}
+					</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="sale_price">
+					<mat-header-cell *matHeaderCellDef> Sale Price </mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						{{ element.sale_price }}
 					</mat-cell>
 				</ng-container>
 
