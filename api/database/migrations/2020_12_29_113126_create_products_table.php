@@ -21,7 +21,8 @@ class CreateProductsTable extends Migration
             $table->string('image')->nullable();
             $table->text('description')->nullable();
             $table->unsignedDecimal('unit_quantity', 10, 2);
-            $table->unsignedDecimal('price', 10, 2);
+            $table->unsignedDecimal('purchase_price', 10, 2)->nullable();
+            $table->unsignedDecimal('sale_price', 10, 2)->nullable();
             $table->unsignedDecimal('discount', 10, 2)->default(0)->nullable();
             $table->boolean('is_visible')->default(true);
             $table->timestamps();

@@ -7,11 +7,11 @@ import { CommonService } from 'src/app/services/common.service';
 import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
-	selector: 'app-add-product-dialog',
-	templateUrl: './add-product-dialog.component.html',
-	styleUrls: ['./add-product-dialog.component.scss'],
+	selector: 'app-add-sale-dialog',
+	templateUrl: './add-sale-dialog.component.html',
+	styleUrls: ['./add-sale-dialog.component.scss'],
 })
-export class AddProductDialogComponent implements OnInit {
+export class AddSaleDialogComponent implements OnInit {
 	product: any = {
 		brand_id: '',
 		name: '',
@@ -38,7 +38,7 @@ export class AddProductDialogComponent implements OnInit {
 	croppedImage: any = '';
 
 	constructor(
-		public dialogRef: MatDialogRef<AddProductDialogComponent>,
+		public dialogRef: MatDialogRef<AddSaleDialogComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		private fb: FormBuilder,
 		private productsService: ProductsService,

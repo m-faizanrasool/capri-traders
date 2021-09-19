@@ -18,7 +18,7 @@ import {
 	ProductsService,
 } from 'src/app/services/products.service';
 import { ConfirmationDialogComponent } from '../../_sharedComponents/confirmation-dialog/confirmation-dialog.component';
-import { AddProductDialogComponent } from './add-product-dialog/add-product-dialog.component';
+import { AddSaleDialogComponent } from './add-sale-dialog/add-sale-dialog.component';
 
 @Component({
 	selector: 'app-list',
@@ -99,7 +99,7 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	addProduct() {
-		const dialogRef = this.dialog.open(AddProductDialogComponent, {
+		const dialogRef = this.dialog.open(AddSaleDialogComponent, {
 			data: { paramsData: this.productData },
 			disableClose: true,
 		});
@@ -115,7 +115,7 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	editProduct(Product) {
-		const dialogRef = this.dialog.open(AddProductDialogComponent, {
+		const dialogRef = this.dialog.open(AddSaleDialogComponent, {
 			data: { paramsData: this.productData, product: Product },
 			disableClose: true,
 		});

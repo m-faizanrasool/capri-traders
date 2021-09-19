@@ -25,7 +25,6 @@ export class AddUserDialogComponent implements OnInit {
 		{ value: 'brands', name: 'Brands' },
 		{ value: 'categories', name: 'Categories' },
 		{ value: 'products', name: 'Products' },
-		{ value: 'coupons', name: 'Coupons' },
 		{ value: 'orders', name: 'Orders' },
 	];
 

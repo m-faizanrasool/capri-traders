@@ -32,9 +32,6 @@ Route::middleware(PhoneFormat::class)->prefix('otp')->group(function () {
         OTPService::create($request->phone);
     });
 });
-Route::prefix('app')->group(function () {
-    Route::get('home', 'App\Http\Controllers\SharedController@appHome');
-});
 
 Route::get('filtered-products', 'App\Http\Controllers\SharedController@products');
 Route::get('cart', 'App\Http\Controllers\CartController@index');

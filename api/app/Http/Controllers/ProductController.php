@@ -16,7 +16,7 @@ class ProductController extends Controller
         $units = Unit::all();
         $vendors = Role::firstWhere('key', 'vendor')->users()->select('id', 'name', 'email', 'phone')->get();
 
-        return compact('brands', 'categories', 'units', 'vendors');
+        return compact('brands', 'units', 'vendors');
     }
 
     public function create()
@@ -31,11 +31,10 @@ class ProductController extends Controller
             "unit_id" => 'required',
             "name" => 'required',
             "unit_quantity" => 'required',
-            "price" => 'required'
         ]);
 
-        $Product = Product::create(request(['brand_id', 'unit_id', 'name', 'image', 'description', 'unit_quantity', 'price', 'discount','order']));
-        $Product->vendors()->sync($request->vendor_ids);
+        $Product = Product::create(request(['brand_id', 'unit_id', 'name', 'image', 'description', 'unit_quantity', 'purchase_price', 'sale_price', 'discoun']));
+
         return response()->json(["message" => 'Product Added Successfully!']);
     }
 
@@ -46,17 +45,15 @@ class ProductController extends Controller
             "unit_id" => 'required',
             "name" => 'required',
             "unit_quantity" => 'required',
-            "price" => 'required'
         ]);
 
         $Product = Product::find($id);
-        $Product->fill(request(['brand_id', 'unit_id', 'name', 'description', 'unit_quantity', 'price', 'discount', 'order', 'is_visible']));
+        $Product->fill(request(['brand_id', 'unit_id', 'name', 'description', 'unit_quantity', 'purchase_price', 'sale_price', 'discount', 'is_visible']));
         if ($request->image) {
             $Product->image = $request->image;
         }
 
         $Product->save();
-        $Product->vendors()->sync($request->vendor_ids);
 
         return response()->json(["message" => 'Product Updated Successfully!']);
     }

@@ -14,7 +14,6 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-
         Role::create([
             "id" => 1,
             "key" => 'admin',
@@ -25,18 +24,6 @@ class RoleSeeder extends Seeder
             "id" => 2,
             "key" => 'vendor',
             "name" => 'Vendor'
-        ]);
-
-        Role::create([
-            "id" => 3,
-            "key" => 'rider',
-            "name" => 'Rider'
-        ]);
-
-        Role::create([
-            "id" => 4,
-            "key" => 'customer',
-            "name" => 'Customer'
         ]);
     }
 }
