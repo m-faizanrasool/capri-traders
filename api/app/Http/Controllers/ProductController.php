@@ -33,7 +33,7 @@ class ProductController extends Controller
             "unit_quantity" => 'required',
         ]);
 
-        $Product = Product::create(request(['brand_id', 'unit_id', 'name', 'image', 'description', 'unit_quantity', 'purchase_price', 'sale_price', 'discoun']));
+        $Product = Product::create(request(['brand_id', 'unit_id', 'name', 'image', 'description', 'unit_quantity', 'purchase_price', 'sale_price', 'discount']));
 
         return response()->json(["message" => 'Product Added Successfully!']);
     }
