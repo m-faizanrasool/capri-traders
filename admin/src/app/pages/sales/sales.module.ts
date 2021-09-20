@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ListComponent } from './list/list.component';
 import { RouterModule } from '@angular/router';
 import { SalesComponent } from './sales.component';
 
@@ -10,7 +9,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { GeneralModule } from 'src/app/_metronic/partials/content/general/general.module';
 import { MatIconModule } from '@angular/material/icon';
-import { AddSaleDialogComponent } from './list/add-sale-dialog/add-sale-dialog.component';
+
 import {
 	MatDialogModule,
 	MAT_DIALOG_DEFAULT_OPTIONS,
@@ -18,13 +17,12 @@ import {
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
-import { ImageCropperModule } from 'ngx-image-cropper';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
-	declarations: [ListComponent, SalesComponent, AddSaleDialogComponent],
+	declarations: [SalesComponent],
 	imports: [
 		CommonModule,
 		MatButtonModule,
@@ -40,7 +38,6 @@ import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-d
 		MatSelectModule,
 		MatInputModule,
 		NgSelectModule,
-		ImageCropperModule,
 		RouterModule.forChild([
 			{
 				path: '',
@@ -48,12 +45,7 @@ import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-d
 				children: [
 					{
 						path: '',
-						redirectTo: 'list',
 						pathMatch: 'full',
-					},
-					{
-						path: 'list',
-						component: ListComponent,
 					},
 				],
 			},
@@ -70,6 +62,6 @@ import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-d
 			},
 		},
 	],
-	entryComponents: [AddSaleDialogComponent, ConfirmationDialogComponent],
+	entryComponents: [ConfirmationDialogComponent],
 })
 export class SalesModule {}

@@ -23,7 +23,7 @@ class CreateSalesTable extends Migration
             $table->string('pay_mode');
             $table->string('remarks')->nullable();
             $table->string('pay_status');
-            $table->integer('item_code');
+            // $table->integer('product_id');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -1,1 +1,232 @@
-<router-outlet></router-outlet>
+<div class="card card-custom">
+	<div class="card-header">
+		<div class="card-title">
+			<h3>Sales</h3>
+		</div>
+		<div class="card-toolbar">
+			<button class="btn btn-primary" (click)="addProduct()">
+				Add Product
+			</button>
+		</div>
+	</div>
+	<div class="card-body">
+		<form class="form" (ngSubmit)="onSubmit()" #f="ngForm">
+			<div class="card-body">
+				<div class="card-body-progress">
+					<mat-spinner [diameter]="20"></mat-spinner>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<mat-select
+								placeholder="Company Head"
+								name="company_head"
+								[(ngModel)]="sale.company_head"
+								required
+							>
+								<mat-option
+									*ngFor="let company_head of company_heads"
+									[value]="company_head.id"
+								>
+									{{ company_head.name }}
+								</mat-option>
+							</mat-select>
+							<mat-error>
+								Company Head is
+								<strong>required</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input
+								type="number"
+								matInput
+								placeholder="Bill/Ref#"
+								name="bill_no"
+								[(ngModel)]="sale.bill_no"
+							/>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input
+								type="number"
+								matInput
+								placeholder="PO#"
+								name="po_no"
+								[(ngModel)]="sale.po_no"
+							/>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div class="separator separator-dashed my-6"></div>
+
+				<div class="form-group row">
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<mat-select
+								placeholder="Part Name"
+								name="party_name"
+								[(ngModel)]="sale.party_name"
+								required
+							>
+								<mat-option
+									*ngFor="let party_name of party_names"
+									[value]="party_name.id"
+								>
+									{{ party_name.name }}
+								</mat-option>
+							</mat-select>
+							<mat-error>
+								Party Name is
+								<strong>required</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<mat-select
+								placeholder="Pay Mode"
+								name="pay_mode"
+								[(ngModel)]="sale.pay_mode"
+								required
+							>
+								<mat-option
+									*ngFor="let pay_mode of pay_modes"
+									[value]="pay_mode.name"
+								>
+									{{ pay_mode.name }}
+								</mat-option>
+							</mat-select>
+							<mat-error>
+								Party Name is
+								<strong>required</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<mat-select
+								placeholder="Pay Status"
+								name="pay_status"
+								[(ngModel)]="sale.pay_status"
+								required
+							>
+								<mat-option
+									*ngFor="let pay_status of pay_statuses"
+									[value]="pay_status.name"
+								>
+									{{ pay_status.name }}
+								</mat-option>
+							</mat-select>
+							<mat-error>
+								Party Name is
+								<strong>required</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input
+								matInput
+								type="text"
+								placeholder="Remarks"
+								name="remarks"
+								[(ngModel)]="sale.remarks"
+							/>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<span matPrefix>Rs: &nbsp;</span>
+							<input
+								matInput
+								type="number"
+								placeholder="Sale Price"
+								name="sale_price"
+							/>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<span matPrefix>Rs: &nbsp;</span>
+							<input
+								matInput
+								type="number"
+								placeholder="Discount"
+								name="discount"
+							/>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="separator separator-dashed my-6"></div>
+				<div class="form-group row">
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<mat-select placeholder="Select Unit" name="unit" required>
+							</mat-select>
+							<mat-error>
+								Unit is
+								<strong>required</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input
+								matInput
+								type="number"
+								placeholder="Unit Quantity"
+								name="unit_quantity"
+								required
+							/>
+							<mat-error>
+								Unit Quantity is
+								<strong>required</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div class="separator separator-dashed my-6"></div>
+
+				<div class="form-group row"></div>
+				<div class="separator separator-dashed my-6"></div>
+			</div>
+			<div class="card-footer">
+				<div class="d-flex justify-content-between">
+					<div class="mr-2"></div>
+					<div>
+						<button
+							type="button"
+							mat-raised-button
+							mat-dialog-close
+							cdkFocusInitial
+						>
+							Cancel</button
+						>&nbsp;
+						<button
+							type="button"
+							mat-raised-button
+							color="primary"
+							(click)="onSubmit()"
+							[disabled]="f.invalid || f.pristine"
+						>
+							Save
+						</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

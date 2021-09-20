@@ -58,12 +58,13 @@ export const DynamicAsideMenuConfig = {
 			page: '/products/list',
 			svg: './assets/media/svg/icons/Layout/Layout-4-blocks.svg',
 		},
+		{ section: 'Accounts' },
 		{
 			title: 'Sales',
 			root: true,
 			show: true,
 			icon: 'flaticon2-world',
-			page: '/sales/list',
+			page: '/sales',
 			svg: './assets/media/svg/icons/Layout/Layout-4-blocks.svg',
 		},
 		{
