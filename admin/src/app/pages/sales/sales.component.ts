@@ -16,18 +16,16 @@ import {
 export class SalesComponent implements OnInit {
 	productData: any;
 	queryParams: ProductQuery;
+
 	company_heads: any = [
 		{ id: 1, name: 'Capri Traders' },
 		{ id: 2, name: 'Capri Traders2' },
 		{ id: 3, name: 'Capri Traders3' },
 	];
-	party_names: any = [
-		{ id: 1, name: 'party 1' },
-		{ id: 2, name: 'party 2' },
-		{ id: 3, name: 'party 3' },
-	];
+
 	pay_modes: any = [{ name: 'credit' }, { name: 'cash' }];
 	pay_statuses: any = [{ name: 'pending' }, { name: 'done' }];
+
 	sale: any = {
 		company_head: '',
 		bill_no: '',
@@ -38,6 +36,7 @@ export class SalesComponent implements OnInit {
 		remarks: '',
 		pay_status: '',
 	};
+
 	sale_items: any = [];
 
 	constructor(
