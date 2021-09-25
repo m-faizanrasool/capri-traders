@@ -19,6 +19,10 @@ export class ProductsService {
 		);
 	}
 
+	getAllProducts() {
+		return this.httpClient.get(environment.apiUrl + 'all-products');
+	}
+
 	getCreateProductParams() {
 		return this.httpClient.get(environment.apiUrl + 'products/create');
 	}

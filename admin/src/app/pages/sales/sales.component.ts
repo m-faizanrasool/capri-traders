@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { AddProductDialogComponent } from '../products/list/add-product-dialog/add-product-dialog.component';
@@ -7,6 +7,9 @@ import {
 	ProductQuery,
 	ProductsService,
 } from 'src/app/services/products.service';
+
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
 	selector: 'app-sales',
@@ -23,6 +26,8 @@ export class SalesComponent implements OnInit {
 		{ id: 3, name: 'Capri Traders3' },
 	];
 
+	products: any = [];
+
 	pay_modes: any = [{ name: 'credit' }, { name: 'cash' }];
 	pay_statuses: any = [{ name: 'pending' }, { name: 'done' }];
 
@@ -37,7 +42,30 @@ export class SalesComponent implements OnInit {
 		pay_status: '',
 	};
 
+	selectedProduct: any = {
+		id: '',
+		quantity: '',
+		rate: '',
+	};
+
+	dataSource = new MatTableDataSource([]);
+
 	sale_items: any = [];
+	pageSize = 20;
+	totalProducts: number;
+
+	displayedColumns = [
+		'name',
+		'brand',
+		'quantity',
+		'rate',
+		'discount',
+		'description',
+		'image',
+		'actions',
+	];
+
+	loaded: boolean = false;
 
 	constructor(
 		private productsService: ProductsService,
@@ -50,7 +78,14 @@ export class SalesComponent implements OnInit {
 		this.productsService.getCreateProductParams().subscribe((response) => {
 			this.productData = response;
 		});
-		console.log(this.company_heads);
+		this.productsService
+			.getAllProducts()
+			.subscribe(this.handleResponse.bind(this));
+	}
+	handleResponse(response: any) {
+		this.products = response.products;
+		this.loaded = true;
+		this.cdr.detectChanges();
 	}
 
 	onSubmit() {
@@ -68,5 +103,20 @@ export class SalesComponent implements OnInit {
 				return;
 			}
 		});
+	}
+
+	AddProductToSaleItems() {
+		const product = this.products.find(
+			(product: any) => product.id == this.selectedProduct.id
+		);
+
+		product.rate = this.selectedProduct.rate;
+		product.quantity = this.selectedProduct.quantity;
+
+		this.sale_items.push(product);
+		// Refreshing Data Source
+		this.dataSource.data = this.sale_items;
+		this.cdr.detectChanges();
+		this.loaded = true;
 	}
 }

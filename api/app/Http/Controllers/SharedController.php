@@ -37,4 +37,10 @@ class SharedController extends Controller
 
         return response()->json(compact('products', 'total'));
     }
+
+    public function allProducts()
+    {
+        $products = Product::with(['brand', 'unit'])->get();
+        return response()->json(compact('products'));
+    }
 }

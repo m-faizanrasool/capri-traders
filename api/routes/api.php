@@ -34,6 +34,7 @@ Route::middleware(PhoneFormat::class)->prefix('otp')->group(function () {
 });
 
 Route::get('filtered-products', 'App\Http\Controllers\SharedController@products');
+Route::get('all-products', 'App\Http\Controllers\SharedController@allProducts');
 Route::get('cart', 'App\Http\Controllers\CartController@index');
 
 Route::middleware(PhoneFormat::class)->post('users/reset-password', 'App\Http\Controllers\UserController@resetPassword');
