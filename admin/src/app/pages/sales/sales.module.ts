@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SalesComponent } from './sales.component';
+import { EditComponent } from './edit/edit.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
@@ -22,7 +23,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
-	declarations: [SalesComponent],
+	declarations: [SalesComponent, EditComponent],
 	imports: [
 		CommonModule,
 		MatButtonModule,
@@ -62,6 +63,6 @@ import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-d
 			},
 		},
 	],
-	entryComponents: [ConfirmationDialogComponent],
+	entryComponents: [ConfirmationDialogComponent, EditComponent],
 })
 export class SalesModule {}

@@ -276,10 +276,15 @@
 						<ng-container matColumnDef="actions">
 							<mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
 							<mat-cell *matCellDef="let product; let index = index">
-								<button mat-icon-button color="primary">
+								<button mat-icon-button color="primary" (click)="editSaleItemsProduct(product)">
 									<mat-icon>create</mat-icon></button
 								>&nbsp;
-								<button mat-icon-button color="warn" type="button">
+								<button
+									mat-icon-button
+									color="warn"
+									(click)="removeFromSaleItems(product.id)"
+									type="button"
+								>
 									<mat-icon>delete</mat-icon>
 								</button>
 							</mat-cell>
@@ -298,7 +303,10 @@
 					>
 						No records found
 					</div>
-					<div class="mat-table-message" *ngIf="!loaded && !dataSource.data.length">
+					<div
+						class="mat-table-message"
+						*ngIf="!loaded && !dataSource.data.length"
+					>
 						Please wait....
 					</div>
 				</div>

@@ -2,13 +2,13 @@ import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { AddProductDialogComponent } from '../products/list/add-product-dialog/add-product-dialog.component';
+import { EditComponent } from './edit/edit.component';
 import { CommonService } from 'src/app/services/common.service';
 import {
 	ProductQuery,
 	ProductsService,
 } from 'src/app/services/products.service';
 
-import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
@@ -51,7 +51,7 @@ export class SalesComponent implements OnInit {
 	dataSource = new MatTableDataSource([]);
 
 	sale_items: any = [];
-	pageSize = 20;
+	pageSize = 10;
 	totalProducts: number;
 
 	displayedColumns = [
@@ -110,13 +110,49 @@ export class SalesComponent implements OnInit {
 			(product: any) => product.id == this.selectedProduct.id
 		);
 
-		product.rate = this.selectedProduct.rate;
-		product.quantity = this.selectedProduct.quantity;
+		// check if product already added to sale items
+		const findProduct = this.sale_items.find(
+			(product: any) => product.id == this.selectedProduct.id
+		);
 
-		this.sale_items.push(product);
-		// Refreshing Data Source
+		if (!findProduct) {
+			product.rate = this.selectedProduct.rate;
+			product.quantity = this.selectedProduct.quantity;
+
+			this.sale_items.push(product);
+			// Refreshing Data Source
+			this.dataSource.data = this.sale_items;
+			this.cdr.detectChanges();
+			this.loaded = true;
+		}
+	}
+
+	removeFromSaleItems(id) {
+		this.sale_items = this.sale_items.filter(function (product) {
+			return product.id != id;
+		});
 		this.dataSource.data = this.sale_items;
-		this.cdr.detectChanges();
-		this.loaded = true;
+	}
+
+	editSaleItemsProduct(Product) {
+		const dialogRef = this.dialog.open(EditComponent, {
+			data: { product: Product },
+			width: '440px',
+			disableClose: true,
+		});
+
+		dialogRef.afterClosed().subscribe((res) => {
+			if (!res) {
+				return;
+			}
+			const product = this.sale_items.find(
+				(product: any) => product.id == this.selectedProduct.id
+			);
+			product.quantity = res.product.quantity;
+			product.rate = res.product.rate;
+
+			this.dataSource.data = this.sale_items;
+			this.cdr.detectChanges();
+		});
 	}
 }
