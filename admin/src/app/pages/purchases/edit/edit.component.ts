@@ -9,8 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class EditComponent implements OnInit {
 	title: string;
 	mode: string;
-	product = { quantity: '', rate: '', description: '', id: '' };
-	index: any;
+	product = { quantity: '', rate: '', id: '' };
 	constructor(
 		public dialogRef: MatDialogRef<EditComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any
@@ -19,7 +18,6 @@ export class EditComponent implements OnInit {
 	ngOnInit(): void {
 		if (this.data && this.data.product) {
 			this.product = this.data.product;
-			this.index = this.data.index;
 			this.title = 'Update Quantity or Rate';
 			this.mode = 'Update';
 		} else {
@@ -29,10 +27,6 @@ export class EditComponent implements OnInit {
 	}
 
 	onSubmit() {
-		this.dialogRef.close({
-			product: this.product,
-			index: this.index,
-			isEdit: false,
-		});
+		this.dialogRef.close({ product: this.product, isEdit: false });
 	}
 }

@@ -89,7 +89,7 @@ export class SalesComponent implements OnInit {
 	}
 
 	onSubmit() {
-		console.log(this.sale);
+		console.log('here', this.sale);
 	}
 
 	addProduct() {
@@ -106,37 +106,32 @@ export class SalesComponent implements OnInit {
 	}
 
 	AddProductToSaleItems() {
-		const product = this.products.find(
-			(product: any) => product.id == this.selectedProduct.id
-		);
+		if (this.selectedProduct.id) {
+			const product = this.products.find(
+				(product: any) => product.id == this.selectedProduct.id
+			);
 
-		// check if product already added to sale items
-		const findProduct = this.sale_items.find(
-			(product: any) => product.id == this.selectedProduct.id
-		);
-
-		if (!findProduct) {
 			product.rate = this.selectedProduct.rate;
 			product.quantity = this.selectedProduct.quantity;
 
-			this.sale_items.push(product);
+			this.sale_items.push(JSON.parse(JSON.stringify(product)));
 			// Refreshing Data Source
 			this.dataSource.data = this.sale_items;
 			this.cdr.detectChanges();
 			this.loaded = true;
+		} else {
+			return;
 		}
 	}
 
-	removeFromSaleItems(id) {
-		this.sale_items = this.sale_items.filter(function (product) {
-			return product.id != id;
-		});
+	removeFromSaleItems(index) {
+		this.sale_items.splice(index, 1);
 		this.dataSource.data = this.sale_items;
 	}
 
-	editSaleItemsProduct(Product) {
+	editSaleItemsProduct(Product, index) {
 		const dialogRef = this.dialog.open(EditComponent, {
-			data: { product: Product },
+			data: { product: Product, index: index },
 			width: '440px',
 			disableClose: true,
 		});
@@ -145,11 +140,9 @@ export class SalesComponent implements OnInit {
 			if (!res) {
 				return;
 			}
-			const product = this.sale_items.find(
-				(product: any) => product.id == this.selectedProduct.id
-			);
-			product.quantity = res.product.quantity;
-			product.rate = res.product.rate;
+
+			this.sale_items[res.index].quantity = res.product.quantity;
+			this.sale_items[res.index].rate = res.product.rate;
 
 			this.dataSource.data = this.sale_items;
 			this.cdr.detectChanges();

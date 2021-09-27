@@ -1,1 +1,347 @@
-<router-outlet></router-outlet>
+<div class="card card-custom">
+	<div class="card-header">
+		<div class="card-title">
+			<h3>Sales</h3>
+		</div>
+		<div class="card-toolbar">
+			<button class="btn btn-primary" (click)="addProduct()">
+				Add Product
+			</button>
+		</div>
+	</div>
+	<div>
+		<form class="form" (ngSubmit)="onSubmit()" #f="ngForm">
+			<!-- Sales Form Start -->
+			<div class="card-body">
+				<div class="card-body-progress">
+					<mat-spinner [diameter]="20"></mat-spinner>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-lg-6 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<mat-select
+								placeholder="Company Head"
+								name="company_head"
+								[(ngModel)]="sale.company_head"
+								required
+							>
+								<mat-option
+									*ngFor="let company_head of company_heads"
+									[value]="company_head.id"
+								>
+									{{ company_head.name }}
+								</mat-option>
+							</mat-select>
+							<mat-error>
+								Company Head is
+								<strong>required</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-2 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input
+								type="number"
+								matInput
+								placeholder="Bill/Ref#"
+								name="bill_no"
+								[(ngModel)]="sale.bill_no"
+							/>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-2 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input
+								type="number"
+								matInput
+								placeholder="PO#"
+								name="po_no"
+								[(ngModel)]="sale.po_no"
+							/>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-2 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input
+								type="number"
+								matInput
+								placeholder="GRN"
+								name="grn"
+								[(ngModel)]="sale.grn"
+							/>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input
+								matInput
+								type="text"
+								placeholder="Party Name"
+								name="sale.party_name"
+								[(ngModel)]="sale.party_name"
+							/>
+							<mat-error>
+								Party Name is
+								<strong>required</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-2 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<mat-select
+								placeholder="Pay Mode"
+								name="pay_mode"
+								[(ngModel)]="sale.pay_mode"
+								required
+							>
+								<mat-option
+									*ngFor="let pay_mode of pay_modes"
+									[value]="pay_mode.name"
+								>
+									{{ pay_mode.name }}
+								</mat-option>
+							</mat-select>
+							<mat-error>
+								<strong>required</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-2 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<mat-select
+								placeholder="Pay Status"
+								name="pay_status"
+								[(ngModel)]="sale.pay_status"
+								required
+							>
+								<mat-option
+									*ngFor="let pay_status of pay_statuses"
+									[value]="pay_status.name"
+								>
+									{{ pay_status.name }}
+								</mat-option>
+							</mat-select>
+							<mat-error>
+								<strong>required</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input
+								matInput
+								type="text"
+								placeholder="Remarks"
+								name="remarks"
+								[(ngModel)]="sale.remarks"
+							/>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-lg-3 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<mat-select
+								[(ngModel)]="selectedProduct.id"
+								placeholder="Enter Item"
+								name="product"
+								required
+							>
+								<mat-option
+									*ngFor="let product of products"
+									[value]="product.id"
+								>
+									{{ product.name }}
+								</mat-option>
+							</mat-select>
+							<mat-error>
+								Item is
+								<strong>required</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-2 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input
+								matInput
+								type="number"
+								placeholder="Quantity"
+								name="quantity"
+								required
+								[(ngModel)]="selectedProduct.quantity"
+							/>
+							<mat-error>
+								Quantity is
+								<strong>required</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-2 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input
+								matInput
+								type="number"
+								placeholder="Rate"
+								name="rate"
+								required
+								[(ngModel)]="selectedProduct.rate"
+							/>
+							<mat-error>
+								Rate is
+								<strong>required</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+					<div class="col-lg-2 kt-margin-bottom-20-mobile">
+						<button (click)="AddProductToSaleItems()" class="btn btn-primary">
+							Add
+						</button>
+						<button class="ml-2 btn btn-danger">Remove</button>
+					</div>
+				</div>
+
+				<div class="separator separator-dashed my-6"></div>
+			</div>
+			<!-- Sales Form End -->
+
+			<!-- Product Details Table Start -->
+			<div class="card-body">
+				<div class="mat-table-wrapper">
+					<mat-table #table [dataSource]="dataSource">
+						<!--- Note that these columns can be defined in any order.
+				The actual rendered columns are set as a property on the row definition" -->
+						<!-- Name Column -->
+						<ng-container matColumnDef="name">
+							<mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+							<mat-cell *matCellDef="let element">
+								{{ element.name }}
+							</mat-cell>
+						</ng-container>
+
+						<ng-container matColumnDef="brand">
+							<mat-header-cell *matHeaderCellDef> Brand </mat-header-cell>
+							<mat-cell *matCellDef="let element">
+								{{ element.brand ? element.brand.name : '' }}
+							</mat-cell>
+						</ng-container>
+
+						<ng-container matColumnDef="quantity">
+							<mat-header-cell *matHeaderCellDef> Quantity </mat-header-cell>
+							<mat-cell *matCellDef="let element">
+								{{ element.quantity }}
+							</mat-cell>
+						</ng-container>
+
+						<ng-container matColumnDef="rate">
+							<mat-header-cell *matHeaderCellDef> Rate </mat-header-cell>
+							<mat-cell *matCellDef="let element">
+								{{ element.rate }}
+							</mat-cell>
+						</ng-container>
+
+						<ng-container matColumnDef="discount">
+							<mat-header-cell *matHeaderCellDef> Discount </mat-header-cell>
+							<mat-cell *matCellDef="let element">
+								{{ element.discount }}
+							</mat-cell>
+						</ng-container>
+
+						<ng-container matColumnDef="description">
+							<mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+							<mat-cell *matCellDef="let element">
+								{{ element.description }}
+							</mat-cell>
+						</ng-container>
+
+						<ng-container matColumnDef="image">
+							<mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+							<mat-cell *matCellDef="let element">
+								<img [src]="element.image_url" class="img-fluid w-75" />
+							</mat-cell>
+						</ng-container>
+						<!-- Actions Column -->
+						<ng-container matColumnDef="actions">
+							<mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+							<mat-cell *matCellDef="let product; let index = index">
+								<button mat-icon-button color="primary" (click)="editSaleItemsProduct(product)">
+									<mat-icon>create</mat-icon></button
+								>&nbsp;
+								<button
+									mat-icon-button
+									color="warn"
+									(click)="removeFromSaleItems(product.id)"
+									type="button"
+								>
+									<mat-icon>delete</mat-icon>
+								</button>
+							</mat-cell>
+						</ng-container>
+						<!-- Symbol Column -->
+						<mat-header-row
+							*matHeaderRowDef="displayedColumns"
+						></mat-header-row>
+						<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+					</mat-table>
+
+					<!-- Message for empty data  -->
+					<div
+						class="mat-table-message"
+						*ngIf="loaded && dataSource.data.length == 0"
+					>
+						No records found
+					</div>
+					<div
+						class="mat-table-message"
+						*ngIf="!loaded && !dataSource.data.length"
+					>
+						Please wait....
+					</div>
+				</div>
+
+				<!-- start: BOTTOM -->
+				<div class="mat-table-bottom">
+					<!-- MATERIAL SPINNER | Url: 'https://material.angular.io/components/progress-spinner/overview' -->
+					<mat-spinner [diameter]="20" *ngIf="!loaded"></mat-spinner>
+					<!-- MATERIAL PAGINATOR | Binded to dasources -->
+					<!-- See off.documentations 'https://material.angular.io/components/paginator/overview' -->
+					<mat-paginator
+						[pageSize]="pageSize"
+						[showFirstLastButtons]="true"
+						[length]="totalProducts"
+					></mat-paginator>
+				</div>
+			</div>
+			<!-- Product Details Table End -->
+			<div class="card-footer">
+				<div class="d-flex justify-content-between">
+					<div class="mr-2"></div>
+					<div>
+						&nbsp;
+						<button
+							type="button"
+							mat-raised-button
+							color="primary"
+							(click)="onSubmit()"
+							[disabled]="f.invalid || f.pristine"
+						>
+							Save
+						</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

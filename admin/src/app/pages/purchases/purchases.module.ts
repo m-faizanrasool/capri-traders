@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ListComponent } from './list/list.component';
 import { RouterModule } from '@angular/router';
 import { PurchasesComponent } from './purchases.component';
+import { EditComponent } from './edit/edit.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
@@ -10,7 +10,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { GeneralModule } from 'src/app/_metronic/partials/content/general/general.module';
 import { MatIconModule } from '@angular/material/icon';
-import { AddPurchaseDialogComponent } from './list/add-purchase-dialog/add-purchase-dialog.component';
+
 import {
 	MatDialogModule,
 	MAT_DIALOG_DEFAULT_OPTIONS,
@@ -18,13 +18,12 @@ import {
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
-import { ImageCropperModule } from 'ngx-image-cropper';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
-	declarations: [ListComponent, PurchasesComponent, AddPurchaseDialogComponent],
+	declarations: [PurchasesComponent, EditComponent],
 	imports: [
 		CommonModule,
 		MatButtonModule,
@@ -40,7 +39,6 @@ import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-d
 		MatSelectModule,
 		MatInputModule,
 		NgSelectModule,
-		ImageCropperModule,
 		RouterModule.forChild([
 			{
 				path: '',
@@ -48,12 +46,7 @@ import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-d
 				children: [
 					{
 						path: '',
-						redirectTo: 'list',
 						pathMatch: 'full',
-					},
-					{
-						path: 'list',
-						component: ListComponent,
 					},
 				],
 			},
@@ -70,6 +63,6 @@ import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-d
 			},
 		},
 	],
-	entryComponents: [AddPurchaseDialogComponent, ConfirmationDialogComponent],
+	entryComponents: [ConfirmationDialogComponent, EditComponent],
 })
 export class PurchasesModule {}
