@@ -72,7 +72,7 @@ export const DynamicAsideMenuConfig = {
 			root: true,
 			show: true,
 			icon: 'flaticon2-world',
-			page: '/purchases',
+			page: '/purchases/list',
 			svg: './assets/media/svg/icons/Layout/Layout-4-blocks.svg',
 		},
 		{
