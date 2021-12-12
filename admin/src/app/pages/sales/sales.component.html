@@ -4,9 +4,7 @@
 			<h3>Sales</h3>
 		</div>
 		<div class="card-toolbar">
-			<button class="btn btn-primary" (click)="addProduct()">
-				Add Product
-			</button>
+			<button class="btn btn-primary" (click)="addItem()">Add Item</button>
 		</div>
 	</div>
 	<div>
@@ -153,16 +151,13 @@
 					<div class="col-lg-3 kt-margin-bottom-20-mobile">
 						<mat-form-field class="mat-form-field-fluid">
 							<mat-select
-								[(ngModel)]="selectedProduct.id"
+								[(ngModel)]="selectedItem.id"
 								placeholder="Enter Item"
-								name="product"
+								name="item"
 								required
 							>
-								<mat-option
-									*ngFor="let product of products"
-									[value]="product.id"
-								>
-									{{ product.name }}
+								<mat-option *ngFor="let item of items" [value]="item.id">
+									{{ item.name }}
 								</mat-option>
 							</mat-select>
 							<mat-error>
@@ -180,7 +175,7 @@
 								placeholder="Quantity"
 								name="quantity"
 								required
-								[(ngModel)]="selectedProduct.quantity"
+								[(ngModel)]="selectedItem.quantity"
 							/>
 							<mat-error>
 								Quantity is
@@ -197,7 +192,7 @@
 								placeholder="Rate"
 								name="rate"
 								required
-								[(ngModel)]="selectedProduct.rate"
+								[(ngModel)]="selectedItem.rate"
 							/>
 							<mat-error>
 								Rate is
@@ -206,9 +201,7 @@
 						</mat-form-field>
 					</div>
 					<div class="col-lg-2 kt-margin-bottom-20-mobile">
-						<a (click)="AddProductToSaleItems()" class="btn btn-primary">
-							Add
-						</a>
+						<a (click)="AddItemToSaleItems()" class="btn btn-primary"> Add </a>
 					</div>
 				</div>
 
@@ -216,7 +209,7 @@
 			</div>
 			<!-- Sales Form End -->
 
-			<!-- Product Details Table Start -->
+			<!-- Item Details Table Start -->
 			<div class="card-body">
 				<div class="mat-table-wrapper">
 					<mat-table #table [dataSource]="dataSource">
@@ -274,11 +267,11 @@
 						<!-- Actions Column -->
 						<ng-container matColumnDef="actions">
 							<mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
-							<mat-cell *matCellDef="let product; let index = index">
+							<mat-cell *matCellDef="let item; let index = index">
 								<a
 									mat-icon-button
 									color="primary"
-									(click)="editSaleItemsProduct(product, index)"
+									(click)="editSaleItemsItem(item, index)"
 								>
 									<mat-icon>create</mat-icon></a
 								>&nbsp;
@@ -323,11 +316,11 @@
 					<mat-paginator
 						[pageSize]="pageSize"
 						[showFirstLastButtons]="true"
-						[length]="totalProducts"
+						[length]="totalItems"
 					></mat-paginator>
 				</div>
 			</div>
-			<!-- Product Details Table End -->
+			<!-- Item Details Table End -->
 			<div class="card-footer">
 				<div class="d-flex justify-content-between">
 					<div class="mr-2"></div>
@@ -338,6 +331,7 @@
 							mat-raised-button
 							color="primary"
 							[disabled]="f.invalid || f.pristine"
+							(click)="save()"
 						>
 							Save
 						</button>

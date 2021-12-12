@@ -1,15 +1,14 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
-import { AddProductDialogComponent } from '../products/list/add-product-dialog/add-product-dialog.component';
+
 import { EditComponent } from './edit/edit.component';
 import { CommonService } from 'src/app/services/common.service';
-import {
-	ProductQuery,
-	ProductsService,
-} from 'src/app/services/products.service';
+import { ItemQuery, ItemsService } from 'src/app/services/itens.service';
 
 import { MatTableDataSource } from '@angular/material/table';
+
+import { AddItemDialogComponent } from './../items/list/add-item-dialog/add-item-dialog.component';
 
 @Component({
 	selector: 'app-sales',
@@ -17,8 +16,8 @@ import { MatTableDataSource } from '@angular/material/table';
 	styleUrls: ['./sales.component.scss'],
 })
 export class SalesComponent implements OnInit {
-	productData: any;
-	queryParams: ProductQuery;
+	itemData: any;
+	queryParams: ItemQuery;
 
 	company_heads: any = [
 		{ id: 1, name: 'Capri Traders' },
@@ -26,7 +25,7 @@ export class SalesComponent implements OnInit {
 		{ id: 3, name: 'Capri Traders3' },
 	];
 
-	products: any = [];
+	items: any = [];
 
 	pay_modes: any = [{ name: 'credit' }, { name: 'cash' }];
 	pay_statuses: any = [{ name: 'pending' }, { name: 'done' }];
@@ -42,7 +41,7 @@ export class SalesComponent implements OnInit {
 		pay_status: '',
 	};
 
-	selectedProduct: any = {
+	selectedItem: any = {
 		id: '',
 		quantity: '',
 		rate: '',
@@ -52,7 +51,7 @@ export class SalesComponent implements OnInit {
 
 	sale_items: any = [];
 	pageSize = 10;
-	totalProducts: number;
+	totalItems: number;
 
 	displayedColumns = [
 		'name',
@@ -68,22 +67,20 @@ export class SalesComponent implements OnInit {
 	loaded: boolean = false;
 
 	constructor(
-		private productsService: ProductsService,
+		private itemsService: ItemsService,
 		private commonService: CommonService,
 		private cdr: ChangeDetectorRef,
 		public dialog: MatDialog
 	) {}
 
 	ngOnInit(): void {
-		this.productsService.getCreateProductParams().subscribe((response) => {
-			this.productData = response;
+		this.itemsService.getCreateItemParams().subscribe((response) => {
+			this.itemData = response;
 		});
-		this.productsService
-			.getAllProducts()
-			.subscribe(this.handleResponse.bind(this));
+		this.itemsService.getAllItems().subscribe(this.handleResponse.bind(this));
 	}
 	handleResponse(response: any) {
-		this.products = response.products;
+		this.items = response.items;
 		this.loaded = true;
 		this.cdr.detectChanges();
 	}
@@ -92,9 +89,9 @@ export class SalesComponent implements OnInit {
 		console.log('here', this.sale);
 	}
 
-	addProduct() {
-		const dialogRef = this.dialog.open(AddProductDialogComponent, {
-			data: { paramsData: this.productData },
+	addItem() {
+		const dialogRef = this.dialog.open(AddItemDialogComponent, {
+			data: { paramsData: this.itemData },
 			disableClose: true,
 		});
 
@@ -105,16 +102,16 @@ export class SalesComponent implements OnInit {
 		});
 	}
 
-	AddProductToSaleItems() {
-		if (this.selectedProduct.id) {
-			const product = this.products.find(
-				(product: any) => product.id == this.selectedProduct.id
+	AddItemToSaleItems() {
+		if (this.selectedItem.id) {
+			const item = this.items.find(
+				(item: any) => item.id == this.selectedItem.id
 			);
 
-			product.rate = this.selectedProduct.rate;
-			product.quantity = this.selectedProduct.quantity;
+			item.rate = this.selectedItem.rate;
+			item.quantity = this.selectedItem.quantity;
 
-			this.sale_items.push(JSON.parse(JSON.stringify(product)));
+			this.sale_items.push(JSON.parse(JSON.stringify(item)));
 			// Refreshing Data Source
 			this.dataSource.data = this.sale_items;
 			this.cdr.detectChanges();
@@ -129,9 +126,9 @@ export class SalesComponent implements OnInit {
 		this.dataSource.data = this.sale_items;
 	}
 
-	editSaleItemsProduct(Product, index) {
+	editSaleItemsItem(Item, index) {
 		const dialogRef = this.dialog.open(EditComponent, {
-			data: { product: Product, index: index },
+			data: { item: Item, index: index },
 			width: '440px',
 			disableClose: true,
 		});
@@ -141,11 +138,16 @@ export class SalesComponent implements OnInit {
 				return;
 			}
 
-			this.sale_items[res.index].quantity = res.product.quantity;
-			this.sale_items[res.index].rate = res.product.rate;
+			this.sale_items[res.index].quantity = res.item.quantity;
+			this.sale_items[res.index].rate = res.item.rate;
 
 			this.dataSource.data = this.sale_items;
 			this.cdr.detectChanges();
 		});
+	}
+
+	save() {
+		console.log(this.sale);
+		console.log(this.sale_items);
 	}
 }
