@@ -16,10 +16,10 @@ class CreatePurchaseItemsTable extends Migration
         Schema::create('purchase_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('purchase_id')->constrained();
-            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('item_id');
             $table->timestamps();
 
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('item_id')->references('id')->on('items');
         });
     }
 

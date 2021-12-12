@@ -13,10 +13,10 @@ class CreateProductUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_user', function (Blueprint $table) {
+        Schema::create('item_user', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('product_id')->constrained();
-			$table->timestamps();
+            $table->foreignId('item_id')->constrained();
+            $table->timestamps();
         });
     }
 

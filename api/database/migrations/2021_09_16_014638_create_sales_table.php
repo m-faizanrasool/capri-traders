@@ -15,6 +15,7 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
+            $table->boolean('is_return')->nullable()->default(false);
             $table->string('company_head');
             $table->integer('bill_no');
             $table->integer('po_no');
@@ -23,7 +24,6 @@ class CreateSalesTable extends Migration
             $table->string('pay_mode');
             $table->string('remarks')->nullable();
             $table->string('pay_status');
-            // $table->integer('product_id');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -16,11 +16,11 @@ class CreateSaleItemsTable extends Migration
         Schema::create('sale_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('sale_id')->constrained();
-            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('item_id');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('item_id')->references('id')->on('items');
         });
     }
 

@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
-class Product extends Model
+class Item extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public static $path = 'images/products/';
+    public static $path = 'images/items/';
 
     protected $guarded = [];
     protected $appends = ['image_url'];
@@ -28,13 +28,13 @@ class Product extends Model
 
     protected static function booted()
     {
-        static::deleting(function ($product) {
-            Storage::delete(self::$path . $product->image);
+        static::deleting(function ($item) {
+            Storage::delete(self::$path . $item->image);
         });
 
-        static::updating(function ($product) {
-            if ($product->isDirty('image')) {
-                Storage::delete(self::$path . $product->getOriginal('image'));
+        static::updating(function ($item) {
+            if ($item->isDirty('image')) {
+                Storage::delete(self::$path . $item->getOriginal('image'));
             }
         });
     }
@@ -45,7 +45,7 @@ class Product extends Model
         if ($this->image && Storage::exists($path)) {
             return asset($path);
         }
-        return asset('assets/product.jpg');
+        return asset('assets/item.jpg');
     }
 
     public function setImageAttribute($value)

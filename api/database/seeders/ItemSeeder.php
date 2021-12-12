@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Product;
+use App\Models\Item;
 use Illuminate\Database\Seeder;
 
-class ProductSeeder extends Seeder
+class ItemSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,7 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        Product::create([
+        Item::create([
             'id' => 1,
             'brand_id' => 3,
             'unit_id' => 7,
@@ -26,7 +26,7 @@ class ProductSeeder extends Seeder
             'discount' => 1000.00
         ]);
 
-        Product::create([
+        Item::create([
             'id' => 2,
             'brand_id' => 1,
             'unit_id' => 4,
@@ -38,7 +38,7 @@ class ProductSeeder extends Seeder
             'discount' => 0.00
         ]);
 
-        Product::create([
+        Item::create([
             'id' => 3,
             'brand_id' => 5,
             'unit_id' => 6,
@@ -50,7 +50,7 @@ class ProductSeeder extends Seeder
             'discount' => 100.00
         ]);
 
-        Product::create([
+        Item::create([
             'id' => 4,
             'brand_id' => 2,
             'unit_id' => 2,
@@ -62,7 +62,7 @@ class ProductSeeder extends Seeder
             'discount' => 0.00
         ]);
 
-        Product::create([
+        Item::create([
             'id' => 5,
             'brand_id' => 4,
             'unit_id' => 1,
@@ -74,7 +74,7 @@ class ProductSeeder extends Seeder
             'discount' => 0.00
         ]);
 
-        Product::create([
+        Item::create([
             'id' => 6,
             'brand_id' => 2,
             'unit_id' => 3,
@@ -86,7 +86,7 @@ class ProductSeeder extends Seeder
             'discount' => 10.00
         ]);
 
-        Product::create([
+        Item::create([
             'id' => 7,
             'brand_id' => 6,
             'unit_id' => 3,
