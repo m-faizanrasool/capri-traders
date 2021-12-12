@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
 	providedIn: 'root',
 })
-export class SalesService {
+export class ItemsService {
 	constructor(private httpClient: HttpClient) {}
 
 	getItems(queryParams) {
@@ -17,6 +17,10 @@ export class SalesService {
 		return this.httpClient.get(
 			environment.apiUrl + 'filtered-items?' + queryParamsString
 		);
+	}
+
+	getAllItems() {
+		return this.httpClient.get(environment.apiUrl + 'all-items');
 	}
 
 	getCreateItemParams() {

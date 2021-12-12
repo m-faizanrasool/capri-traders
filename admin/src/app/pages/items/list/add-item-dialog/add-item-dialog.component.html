@@ -19,7 +19,7 @@
 						<mat-select
 							placeholder="Select Brand"
 							name="brand"
-							[(ngModel)]="product.brand_id"
+							[(ngModel)]="item.brand_id"
 							required
 						>
 							<mat-option *ngFor="let brand of brands" [value]="brand.id">
@@ -40,7 +40,7 @@
 							matInput
 							placeholder="Name"
 							name="name"
-							[(ngModel)]="product.name"
+							[(ngModel)]="item.name"
 							required
 						/>
 						<mat-error>
@@ -58,7 +58,7 @@
 							rows="4"
 							#description
 							name="description"
-							[(ngModel)]="product.description"
+							[(ngModel)]="item.description"
 						></textarea>
 						<mat-hint align="end">
 							{{ description.value.length }} / 400
@@ -82,7 +82,7 @@
 							type="number"
 							placeholder="Purchase Price"
 							name="purchase_price"
-							[(ngModel)]="product.purchase_price"
+							[(ngModel)]="item.purchase_price"
 						/>
 					</mat-form-field>
 				</div>
@@ -95,7 +95,7 @@
 							type="number"
 							placeholder="Sale Price"
 							name="sale_price"
-							[(ngModel)]="product.sale_price"
+							[(ngModel)]="item.sale_price"
 						/>
 					</mat-form-field>
 				</div>
@@ -108,7 +108,7 @@
 							type="number"
 							placeholder="Discount"
 							name="discount"
-							[(ngModel)]="product.discount"
+							[(ngModel)]="item.discount"
 						/>
 					</mat-form-field>
 				</div>
@@ -120,7 +120,7 @@
 						<mat-select
 							placeholder="Select Unit"
 							name="unit"
-							[(ngModel)]="product.unit_id"
+							[(ngModel)]="item.unit_id"
 							required
 						>
 							<mat-option *ngFor="let unit of units" [value]="unit.id">
@@ -140,7 +140,7 @@
 							type="number"
 							placeholder="Unit Quantity"
 							name="unit_quantity"
-							[(ngModel)]="product.unit_quantity"
+							[(ngModel)]="item.unit_quantity"
 							required
 						/>
 						<mat-error>
@@ -162,7 +162,7 @@
 
 			<div
 				class="row images"
-				*ngIf="product.image || product.image_url || imageChangedEvent"
+				*ngIf="item.image || item.image_url || imageChangedEvent"
 			>
 				<div
 					class="col-lg-6 kt-margin-bottom-20-mobile"
@@ -182,11 +182,11 @@
 				</div>
 				<div class="col-lg-6 kt-margin-bottom-20-mobile">
 					<h3>{{ imageChangedEvent ? 'Cropped Image:' : 'Product' }}</h3>
-					<div class="imagePreview" *ngIf="product.image">
-						<img [src]="product.image" class="img-fluid" />
+					<div class="imagePreview" *ngIf="item.image">
+						<img [src]="item.image" class="img-fluid" />
 					</div>
-					<div class="imagePreview" *ngIf="product.image_url && !product.image">
-						<img [src]="product.image_url" class="img-fluid" />
+					<div class="imagePreview" *ngIf="item.image_url && !item.image">
+						<img [src]="item.image_url" class="img-fluid" />
 					</div>
 				</div>
 			</div>
@@ -211,7 +211,7 @@
 						[disabled]="
 							viewLoading ||
 							f.invalid ||
-							(f.pristine && !product.image) ||
+							(f.pristine && !item.image) ||
 							disabled
 						"
 					>

@@ -13,13 +13,9 @@ import { debounceTime, finalize, startWith, switchMap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
 import { CommonService } from 'src/app/services/common.service';
-import {
-	ProductQuery,
-	ProductsService,
-} from 'src/app/services/products.service';
+import { ItemQuery, ItemsService } from 'src/app/services/itens.service';
 import { ConfirmationDialogComponent } from '../../_sharedComponents/confirmation-dialog/confirmation-dialog.component';
-import { AddProductDialogComponent } from './add-product-dialog/add-product-dialog.component';
-
+import { AddItemDialogComponent } from './add-item-dialog/add-item-dialog.component';
 @Component({
 	selector: 'app-list',
 	templateUrl: './list.component.html',
@@ -33,10 +29,10 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
 	search = new FormControl('');
 	pageIndex = 0;
 	pageSize = 20;
-	products: any[] = [];
-	totalProducts: number;
-	productData: any;
-	queryParams: ProductQuery;
+	items: any[] = [];
+	totalItems: number;
+	itemData: any;
+	queryParams: ItemQuery;
 
 	displayedColumns = [
 		'name',
@@ -51,15 +47,15 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
 	];
 
 	constructor(
-		private productsService: ProductsService,
+		private itemsService: ItemsService,
 		private commonService: CommonService,
 		private cdr: ChangeDetectorRef,
 		public dialog: MatDialog
 	) {}
 
 	ngOnInit() {
-		this.productsService.getCreateProductParams().subscribe((response) => {
-			this.productData = response;
+		this.itemsService.getCreateItemParams().subscribe((response) => {
+			this.itemData = response;
 		});
 	}
 
@@ -88,19 +84,19 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
 			items_per_page: this.pageSize,
 		};
 
-		return this.productsService.getProducts(this.queryParams);
+		return this.itemsService.getItems(this.queryParams);
 	}
 
 	handleResponse(response: any) {
-		this.totalProducts = response.total;
-		this.products = response.products;
+		this.totalItems = response.total;
+		this.items = response.items;
 		this.loaded = true;
 		this.cdr.detectChanges();
 	}
 
-	addProduct() {
-		const dialogRef = this.dialog.open(AddProductDialogComponent, {
-			data: { paramsData: this.productData },
+	addItem() {
+		const dialogRef = this.dialog.open(AddItemDialogComponent, {
+			data: { paramsData: this.itemData },
 			disableClose: true,
 		});
 
@@ -108,15 +104,15 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
 			if (!res) {
 				return;
 			}
-			this.productsService
-				.getProducts(this.queryParams)
+			this.itemsService
+				.getItems(this.queryParams)
 				.subscribe(this.handleResponse.bind(this));
 		});
 	}
 
-	editProduct(Product) {
-		const dialogRef = this.dialog.open(AddProductDialogComponent, {
-			data: { paramsData: this.productData, product: Product },
+	editItem(Item) {
+		const dialogRef = this.dialog.open(AddItemDialogComponent, {
+			data: { paramsData: this.itemData, item: Item },
 			disableClose: true,
 		});
 
@@ -124,27 +120,27 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
 			if (!res) {
 				return;
 			}
-			this.productsService
-				.getProducts(this.queryParams)
+			this.itemsService
+				.getItems(this.queryParams)
 				.subscribe(this.handleResponse.bind(this));
 		});
 	}
 
-	toggleVisiblity(product) {
-		product.disabled = true;
-		product.is_visible = !product.is_visible;
-		this.productsService
-			.toggle_visibility(product.id)
+	toggleVisiblity(item) {
+		item.disabled = true;
+		item.is_visible = !item.is_visible;
+		this.itemsService
+			.toggle_visibility(item.id)
 			.pipe(
 				finalize(() => {
-					product.disabled = false;
+					item.disabled = false;
 					this.cdr.detectChanges();
 				})
 			)
 			.subscribe();
 	}
 
-	deleteProduct(id, index) {
+	deleteItem(id, index) {
 		const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
 			data: { title: 'Delete category', message: 'Are you sure?' },
 			width: '440px',
@@ -157,11 +153,11 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
 			}
 
 			if (res.confirm) {
-				this.productsService.deleteProduct(id).subscribe(
+				this.itemsService.deleteItem(id).subscribe(
 					(response: any) => {
-						const products = [...this.products];
-						products.splice(index, 1);
-						this.products = products;
+						const items = [...this.items];
+						items.splice(index, 1);
+						this.items = items;
 						this.cdr.detectChanges();
 						this.commonService.openSnackBar(response.message);
 					},

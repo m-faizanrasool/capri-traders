@@ -45,10 +45,10 @@ const routes: Routes = [
 					),
 			},
 			{
-				path: 'products',
+				path: 'items',
 				canActivate: [RoleGuard],
 				loadChildren: () =>
-					import('./products/products.module').then((m) => m.ProductsModule),
+					import('./items/items.module').then((m) => m.ItemsModule),
 			},
 			{
 				path: 'sales',

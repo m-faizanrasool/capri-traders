@@ -4,15 +4,15 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { finalize } from 'rxjs/operators';
 import { CommonService } from 'src/app/services/common.service';
-import { ProductsService } from 'src/app/services/products.service';
+import { ItemsService } from 'src/app/services/itens.service';
 
 @Component({
-	selector: 'app-add-product-dialog',
-	templateUrl: './add-product-dialog.component.html',
-	styleUrls: ['./add-product-dialog.component.scss'],
+	selector: 'app-add-item-dialog',
+	templateUrl: './add-item-dialog.component.html',
+	styleUrls: ['./add-item-dialog.component.scss'],
 })
-export class AddProductDialogComponent implements OnInit {
-	product: any = {
+export class AddItemDialogComponent implements OnInit {
+	item: any = {
 		brand_id: '',
 		name: '',
 		description: '',
@@ -23,7 +23,7 @@ export class AddProductDialogComponent implements OnInit {
 		discount: '',
 		order: '',
 	};
-	productForm: FormGroup;
+	itemForm: FormGroup;
 
 	brands: any[];
 	units: any[];
@@ -38,10 +38,10 @@ export class AddProductDialogComponent implements OnInit {
 	croppedImage: any = '';
 
 	constructor(
-		public dialogRef: MatDialogRef<AddProductDialogComponent>,
+		public dialogRef: MatDialogRef<AddItemDialogComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		private fb: FormBuilder,
-		private productsService: ProductsService,
+		private itemsService: ItemsService,
 		private commonService: CommonService
 	) {}
 
@@ -49,39 +49,39 @@ export class AddProductDialogComponent implements OnInit {
 		this.brands = this.data.paramsData.brands;
 		this.units = this.data.paramsData.units;
 
-		if (this.data.product) {
-			this.product = { ...this.data.product };
+		if (this.data.item) {
+			this.item = { ...this.data.item };
 			this.mode = 'edit';
 		}
 		this.viewLoading = false;
 	}
 
 	getTitle(): string {
-		if (this.product.id) {
-			return `Edit Product '${this.product.name}'`;
+		if (this.item.id) {
+			return `Edit Item '${this.item.name}'`;
 		}
 
-		return 'New Product';
+		return 'New Item';
 	}
 
 	fileChangeEvent(event: any): void {
 		this.imageChangedEvent = event;
-		this.product.image = '';
+		this.item.image = '';
 	}
 	imageCropped(event: ImageCroppedEvent) {
-		this.product.image = event.base64;
-		this.product.image_url = event.base64;
+		this.item.image = event.base64;
+		this.item.image_url = event.base64;
 	}
 
 	imageChanged() {
-		this.product.image = '';
+		this.item.image = '';
 	}
 
 	onSubmit() {
 		this.disabled = true;
 		if (this.mode === 'edit') {
-			this.productsService
-				.updateProduct(this.product)
+			this.itemsService
+				.updateItem(this.item)
 				.pipe(finalize(() => (this.disabled = false)))
 				.subscribe(
 					({ message }: any) => {
@@ -93,8 +93,8 @@ export class AddProductDialogComponent implements OnInit {
 					}
 				);
 		} else {
-			this.productsService
-				.addProduct(this.product)
+			this.itemsService
+				.addItem(this.item)
 				.pipe(finalize(() => (this.disabled = false)))
 				.subscribe(
 					({ message }: any) => {

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListComponent } from './list/list.component';
 import { RouterModule } from '@angular/router';
-import { ProductsComponent } from './products.component';
+import { ItemsComponent } from './items.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
@@ -10,7 +10,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { GeneralModule } from 'src/app/_metronic/partials/content/general/general.module';
 import { MatIconModule } from '@angular/material/icon';
-import { AddProductDialogComponent } from './list/add-product-dialog/add-product-dialog.component';
+
+import { AddItemDialogComponent } from './list/add-item-dialog/add-item-dialog.component';
+
 import {
 	MatDialogModule,
 	MAT_DIALOG_DEFAULT_OPTIONS,
@@ -24,7 +26,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
-	declarations: [ListComponent, ProductsComponent, AddProductDialogComponent],
+	declarations: [ListComponent, ItemsComponent, AddItemDialogComponent],
 	imports: [
 		CommonModule,
 		MatButtonModule,
@@ -44,7 +46,7 @@ import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-d
 		RouterModule.forChild([
 			{
 				path: '',
-				component: ProductsComponent,
+				component: ItemsComponent,
 				children: [
 					{
 						path: '',
@@ -70,6 +72,6 @@ import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-d
 			},
 		},
 	],
-	entryComponents: [AddProductDialogComponent, ConfirmationDialogComponent],
+	entryComponents: [AddItemDialogComponent, ConfirmationDialogComponent],
 })
-export class ProductsModule {}
+export class ItemsModule {}
