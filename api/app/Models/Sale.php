@@ -9,7 +9,10 @@ class Sale extends Model
 {
     use HasFactory;
 
-    public function sale_item(){
-        return $this->hasMany(SaleItem::class);
+    protected $guarded = [];
+
+    public function sale_item()
+    {
+        return $this->hasMany(SaleItem::class)->with('item');
     }
 }

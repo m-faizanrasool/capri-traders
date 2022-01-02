@@ -10,6 +10,7 @@ import { ItemQuery, ItemsService } from 'src/app/services/items.service';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { AddItemDialogComponent } from './../items/list/add-item-dialog/add-item-dialog.component';
+import { NgForm } from '@angular/forms';
 
 @Component({
 	selector: 'app-sales',
@@ -32,6 +33,7 @@ export class SalesComponent implements OnInit {
 	pay_statuses: any = [{ name: 'pending' }, { name: 'done' }];
 
 	sale: any = {
+		is_return: false,
 		company_head: '',
 		date: '',
 		bill_no: '',
@@ -88,11 +90,18 @@ export class SalesComponent implements OnInit {
 		this.cdr.detectChanges();
 	}
 
-	onSubmit(form) {
+	onSubmit(form: NgForm, is_return: boolean) {
 		console.log(form);
 
 		if (form.invalid) {
 			return;
+		}
+
+		// Set Sale is return or not
+		if (is_return) {
+			this.sale.is_return = is_return;
+		} else {
+			this.sale.is_return = is_return;
 		}
 
 		console.log('here', this.sale);

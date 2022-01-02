@@ -8,7 +8,7 @@
 		</div>
 	</div>
 	<div>
-		<form class="form" (ngSubmit)="onSubmit(saleForm)" #saleForm="ngForm">
+		<form class="form" #saleForm="ngForm">
 			<!-- Sales Form Start -->
 			<div class="card-body">
 				<div class="card-body-progress">
@@ -342,7 +342,18 @@
 							type="submit"
 							mat-raised-button
 							color="primary"
+							class="mr-3"
 							[disabled]="saleForm.invalid || saleForm.pristine"
+							(click)="onSubmit(saleForm, true)"
+						>
+							Save as Reutrn
+						</button>
+						<button
+							type="submit"
+							mat-raised-button
+							color="primary"
+							[disabled]="saleForm.invalid || saleForm.pristine"
+							(click)="onSubmit(saleForm, false)"
 						>
 							Save
 						</button>

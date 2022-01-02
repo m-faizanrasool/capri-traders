@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sale;
+use App\Models\SaleItem;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -35,6 +37,7 @@ class SaleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            "is_return"=> 'required',
             "bill_no"=> 'required',
             "company_head"=> 'required',
             "date"=> 'required',
@@ -46,6 +49,29 @@ class SaleController extends Controller
             "remarks"=> 'required',
             "sale_items" =>'required'
         ]);
+
+        $Sale = Sale::create(request([
+            "is_return",
+            "bill_no",
+            "company_head",
+            "date",
+            "grn",
+            "party_name",
+            "pay_mode",
+            "pay_status",
+            "po_no",
+            "remarks"
+        ]));
+
+        // create Sale Items
+        foreach ($request->sale_tems as $SaleItem) {
+            $Sale->sale_item()->create([
+                "item_id" => $SaleItem->item->id,
+                "rate" => $SaleItem->item->rate,
+                "unit_id" => $SaleItem->item->unit->id,
+                "unit_quantity" => $SaleItem->item->quantity
+            ]);
+        }
 
         return "here";
     }

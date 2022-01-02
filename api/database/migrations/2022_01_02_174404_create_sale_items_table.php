@@ -17,11 +17,15 @@ class CreateSaleItemsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('item_id');
             $table->unsignedBigInteger('sale_id');
+            $table->unsignedSmallInteger('unit_id');
+            $table->unsignedDecimal('unit_quantity', 10, 2);
+            $table->unsignedDecimal('rate', 10, 2);
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('item_id')->references('id')->on('items');
             $table->foreign('sale_id')->references('id')->on('sales');
+            $table->foreign('unit_id')->references('id')->on('units');
         });
     }
 

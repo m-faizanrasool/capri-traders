@@ -9,6 +9,8 @@ class SaleItem extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function sale()
     {
         return $this->belongsTo(Sale::class);
