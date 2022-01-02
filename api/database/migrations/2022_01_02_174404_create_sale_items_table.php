@@ -15,12 +15,13 @@ class CreateSaleItemsTable extends Migration
     {
         Schema::create('sale_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sale_id')->constrained();
             $table->unsignedBigInteger('item_id');
+            $table->unsignedBigInteger('sale_id');
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('item_id')->references('id')->on('items');
+            $table->foreign('sale_id')->references('id')->on('sales');
         });
     }
 

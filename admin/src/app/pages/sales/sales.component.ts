@@ -1,3 +1,4 @@
+import { SalesService } from './../../services/sales.service';
 import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -32,6 +33,7 @@ export class SalesComponent implements OnInit {
 
 	sale: any = {
 		company_head: '',
+		date: '',
 		bill_no: '',
 		po_no: '',
 		grn: '',
@@ -39,6 +41,7 @@ export class SalesComponent implements OnInit {
 		pay_mode: '',
 		remarks: '',
 		pay_status: '',
+		sale_items: [],
 	};
 
 	selectedItem: any = {
@@ -49,7 +52,6 @@ export class SalesComponent implements OnInit {
 
 	dataSource = new MatTableDataSource([]);
 
-	sale_items: any = [];
 	pageSize = 10;
 	totalItems: number;
 
@@ -68,6 +70,7 @@ export class SalesComponent implements OnInit {
 
 	constructor(
 		private itemsService: ItemsService,
+		private salesService: SalesService,
 		private commonService: CommonService,
 		private cdr: ChangeDetectorRef,
 		public dialog: MatDialog
@@ -85,8 +88,17 @@ export class SalesComponent implements OnInit {
 		this.cdr.detectChanges();
 	}
 
-	onSubmit() {
+	onSubmit(form) {
+		console.log(form);
+
+		if (form.invalid) {
+			return;
+		}
+
 		console.log('here', this.sale);
+		this.salesService.addSale(this.sale).subscribe((response) => {
+			console.log(response);
+		});
 	}
 
 	addItem() {
@@ -111,9 +123,9 @@ export class SalesComponent implements OnInit {
 			item.rate = this.selectedItem.rate;
 			item.quantity = this.selectedItem.quantity;
 
-			this.sale_items.push(JSON.parse(JSON.stringify(item)));
+			this.sale.sale_items.push(JSON.parse(JSON.stringify(item)));
 			// Refreshing Data Source
-			this.dataSource.data = this.sale_items;
+			this.dataSource.data = this.sale.sale_items;
 			this.cdr.detectChanges();
 			this.loaded = true;
 		} else {
@@ -122,8 +134,8 @@ export class SalesComponent implements OnInit {
 	}
 
 	removeFromSaleItems(index) {
-		this.sale_items.splice(index, 1);
-		this.dataSource.data = this.sale_items;
+		this.sale.sale_items.splice(index, 1);
+		this.dataSource.data = this.sale.sale_items;
 	}
 
 	editSaleItemsItem(Item, index) {
@@ -138,16 +150,11 @@ export class SalesComponent implements OnInit {
 				return;
 			}
 
-			this.sale_items[res.index].quantity = res.item.quantity;
-			this.sale_items[res.index].rate = res.item.rate;
+			this.sale.sale_items[res.index].quantity = res.item.quantity;
+			this.sale.sale_items[res.index].rate = res.item.rate;
 
-			this.dataSource.data = this.sale_items;
+			this.dataSource.data = this.sale.sale_items;
 			this.cdr.detectChanges();
 		});
-	}
-
-	save() {
-		console.log(this.sale);
-		console.log(this.sale_items);
 	}
 }

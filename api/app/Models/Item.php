@@ -62,4 +62,9 @@ class Item extends Model
     {
         return $this->belongsTo(Unit::class);
     }
+
+    public function sale_item()
+    {
+        return $this->hasMany(SaleItem::class);
+    }
 }

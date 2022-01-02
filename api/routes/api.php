@@ -47,10 +47,11 @@ Route::middleware(['auth:sanctum', PhoneFormat::class])->group(function () {
     Route::get('authenticated-user', 'App\Http\Controllers\UserController@authenticated');
     Route::patch('users', 'App\Http\Controllers\UserController@update');
 
-    Route::post('items/toggle-visibility', 'App\Http\Controllers\ProductController@toggleVisibility');
+    Route::post('items/toggle-visibility', 'App\Http\Controllers\ItemController@toggleVisibility');
 
     Route::resources([
-        'items' => 'App\Http\Controllers\ProductController',
+        'items' => 'App\Http\Controllers\ItemController',
         'users' => 'App\Http\Controllers\UserController',
+        'sales' =>  'App\Http\Controllers\SalesController',
     ]);
 });

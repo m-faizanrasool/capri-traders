@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Brand;
+use App\Models\Item;
 use App\Models\Unit;
 use App\Models\Role;
 
-class ProductController extends Controller
+class ItemController extends Controller
 {
     private function _related()
     {
@@ -33,9 +34,9 @@ class ProductController extends Controller
             "unit_quantity" => 'required',
         ]);
 
-        $Product = Product::create(request(['brand_id', 'unit_id', 'name', 'image', 'description', 'unit_quantity', 'purchase_price', 'sale_price', 'discount']));
+        $Item = Item::create(request(['brand_id', 'unit_id', 'name', 'image', 'description', 'unit_quantity', 'purchase_price', 'sale_price', 'discount']));
 
-        return response()->json(["message" => 'Product Added Successfully!']);
+        return response()->json(["message" => 'Item Added Successfully!']);
     }
 
     public function update(Request $request, $id)
@@ -47,27 +48,27 @@ class ProductController extends Controller
             "unit_quantity" => 'required',
         ]);
 
-        $Product = Product::find($id);
-        $Product->fill(request(['brand_id', 'unit_id', 'name', 'description', 'unit_quantity', 'purchase_price', 'sale_price', 'discount', 'is_visible']));
+        $Item = Item::find($id);
+        $Item->fill(request(['brand_id', 'unit_id', 'name', 'description', 'unit_quantity', 'purchase_price', 'sale_price', 'discount', 'is_visible']));
         if ($request->image) {
-            $Product->image = $request->image;
+            $Item->image = $request->image;
         }
 
-        $Product->save();
+        $Item->save();
 
-        return response()->json(["message" => 'Product Updated Successfully!']);
+        return response()->json(["message" => 'Item Updated Successfully!']);
     }
 
     public function toggleVisibility(Request $request)
     {
-        $product = Product::find($request->id);
-        $product->is_visible = !$product->is_visible;
-        $product->save();
+        $item = Item::find($request->id);
+        $item->is_visible = !$item->is_visible;
+        $item->save();
     }
 
     public function destroy($id)
     {
-        Product::find($id)->delete();
-        return response()->json(["message" => 'Product Deleted Successfully!']);
+        Item::find($id)->delete();
+        return response()->json(["message" => 'Item Deleted Successfully!']);
     }
 }
