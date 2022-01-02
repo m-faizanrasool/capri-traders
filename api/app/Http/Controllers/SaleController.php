@@ -64,16 +64,16 @@ class SaleController extends Controller
         ]));
 
         // create Sale Items
-        foreach ($request->sale_tems as $SaleItem) {
+        foreach ($request->sale_items as $SaleItem) {
             $Sale->sale_item()->create([
-                "item_id" => $SaleItem->item->id,
-                "rate" => $SaleItem->item->rate,
-                "unit_id" => $SaleItem->item->unit->id,
-                "unit_quantity" => $SaleItem->item->quantity
+                "item_id" => $SaleItem['id'],
+                "rate" => $SaleItem['rate'],
+                "unit_id" => $SaleItem['unit_id'],
+                "unit_quantity" => $SaleItem['quantity']
             ]);
         }
 
-        return "here";
+        return response()->json(["message" => 'Saved Successfully!']);
     }
 
     /**

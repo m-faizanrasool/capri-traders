@@ -17,7 +17,7 @@ class CreateSalesTable extends Migration
             $table->id();
             $table->boolean('is_return')->nullable()->default(false);
             $table->string('company_head');
-            $table->date('date');
+            $table->dateTime('date');
             $table->integer('bill_no');
             $table->integer('po_no');
             $table->integer('grn');
