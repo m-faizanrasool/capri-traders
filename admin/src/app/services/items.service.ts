@@ -14,6 +14,8 @@ export class ItemsService {
 			fromObject: queryParams,
 		}).toString();
 
+		console.log(queryParamsString);
+
 		return this.httpClient.get(
 			environment.apiUrl + 'filtered-items?' + queryParamsString
 		);
