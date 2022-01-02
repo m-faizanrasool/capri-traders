@@ -13,7 +13,7 @@ import { debounceTime, finalize, startWith, switchMap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
 import { CommonService } from 'src/app/services/common.service';
-import { ItemQuery, ItemsService } from 'src/app/services/itens.service';
+import { ItemQuery, ItemsService } from 'src/app/services/items.service';
 import { ConfirmationDialogComponent } from '../../_sharedComponents/confirmation-dialog/confirmation-dialog.component';
 import { AddItemDialogComponent } from './add-item-dialog/add-item-dialog.component';
 @Component({

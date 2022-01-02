@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { EditComponent } from './edit/edit.component';
 import { CommonService } from 'src/app/services/common.service';
-import { ItemQuery, ItemsService } from 'src/app/services/itens.service';
+import { ItemQuery, ItemsService } from 'src/app/services/items.service';
 
 import { MatTableDataSource } from '@angular/material/table';
 

@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { finalize } from 'rxjs/operators';
 import { CommonService } from 'src/app/services/common.service';
-import { ItemsService } from 'src/app/services/itens.service';
+import { ItemsService } from 'src/app/services/items.service';
 
 @Component({
 	selector: 'app-add-item-dialog',
