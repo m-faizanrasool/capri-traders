@@ -22,9 +22,9 @@ class CreateSalesTable extends Migration
             $table->integer('po_no');
             $table->integer('grn');
             $table->string('party_name');
-            $table->string('pay_mode');
+            $table->enum('pay_mode', ['CHECK', 'CASH'])->index();
+            $table->enum('pay_status', ['PENDING', 'DONE'])->index();
             $table->string('remarks')->nullable();
-            $table->string('pay_status');
             $table->timestamps();
             $table->softDeletes();
         });
