@@ -11,6 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { AddItemDialogComponent } from './../items/list/add-item-dialog/add-item-dialog.component';
 import { NgForm } from '@angular/forms';
+import { CompanyHeadsService } from 'src/app/services/company-head.service';
 
 @Component({
 	selector: 'app-sales',
@@ -21,11 +22,7 @@ export class SalesComponent implements OnInit {
 	itemData: any;
 	queryParams: ItemQuery;
 
-	company_heads: any = [
-		{ id: 1, name: 'Capri Traders' },
-		{ id: 2, name: 'Capri Traders2' },
-		{ id: 3, name: 'Capri Traders3' },
-	];
+	company_heads: any = [];
 
 	items: any = [];
 
@@ -34,7 +31,7 @@ export class SalesComponent implements OnInit {
 
 	sale: any = {
 		is_return: false,
-		company_head: '',
+		company_head_id: '',
 		date: '',
 		bill_no: '',
 		po_no: '',
@@ -73,6 +70,7 @@ export class SalesComponent implements OnInit {
 	constructor(
 		private itemsService: ItemsService,
 		private salesService: SalesService,
+		private companyHeadsService: CompanyHeadsService,
 		private commonService: CommonService,
 		private cdr: ChangeDetectorRef,
 		public dialog: MatDialog
@@ -83,6 +81,12 @@ export class SalesComponent implements OnInit {
 			this.itemData = response;
 		});
 		this.itemsService.getAllItems().subscribe(this.handleResponse.bind(this));
+
+		this.companyHeadsService.getAllCompanyHeads().subscribe((response) => {
+			console.log(response);
+
+			this.company_heads = response.company_heads;
+		});
 	}
 	handleResponse(response: any) {
 		this.items = response.items;

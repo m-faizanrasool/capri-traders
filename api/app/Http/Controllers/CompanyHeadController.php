@@ -14,7 +14,9 @@ class CompanyHeadController extends Controller
      */
     public function index()
     {
-        //
+        $company_heads = CompanyHead::all();
+
+        return compact('company_heads');
     }
 
     /**

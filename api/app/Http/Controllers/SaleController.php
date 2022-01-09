@@ -39,7 +39,7 @@ class SaleController extends Controller
         $request->validate([
             "is_return"=> 'required',
             "bill_no"=> 'required',
-            "company_head"=> 'required',
+            "company_head_id"=> 'required',
             "date"=> 'required',
             "grn"=> 'required',
             "party_name"=> 'required',
@@ -53,7 +53,7 @@ class SaleController extends Controller
         $Sale = Sale::create(request([
             "is_return",
             "bill_no",
-            "company_head",
+            "company_head_id",
             "date",
             "grn",
             "party_name",
@@ -64,12 +64,12 @@ class SaleController extends Controller
         ]));
 
         // create Sale Items
-        foreach ($request->sale_items as $SaleItem) {
+        foreach ($request->sale_items as $sale_item) {
             $Sale->sale_item()->create([
-                "item_id" => $SaleItem['id'],
-                "rate" => $SaleItem['rate'],
-                "unit_id" => $SaleItem['unit_id'],
-                "unit_quantity" => $SaleItem['quantity']
+                "item_id" => $sale_item['id'],
+                "rate" => $sale_item['rate'],
+                "unit_id" => $sale_item['unit_id'],
+                "unit_quantity" => $sale_item['quantity']
             ]);
         }
 

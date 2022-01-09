@@ -53,5 +53,6 @@ Route::middleware(['auth:sanctum', PhoneFormat::class])->group(function () {
         'items' => 'App\Http\Controllers\ItemController',
         'users' => 'App\Http\Controllers\UserController',
         'sales' =>  'App\Http\Controllers\SaleController',
+        'company-heads' =>  'App\Http\Controllers\CompanyHeadController',
     ]);
 });
