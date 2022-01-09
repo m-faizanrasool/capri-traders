@@ -16,8 +16,8 @@ class CreateSalesTable extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->boolean('is_return')->nullable()->default(false);
-            $table->string('company_head');
-            $table->dateTime('date');
+            $table->unsignedBigInteger('company_head_id');
+            $table->timestamp('date');
             $table->integer('bill_no');
             $table->integer('po_no');
             $table->integer('grn');
@@ -27,6 +27,8 @@ class CreateSalesTable extends Migration
             $table->string('remarks')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('company_head_id')->references('id')->on('company_heads');
         });
     }
 
