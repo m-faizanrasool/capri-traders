@@ -29,8 +29,8 @@ export class SalesComponent implements OnInit {
 
 	items: any = [];
 
-	pay_modes: any = [{ name: 'credit' }, { name: 'cash' }];
-	pay_statuses: any = [{ name: 'pending' }, { name: 'done' }];
+	pay_modes: any = [{ name: 'CREDIT' }, { name: 'CASH' }];
+	pay_statuses: any = [{ name: 'PENDING' }, { name: 'DONE' }];
 
 	sale: any = {
 		is_return: false,
