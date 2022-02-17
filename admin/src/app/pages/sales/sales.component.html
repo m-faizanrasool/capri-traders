@@ -46,7 +46,12 @@
 								placeholder="Date"
 								name="date"
 								[(ngModel)]="sale.date"
+								rewuired
 							/>
+							<mat-error>
+								Date is
+								<strong>required</strong>
+							</mat-error>
 						</mat-form-field>
 					</div>
 
@@ -58,7 +63,12 @@
 								placeholder="Bill/Ref#"
 								name="bill_no"
 								[(ngModel)]="sale.bill_no"
+								required
 							/>
+							<mat-error>
+								Bill no is
+								<strong>required</strong>
+							</mat-error>
 						</mat-form-field>
 					</div>
 
@@ -70,7 +80,12 @@
 								placeholder="PO#"
 								name="po_no"
 								[(ngModel)]="sale.po_no"
+								required
 							/>
+							<mat-error>
+								PO# is
+								<strong>required</strong>
+							</mat-error>
 						</mat-form-field>
 					</div>
 
@@ -82,7 +97,12 @@
 								placeholder="GRN"
 								name="grn"
 								[(ngModel)]="sale.grn"
+								required
 							/>
+							<mat-error>
+								GRN is
+								<strong>required</strong>
+							</mat-error>
 						</mat-form-field>
 					</div>
 				</div>
@@ -96,6 +116,7 @@
 								placeholder="Party Name"
 								name="sale.party_name"
 								[(ngModel)]="sale.party_name"
+								required
 							/>
 							<mat-error>
 								Party Name is

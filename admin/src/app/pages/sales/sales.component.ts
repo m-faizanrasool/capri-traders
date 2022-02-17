@@ -31,15 +31,15 @@ export class SalesComponent implements OnInit {
 
 	sale: any = {
 		is_return: false,
-		company_head_id: '',
-		date: '',
-		bill_no: '',
-		po_no: '',
-		grn: '',
-		party_name: '',
-		pay_mode: '',
-		remarks: '',
-		pay_status: '',
+		company_head_id: 1,
+		date: '2012-04-12',
+		bill_no: 123,
+		po_no: 123,
+		grn: 123,
+		party_name: 'test',
+		pay_mode: 'CASH',
+		remarks: 'testing',
+		pay_status: 'PENDING',
 		sale_items: [],
 	};
 
@@ -82,9 +82,7 @@ export class SalesComponent implements OnInit {
 		});
 		this.itemsService.getAllItems().subscribe(this.handleResponse.bind(this));
 
-		this.companyHeadsService.getAllCompanyHeads().subscribe((response) => {
-			console.log(response);
-
+		this.companyHeadsService.getAllCompanyHeads().subscribe((response: any) => {
 			this.company_heads = response.company_heads;
 		});
 	}
@@ -102,11 +100,7 @@ export class SalesComponent implements OnInit {
 		}
 
 		// Set Sale is return or not
-		if (is_return) {
-			this.sale.is_return = is_return;
-		} else {
-			this.sale.is_return = is_return;
-		}
+		this.sale.is_return = is_return;
 
 		console.log('here', this.sale);
 		this.salesService.addSale(this.sale).subscribe((response) => {
@@ -141,8 +135,6 @@ export class SalesComponent implements OnInit {
 			this.dataSource.data = this.sale.sale_items;
 			this.cdr.detectChanges();
 			this.loaded = true;
-		} else {
-			return;
 		}
 	}
 

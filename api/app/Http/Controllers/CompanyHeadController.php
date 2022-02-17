@@ -16,7 +16,7 @@ class CompanyHeadController extends Controller
     {
         $company_heads = CompanyHead::all();
 
-        return compact('company_heads');
+        return response()->json(compact('company_heads'));
     }
 
     /**
