@@ -17,11 +17,11 @@ class CreateSalesTable extends Migration
             $table->id();
             $table->boolean('is_return')->nullable()->default(false);
             $table->unsignedBigInteger('company_head_id');
-            $table->timestamp('date');
-            $table->integer('bill_no');
+            $table->timestamp('date')->index();
+            $table->integer('bill_no')->index();
             $table->integer('po_no');
             $table->integer('grn');
-            $table->string('party_name');
+            $table->string('party_name')->index();
             $table->enum('pay_mode', ['CREDIT', 'CASH'])->index();
             $table->enum('pay_status', ['PENDING', 'DONE'])->index();
             $table->string('remarks')->nullable();
