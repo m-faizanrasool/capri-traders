@@ -19,14 +19,6 @@ export const DynamicAsideMenuConfig = {
 		},
 		{ section: 'Lists' },
 		{
-			title: 'Banners',
-			root: true,
-			show: false,
-			icon: 'flaticon2-world',
-			page: '/banners',
-			svg: './assets/media/svg/icons/Design/Line.svg',
-		},
-		{
 			title: 'Users',
 			root: true,
 			show: false,
@@ -41,14 +33,6 @@ export const DynamicAsideMenuConfig = {
 			icon: 'flaticon2-world',
 			page: '/brands',
 			svg: './assets/media/svg/icons/Design/Interselect.svg',
-		},
-		{
-			title: 'Categories',
-			root: true,
-			show: false,
-			icon: 'flaticon2-world',
-			page: '/categories',
-			svg: './assets/media/svg/icons/Files/Group-folders.svg',
 		},
 		{
 			title: 'Items',
@@ -82,14 +66,6 @@ export const DynamicAsideMenuConfig = {
 			icon: 'flaticon2-world',
 			page: '/ledger',
 			svg: './assets/media/svg/icons/Files/Folder.svg',
-		},
-		{
-			title: 'Orders',
-			root: true,
-			show: false,
-			icon: 'flaticon2-world',
-			page: '/orders',
-			svg: './assets/media/svg/icons/Shopping/Cart1.svg',
 		},
 	],
 };

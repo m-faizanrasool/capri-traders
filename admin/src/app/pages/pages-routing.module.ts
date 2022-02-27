@@ -19,12 +19,6 @@ const routes: Routes = [
 					import('./builder/builder.module').then((m) => m.BuilderModule),
 			},
 			{
-				path: 'banners',
-				canActivate: [RoleGuard],
-				loadChildren: () =>
-					import('./banners/banners.module').then((m) => m.BannersModule),
-			},
-			{
 				path: 'users',
 				canActivate: [RoleGuard],
 				loadChildren: () =>
@@ -35,14 +29,6 @@ const routes: Routes = [
 				canActivate: [RoleGuard],
 				loadChildren: () =>
 					import('./brands/brands.module').then((m) => m.BrandsModule),
-			},
-			{
-				path: 'categories',
-				canActivate: [RoleGuard],
-				loadChildren: () =>
-					import('./categories/categories.module').then(
-						(m) => m.CategoriesModule
-					),
 			},
 			{
 				path: 'items',
@@ -67,12 +53,6 @@ const routes: Routes = [
 				canActivate: [RoleGuard],
 				loadChildren: () =>
 					import('./ledger/ledger.module').then((m) => m.LedgerModule),
-			},
-			{
-				path: 'orders',
-				canActivate: [RoleGuard],
-				loadChildren: () =>
-					import('./orders/orders.module').then((m) => m.OrdersModule),
 			},
 			{
 				path: '',
