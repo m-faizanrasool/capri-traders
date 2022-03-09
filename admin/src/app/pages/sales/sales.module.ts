@@ -21,6 +21,7 @@ import { MatInputModule } from '@angular/material/input';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-dialog/confirmation-dialog.component';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
 	declarations: [SalesComponent, EditComponent],
@@ -38,6 +39,7 @@ import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-d
 		MatButtonModule,
 		MatSelectModule,
 		MatInputModule,
+		MatSortModule,
 		NgSelectModule,
 		RouterModule.forChild([
 			{

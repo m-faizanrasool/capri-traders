@@ -12,6 +12,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AddItemDialogComponent } from './../items/list/add-item-dialog/add-item-dialog.component';
 import { NgForm } from '@angular/forms';
 import { CompanyHeadsService } from 'src/app/services/company-head.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
 	selector: 'app-sales',
@@ -64,6 +66,9 @@ export class SalesComponent implements OnInit {
 		'image',
 		'actions',
 	];
+
+	@ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+	@ViewChild(MatSort) sort: MatSort;
 
 	loaded: boolean = false;
 
@@ -131,8 +136,11 @@ export class SalesComponent implements OnInit {
 			item.quantity = this.selectedItem.quantity;
 
 			this.sale.sale_items.push(JSON.parse(JSON.stringify(item)));
-			// Refreshing Data Source
-			this.dataSource.data = this.sale.sale_items;
+
+			this.refreshDataSource();
+			this.cdr.detectChanges();
+
+			this.totalItems = this.sale.sale_items.length;
 			this.cdr.detectChanges();
 			this.loaded = true;
 		}
@@ -140,7 +148,14 @@ export class SalesComponent implements OnInit {
 
 	removeFromSaleItems(index) {
 		this.sale.sale_items.splice(index, 1);
-		this.dataSource.data = this.sale.sale_items;
+		this.refreshDataSource();
+		this.cdr.detectChanges();
+	}
+
+	refreshDataSource() {
+		this.dataSource = new MatTableDataSource(this.sale.sale_items);
+		this.dataSource.paginator = this.paginator;
+		this.dataSource.sort = this.sort;
 	}
 
 	editSaleItemsItem(Item, index) {
