@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
-use App\Models\SaleItem;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -42,7 +41,7 @@ class SaleController extends Controller
             "company_head_id"=> 'required',
             "date"=> 'required',
             "grn"=> 'required',
-            "party_name"=> 'required',
+            "party_id"=> 'required',
             "pay_mode"=> 'required',
             "pay_status"=> 'required',
             "po_no"=> 'required',
@@ -56,7 +55,7 @@ class SaleController extends Controller
             "company_head_id",
             "date",
             "grn",
-            "party_name",
+            "party_id",
             "pay_mode",
             "pay_status",
             "po_no",

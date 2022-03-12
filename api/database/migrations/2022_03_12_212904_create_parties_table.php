@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCompanyHeadsTable extends Migration
+class CreatePartiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCompanyHeadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('company_heads', function (Blueprint $table) {
+        Schema::create('parties', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->string('name');
             $table->timestamps();
@@ -28,6 +28,6 @@ class CreateCompanyHeadsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('company_heads');
+        Schema::dropIfExists('parties');
     }
 }

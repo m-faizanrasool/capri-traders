@@ -12,6 +12,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AddItemDialogComponent } from './../items/list/add-item-dialog/add-item-dialog.component';
 import { NgForm } from '@angular/forms';
 import { CompanyHeadsService } from 'src/app/services/company-head.service';
+import { PartiesService } from 'src/app/services/parties.service';
+
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
@@ -25,6 +27,7 @@ export class SalesComponent implements OnInit {
 	queryParams: ItemQuery;
 
 	company_heads: any = [];
+	parties: any = [];
 
 	items: any = [];
 
@@ -38,7 +41,7 @@ export class SalesComponent implements OnInit {
 		bill_no: 123,
 		po_no: 123,
 		grn: 123,
-		party_name: 'test',
+		party_id: 1,
 		pay_mode: 'CASH',
 		remarks: 'testing',
 		pay_status: 'PENDING',
@@ -76,6 +79,7 @@ export class SalesComponent implements OnInit {
 		private itemsService: ItemsService,
 		private salesService: SalesService,
 		private companyHeadsService: CompanyHeadsService,
+		private partiesService: PartiesService,
 		private commonService: CommonService,
 		private cdr: ChangeDetectorRef,
 		public dialog: MatDialog
@@ -89,6 +93,10 @@ export class SalesComponent implements OnInit {
 
 		this.companyHeadsService.getAllCompanyHeads().subscribe((response: any) => {
 			this.company_heads = response.company_heads;
+		});
+
+		this.partiesService.getAllParties().subscribe((response: any) => {
+			this.parties = response.parties;
 		});
 	}
 	handleResponse(response: any) {

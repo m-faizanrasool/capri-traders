@@ -109,17 +109,22 @@
 
 				<div class="form-group row">
 					<div class="col-lg-4 kt-margin-bottom-20-mobile">
-						<mat-form-field class="mat-form-field-fluid">
-							<input
-								matInput
-								type="text"
-								placeholder="Party Name"
-								name="sale.party_name"
-								[(ngModel)]="sale.party_name"
+					<mat-form-field class="mat-form-field-fluid">
+							<mat-select
+								placeholder="Party"
+								name="party_id"
+								[(ngModel)]="sale.party_id"
 								required
-							/>
+							>
+								<mat-option
+									*ngFor="let party of parties"
+									[value]="party.id"
+								>
+									{{ party.name }}
+								</mat-option>
+							</mat-select>
 							<mat-error>
-								Party Name is
+								Company Head is
 								<strong>required</strong>
 							</mat-error>
 						</mat-form-field>
