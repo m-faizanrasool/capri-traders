@@ -7,6 +7,7 @@
 			<div class="form-group">
 				<label>Quantity:</label>
 				<input
+					type="number"
 					class="form-control"
 					placeholder="Quantity"
 					[(ngModel)]="item.quantity"
@@ -18,6 +19,7 @@
 			<div class="form-group">
 				<label>Rate:</label>
 				<input
+					type="number"
 					class="form-control"
 					placeholder="Rate"
 					[(ngModel)]="item.rate"
@@ -29,18 +31,20 @@
 			<div class="form-group">
 				<label>Description:</label>
 				<input
+					type="text"
 					class="form-control"
 					placeholder="Description"
 					[(ngModel)]="item.description"
-					name="rate"
+					name="description"
 					required
 				/>
 			</div>
 		</div>
 		<div class="card-footer">
 			<button type="button" mat-raised-button mat-dialog-close cdkFocusInitial>
-				Cancel</button
-			>&nbsp;
+				Cancel
+			</button>
+			&nbsp;
 			<button
 				type="submit"
 				color="primary"

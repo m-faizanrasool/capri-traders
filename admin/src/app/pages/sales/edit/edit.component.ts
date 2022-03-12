@@ -9,7 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class EditComponent implements OnInit {
 	title: string;
 	mode: string;
-	item = { quantity: '', rate: '', description: '', id: '' };
+	item = { quantity: 0, rate: 0, description: '', id: '' };
 	index: any;
 	constructor(
 		public dialogRef: MatDialogRef<EditComponent>,
