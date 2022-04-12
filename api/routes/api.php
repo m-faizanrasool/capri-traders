@@ -33,7 +33,8 @@ Route::middleware(PhoneFormat::class)->prefix('otp')->group(function () {
     });
 });
 
-Route::get('filtered-products', 'App\Http\Controllers\SharedController@products');
+Route::get('filtered-items', 'App\Http\Controllers\SharedController@items');
+Route::get('all-items', 'App\Http\Controllers\SharedController@allItems');
 Route::get('cart', 'App\Http\Controllers\CartController@index');
 
 Route::middleware(PhoneFormat::class)->post('users/reset-password', 'App\Http\Controllers\UserController@resetPassword');
@@ -46,10 +47,13 @@ Route::middleware(['auth:sanctum', PhoneFormat::class])->group(function () {
     Route::get('authenticated-user', 'App\Http\Controllers\UserController@authenticated');
     Route::patch('users', 'App\Http\Controllers\UserController@update');
 
-    Route::post('products/toggle-visibility', 'App\Http\Controllers\ProductController@toggleVisibility');
+    Route::post('items/toggle-visibility', 'App\Http\Controllers\ItemController@toggleVisibility');
 
     Route::resources([
-        'products' => 'App\Http\Controllers\ProductController',
+        'items' => 'App\Http\Controllers\ItemController',
         'users' => 'App\Http\Controllers\UserController',
+        'sales' =>  'App\Http\Controllers\SaleController',
+        'company-heads' =>  'App\Http\Controllers\CompanyHeadController',
+        'parties' =>  'App\Http\Controllers\PartyController',
     ]);
 });

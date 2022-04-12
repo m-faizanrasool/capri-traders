@@ -19,9 +19,9 @@ class UserSeeder extends Seeder
             "role_id" => 1,
             "is_super_admin" => 1,
             "name" => 'Developer',
-            "email" => 'developer@capri.com',
+            "email" => 'faizan@capri.com',
             "phone" => '+923016336171',
-            "password" => 'admin',
+            "password" => 'boss',
         ]);
 
         User::create([

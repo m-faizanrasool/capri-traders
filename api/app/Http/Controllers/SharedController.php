@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
-use App\Models\Product;
+use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class SharedController extends Controller
 {
-    public function products(Request $request)
+    public function items(Request $request)
     {
         $User = $request->user('sanctum');
-        $products = Product::with(['brand', 'unit']);
+        $items = Item::with(['brand', 'unit']);
 
-        $products->where(function ($q) use ($request) {
+        $items->where(function ($q) use ($request) {
             if ($request->brands) {
                 $q->orWhereIn('brand_id', explode(",", $request->brands));
             }
@@ -22,7 +22,7 @@ class SharedController extends Controller
 
         if ($request->search) {
             $search = $request->search;
-            $products->where(function ($q) use ($search) {
+            $items->where(function ($q) use ($search) {
                 $q->where('name', 'LIKE', '%' . $search . '%');
                 $q->orWhereHas('brand', function ($q) use ($search) {
                     $q->where('name', 'LIKE', '%' . $search . '%');
@@ -30,11 +30,17 @@ class SharedController extends Controller
             });
         }
 
-        $total = $products->count();
+        $total = $items->count();
         $items_per_page = $request->items_per_page ?? 3;
-        $products = $products->offset($request->page_index * $items_per_page)->limit($items_per_page)->orderByRaw('-`created_at` DESC')->get();
+        $items = $items->offset($request->page_index * $items_per_page)->limit($items_per_page)->orderByRaw('-`created_at` DESC')->get();
 
 
-        return response()->json(compact('products', 'total'));
+        return response()->json(compact('items', 'total'));
+    }
+
+    public function allItems()
+    {
+        $items = Item::with(['brand', 'unit'])->get();
+        return response()->json(compact('items'));
     }
 }

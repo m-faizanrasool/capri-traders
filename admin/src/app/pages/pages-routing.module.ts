@@ -19,12 +19,6 @@ const routes: Routes = [
 					import('./builder/builder.module').then((m) => m.BuilderModule),
 			},
 			{
-				path: 'banners',
-				canActivate: [RoleGuard],
-				loadChildren: () =>
-					import('./banners/banners.module').then((m) => m.BannersModule),
-			},
-			{
 				path: 'users',
 				canActivate: [RoleGuard],
 				loadChildren: () =>
@@ -37,18 +31,10 @@ const routes: Routes = [
 					import('./brands/brands.module').then((m) => m.BrandsModule),
 			},
 			{
-				path: 'categories',
+				path: 'items',
 				canActivate: [RoleGuard],
 				loadChildren: () =>
-					import('./categories/categories.module').then(
-						(m) => m.CategoriesModule
-					),
-			},
-			{
-				path: 'products',
-				canActivate: [RoleGuard],
-				loadChildren: () =>
-					import('./products/products.module').then((m) => m.ProductsModule),
+					import('./items/items.module').then((m) => m.ItemsModule),
 			},
 			{
 				path: 'sales',
@@ -63,10 +49,10 @@ const routes: Routes = [
 					import('./purchases/purchases.module').then((m) => m.PurchasesModule),
 			},
 			{
-				path: 'orders',
+				path: 'ledger',
 				canActivate: [RoleGuard],
 				loadChildren: () =>
-					import('./orders/orders.module').then((m) => m.OrdersModule),
+					import('./ledger/ledger.module').then((m) => m.LedgerModule),
 			},
 			{
 				path: '',

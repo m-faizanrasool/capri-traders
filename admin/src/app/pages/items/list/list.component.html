@@ -1,0 +1,143 @@
+<div class="card card-custom">
+	<div class="card-header">
+		<div class="card-title">
+			<h3>Items</h3>
+		</div>
+		<div class="card-toolbar">
+			<button class="btn btn-primary" (click)="addItem()" [disabled]="!loaded">
+				Add Item
+			</button>
+		</div>
+	</div>
+	<div class="card-body">
+		<!-- start::FILTERS & GROUP ACTIONS -->
+		<div class="form mb-3">
+			<!-- start::FILTERS -->
+			<div class="form-filtration">
+				<div class="row align-items-center">
+					<div class="col-lg-3 kt-margin-bottom-10-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input
+								matInput
+								placeholder="Search Items"
+								[formControl]="search"
+							/>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end::FILTERS & GROUP ACTIONS -->
+		<div class="mat-table-wrapper">
+			<mat-table #table [dataSource]="items">
+				<!--- Note that these columns can be defined in any order.
+				The actual rendered columns are set as a property on the row definition" -->
+				<!-- Name Column -->
+				<ng-container matColumnDef="name">
+					<mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+					<mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="brand">
+					<mat-header-cell *matHeaderCellDef> Brand </mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						{{ element.brand ? element.brand.name : '' }}
+					</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="quantity">
+					<mat-header-cell *matHeaderCellDef> Quantity </mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						{{ element.unit_quantity }} {{ element.unit.abbr }}
+					</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="purchase_price">
+					<mat-header-cell *matHeaderCellDef> Purchase Price </mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						{{ element.purchase_price }}
+					</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="sale_price">
+					<mat-header-cell *matHeaderCellDef> Sale Price </mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						{{ element.sale_price }}
+					</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="discount">
+					<mat-header-cell *matHeaderCellDef> Discount </mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						{{ element.discount }}
+					</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="description">
+					<mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						{{ element.description }}
+					</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="image">
+					<mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						<img [src]="element.image_url" class="img-fluid w-75" />
+					</mat-cell>
+				</ng-container>
+				<!-- Actions Column -->
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+					<mat-cell *matCellDef="let item; let index = index">
+						<button mat-icon-button color="primary" (click)="editItem(item)">
+							<mat-icon>create</mat-icon></button
+						>&nbsp;
+						<button
+							mat-icon-button
+							color="warn"
+							type="button"
+							(click)="deleteItem(item.id, index)"
+						>
+							<mat-icon>delete</mat-icon>
+						</button>
+						<button
+							mat-icon-button
+							[color]="item.is_visible ? 'primary' : 'light'"
+							type="button"
+							(click)="toggleVisiblity(item)"
+							[disabled]="item.disabled"
+						>
+							<mat-icon *ngIf="item.is_visible">visibility</mat-icon>
+							<mat-icon *ngIf="!item.is_visible">visibility_off</mat-icon>
+						</button>
+					</mat-cell>
+				</ng-container>
+				<!-- Symbol Column -->
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+
+			<!-- Message for empty data  -->
+			<div class="mat-table-message" *ngIf="loaded && items.length == 0">
+				No records found
+			</div>
+			<div class="mat-table-message" *ngIf="!loaded && !items.length">
+				Please wait....
+			</div>
+		</div>
+
+		<!-- start: BOTTOM -->
+		<div class="mat-table-bottom">
+			<!-- MATERIAL SPINNER | Url: 'https://material.angular.io/components/progress-spinner/overview' -->
+			<mat-spinner [diameter]="20" *ngIf="!loaded"></mat-spinner>
+			<!-- MATERIAL PAGINATOR | Binded to dasources -->
+			<!-- See off.documentations 'https://material.angular.io/components/paginator/overview' -->
+			<mat-paginator
+				[pageSize]="pageSize"
+				[showFirstLastButtons]="true"
+				[length]="totalItems"
+			></mat-paginator>
+		</div>
+	</div>
+</div>
