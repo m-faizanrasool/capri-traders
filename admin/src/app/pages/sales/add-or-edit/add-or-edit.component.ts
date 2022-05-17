@@ -187,9 +187,9 @@ export class AddOrEditComponent implements OnInit {
 		this.dataSource.sort = this.sort;
 	}
 
-	editSaleItemsItem(Item, index) {
+	editSaleItemsItem(sale_item, index) {
 		const dialogRef = this.dialog.open(EditComponent, {
-			data: { item: Item, index: index },
+			data: { sale_item, index: index },
 			width: '440px',
 			disableClose: true,
 		});
@@ -199,8 +199,9 @@ export class AddOrEditComponent implements OnInit {
 				return;
 			}
 
-			this.sale.sale_items[res.index].quantity = res.item.quantity;
-			this.sale.sale_items[res.index].rate = res.item.rate;
+			this.sale.sale_items[res.index].unit_quantity =
+				res.sale_item.unit_quantity;
+			this.sale.sale_items[res.index].rate = res.sale_item.rate;
 
 			this.dataSource.data = this.sale.sale_items;
 			this.cdr.detectChanges();
