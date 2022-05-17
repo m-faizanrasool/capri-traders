@@ -20,6 +20,7 @@ class CreateLedgersTable extends Migration
             $table->unsignedBigInteger('type_id')->nullable()->index();
             $table->timestamp('date');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('company_head_id')->references('id')->on('company_heads');
         });
