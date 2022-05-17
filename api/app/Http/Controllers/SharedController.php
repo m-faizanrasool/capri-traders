@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Brand;
 use App\Models\Item;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class SharedController extends Controller
 {
@@ -33,7 +31,6 @@ class SharedController extends Controller
         $total = $items->count();
         $items_per_page = $request->items_per_page ?? 3;
         $items = $items->offset($request->page_index * $items_per_page)->limit($items_per_page)->orderByRaw('-`created_at` DESC')->get();
-
 
         return response()->json(compact('items', 'total'));
     }
