@@ -22,9 +22,16 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-dialog/confirmation-dialog.component';
 import { MatSortModule } from '@angular/material/sort';
+import { ListComponent } from './list/list.component';
+import { AddOrEditComponent } from './add-or-edit/add-or-edit.component';
 
 @NgModule({
-	declarations: [SalesComponent, EditComponent],
+	declarations: [
+		SalesComponent,
+		EditComponent,
+		ListComponent,
+		AddOrEditComponent,
+	],
 	imports: [
 		CommonModule,
 		MatButtonModule,
@@ -48,7 +55,16 @@ import { MatSortModule } from '@angular/material/sort';
 				children: [
 					{
 						path: '',
+						redirectTo: 'list',
 						pathMatch: 'full',
+					},
+					{
+						path: 'list',
+						component: ListComponent,
+					},
+					{
+						path: 'list/detail',
+						component: AddOrEditComponent,
 					},
 				],
 			},

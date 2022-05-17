@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ledger;
 use App\Models\Sale;
 use Illuminate\Http\Request;
 
@@ -49,7 +50,7 @@ class SaleController extends Controller
             "sale_items" =>'required'
         ]);
 
-        $Sale = Sale::create(request([
+        $sale = Sale::create(request([
             "is_return",
             "bill_no",
             "company_head_id",
@@ -64,11 +65,11 @@ class SaleController extends Controller
 
         // create Sale Items
         foreach ($request->sale_items as $sale_item) {
-            $Sale->sale_item()->create([
-                "item_id" => $sale_item['id'],
+            $sale->sale_items()->create([
+                "item_id" => $sale_item['item']['id'],
                 "rate" => $sale_item['rate'],
-                "unit_id" => $sale_item['unit_id'],
-                "unit_quantity" => $sale_item['quantity']
+                "unit_id" => $sale_item['item']['unit_id'],
+                "unit_quantity" => $sale_item['unit_quantity']
             ]);
         }
 
@@ -83,7 +84,8 @@ class SaleController extends Controller
      */
     public function show($id)
     {
-        //
+        $sale = Sale::with('sale_items')->find($id);
+        return response()->json(compact('sale'));
     }
 
     /**

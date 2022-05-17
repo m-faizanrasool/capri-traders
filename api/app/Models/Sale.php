@@ -11,8 +11,31 @@ class Sale extends Model
 
     protected $guarded = [];
 
-    public function sale_item()
+    public function sale_items()
     {
         return $this->hasMany(SaleItem::class)->with('item');
+    }
+
+    public function ledger(){
+        return $this->hasOne(Ledger::class, 'type_id');
+    }
+
+    protected static function booted()
+    {
+        static::creating(function ($sale) {
+        });
+
+        static::created(function ($sale) {
+            $sale->ledger()->create([
+                'company_head_id' => $sale->company_head_id,
+                'type' => 'Sale',
+                'type_id' => $sale->id,
+                'date' => $sale->date,
+            ]);
+        });
+
+        static::updating(function ($sale) {
+            $sale->ledger()->update(['date', $sale->date]);
+        });
     }
 }
