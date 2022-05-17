@@ -9,6 +9,10 @@ import { environment } from 'src/environments/environment';
 export class SalesService {
 	constructor(private httpClient: HttpClient) {}
 
+	getSale(sale_id) {
+		return this.httpClient.get(`${environment.apiUrl}sales/${sale_id}`);
+	}
+
 	addSale(sale) {
 		return this.httpClient.post(`${environment.apiUrl}sales`, sale);
 	}
