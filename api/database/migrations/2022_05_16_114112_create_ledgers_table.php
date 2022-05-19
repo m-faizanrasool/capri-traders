@@ -16,6 +16,7 @@ class CreateLedgersTable extends Migration
         Schema::create('ledgers', function (Blueprint $table) {
             $table->id();
             $table->unsignedSmallInteger('company_head_id')->index();
+            $table->unsignedSmallInteger('party_id')->index();
             $table->string('type')->nullable()->index();
             $table->unsignedBigInteger('type_id')->nullable()->index();
             $table->timestamp('date');
@@ -23,6 +24,7 @@ class CreateLedgersTable extends Migration
             $table->softDeletes();
 
             $table->foreign('company_head_id')->references('id')->on('company_heads');
+            $table->foreign('party_id')->references('id')->on('parties');
         });
     }
 
