@@ -21,6 +21,16 @@ class Sale extends Model
         return $this->hasOne(Ledger::class, 'type_id');
     }
 
+    public function company_head()
+    {
+        return $this->belongsTo(CompanyHead::class);
+    }
+
+    public function party()
+    {
+        return $this->belongsTo(Party::class);
+    }
+
     protected static function booted()
     {
         static::creating(function ($sale) {

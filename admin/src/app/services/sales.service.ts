@@ -9,6 +9,10 @@ import { environment } from 'src/environments/environment';
 export class SalesService {
 	constructor(private httpClient: HttpClient) {}
 
+	getAllSales() {
+		return this.httpClient.get(`${environment.apiUrl}sales`);
+	}
+
 	getSale(sale_id) {
 		return this.httpClient.get(`${environment.apiUrl}sales/${sale_id}`);
 	}
@@ -19,15 +23,6 @@ export class SalesService {
 
 	updateSale(sale) {
 		return this.httpClient.patch(`${environment.apiUrl}sales/` + sale.id, sale);
-	}
-
-	toggle_visibility(id) {
-		return this.httpClient.post(
-			`${environment.apiUrl}items/toggle-visibility`,
-			{
-				id,
-			}
-		);
 	}
 
 	deleteItem(id) {

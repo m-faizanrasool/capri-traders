@@ -15,7 +15,9 @@ class SaleController extends Controller
      */
     public function index()
     {
-        //
+        $sales = Sale::with(['sale_items', 'company_head', 'party'])->get();
+
+        return response()->json(compact('sales'));
     }
 
     /**
