@@ -19,7 +19,7 @@ class CreateLedgersTable extends Migration
             $table->unsignedSmallInteger('party_id')->index();
             $table->string('type')->nullable()->index();
             $table->unsignedBigInteger('type_id')->nullable()->index();
-            $table->timestamp('date');
+            $table->timestamp('date')->index();
             $table->timestamps();
             $table->softDeletes();
 
