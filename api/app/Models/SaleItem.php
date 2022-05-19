@@ -21,4 +21,13 @@ class SaleItem extends Model
     {
         return $this->belongsTo(Item::class);
     }
+
+    protected static function booted()
+    {
+        static::creating(function ($sale_item) {
+            $item = $sale_item->item;
+            $item->unit_quantity -= $sale_item->unit_quantity;
+            $item->save();
+        });
+    }
 }

@@ -19,6 +19,10 @@ export class ListComponent implements OnInit {
 	ngOnInit(): void {}
 
 	addSale() {
-		this.router.navigate(['sales/list/detail', { sale_id: 1 }]);
+		this.router.navigate(['sales/list/add-or-edit']);
+	}
+
+	editSale() {
+		this.router.navigate(['sales/list/add-or-edit', { sale_id: 1 }]);
 	}
 }

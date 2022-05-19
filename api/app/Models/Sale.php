@@ -16,7 +16,8 @@ class Sale extends Model
         return $this->hasMany(SaleItem::class)->with('item');
     }
 
-    public function ledger(){
+    public function ledger()
+    {
         return $this->hasOne(Ledger::class, 'type_id');
     }
 
@@ -35,7 +36,10 @@ class Sale extends Model
         });
 
         static::updating(function ($sale) {
-            $sale->ledger()->update(['date', $sale->date]);
+            $dirty_sale = $sale->getDirty();
+            if (isset($dirty_sale['date'])) {
+                $sale->ledger()->update(['date', $sale->date]);
+            }
         });
     }
 }
