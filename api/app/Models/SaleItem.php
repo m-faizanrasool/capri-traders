@@ -29,5 +29,18 @@ class SaleItem extends Model
             $item->unit_quantity -= $sale_item->unit_quantity;
             $item->save();
         });
+
+        static::updating(function ($sale_item) {
+            $dirtySaleItem = $sale_item->getDirty();
+            $OriginalSaleItem = $sale_item->getOriginal();
+            $item = $sale_item->item;
+
+            if (isset($dirtySaleItem['unit_quantity'])) {
+                $item->unit_quantity += $OriginalSaleItem['unit_quantity'];
+            }
+
+            $item->unit_quantity -= $sale_item->unit_quantity;
+            $item->save();
+        });
     }
 }

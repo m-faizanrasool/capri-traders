@@ -189,7 +189,6 @@
 								[(ngModel)]="selectedItem.id"
 								placeholder="Enter Item"
 								name="item"
-								required
 							>
 								<mat-option *ngFor="let item of items" [value]="item.id">
 									{{ item.name }}
@@ -209,7 +208,6 @@
 								type="number"
 								placeholder="Quantity"
 								name="quantity"
-								required
 								[(ngModel)]="selectedItem.unit_quantity"
 							/>
 							<mat-error>
@@ -226,7 +224,6 @@
 								type="number"
 								placeholder="Rate"
 								name="rate"
-								required
 								[(ngModel)]="selectedItem.rate"
 							/>
 							<mat-error>
@@ -391,16 +388,18 @@
 						[disabled]="saleForm.invalid || saleForm.pristine"
 						(click)="onSubmit(saleForm, true)"
 					>
-						Save as Reutrn
+						{{ this.mode === 'ADD' ? 'Save' : 'Update' }} as Reutrn
 					</button>
 					<button
 						type="submit"
 						mat-raised-button
 						color="primary"
-						[disabled]="saleForm.invalid || saleForm.pristine"
+						[disabled]="
+							saleForm.invalid || saleForm.pristine || !sale.sale_items.length
+						"
 						(click)="onSubmit(saleForm, false)"
 					>
-						Save
+						{{ this.mode === 'ADD' ? 'Save' : 'Update' }}
 					</button>
 				</div>
 			</div>

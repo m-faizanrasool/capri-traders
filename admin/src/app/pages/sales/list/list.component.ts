@@ -34,6 +34,7 @@ export class ListComponent implements OnInit {
 		'is_return',
 		'actions',
 	];
+
 	constructor(
 		public dialog: MatDialog,
 		private router: Router,
@@ -52,11 +53,11 @@ export class ListComponent implements OnInit {
 	}
 
 	addSale() {
-		this.router.navigate(['sales/list/add-or-edit']);
+		this.router.navigate(['sales/add-or-edit']);
 	}
 
 	editSale(sale_id) {
-		this.router.navigate(['sales/list/add-or-edit', { sale_id }]);
+		this.router.navigate(['sales/add-or-edit', { sale_id }]);
 	}
 
 	deleteSale(sale_id, index) {}

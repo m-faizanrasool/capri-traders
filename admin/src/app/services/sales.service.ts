@@ -26,7 +26,7 @@ export class SalesService {
 	}
 
 	deleteItem(id) {
-		return this.httpClient.delete(`${environment.apiUrl}items/` + id);
+		return this.httpClient.delete(`${environment.apiUrl}sales/` + id);
 	}
 }
 

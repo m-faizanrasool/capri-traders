@@ -77,6 +77,8 @@ export class AddOrEditComponent implements OnInit {
 	@ViewChild(MatSort) sort: MatSort;
 
 	loaded: boolean = false;
+	mode: string = 'ADD';
+
 	constructor(
 		private activatedRoute: ActivatedRoute,
 		private itemsService: ItemsService,
@@ -93,6 +95,7 @@ export class AddOrEditComponent implements OnInit {
 			async (params) => {
 				console.log(params);
 				if (params.sale_id) {
+					this.mode = 'EDIT';
 					this.salesService
 						.getSale(params.sale_id)
 						.subscribe((response: any) => {
@@ -124,8 +127,6 @@ export class AddOrEditComponent implements OnInit {
 	}
 
 	onSubmit(form: NgForm, is_return: boolean) {
-		console.log(form);
-
 		if (form.invalid) {
 			return;
 		}
@@ -133,10 +134,15 @@ export class AddOrEditComponent implements OnInit {
 		// Set Sale is return or not
 		this.sale.is_return = is_return;
 
-		console.log('here', this.sale);
-		this.salesService.addSale(this.sale).subscribe((response) => {
-			console.log(response);
-		});
+		if (this.mode === 'ADD') {
+			this.salesService.addSale(this.sale).subscribe((response) => {
+				console.log(response);
+			});
+		} else {
+			this.salesService.updateSale(this.sale).subscribe((response) => {
+				console.log(response);
+			});
+		}
 	}
 
 	addItem() {

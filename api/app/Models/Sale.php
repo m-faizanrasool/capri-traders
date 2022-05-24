@@ -39,6 +39,7 @@ class Sale extends Model
         static::created(function ($sale) {
             $sale->ledger()->create([
                 'company_head_id' => $sale->company_head_id,
+                'party_id' => $sale->party_id,
                 'type' => 'Sale',
                 'type_id' => $sale->id,
                 'date' => $sale->date,

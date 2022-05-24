@@ -63,7 +63,7 @@ import { AddOrEditComponent } from './add-or-edit/add-or-edit.component';
 						component: ListComponent,
 					},
 					{
-						path: 'list/add-or-edit',
+						path: 'add-or-edit',
 						component: AddOrEditComponent,
 					},
 				],
