@@ -77,6 +77,6 @@ import { ListComponent } from './list/list.component';
 			},
 		},
 	],
-	entryComponents: [ConfirmationDialogComponent, EditComponent],
+	entryComponents: [ConfirmationDialogComponent],
 })
 export class PurchasesModule {}
