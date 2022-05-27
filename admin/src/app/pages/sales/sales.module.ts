@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SalesComponent } from './sales.component';
-import { EditComponent } from './edit/edit.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
@@ -25,7 +24,7 @@ import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-d
 import { ListComponent } from './list/list.component';
 
 @NgModule({
-	declarations: [SalesComponent, EditComponent, ListComponent],
+	declarations: [SalesComponent, ListComponent],
 	imports: [
 		CommonModule,
 		MatButtonModule,
