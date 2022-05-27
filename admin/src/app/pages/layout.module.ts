@@ -24,7 +24,6 @@ import { HeaderMenuDynamicComponent } from './_layout/components/header/header-m
 import { ConfirmationDialogComponent } from './_sharedComponents/confirmation-dialog/confirmation-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { CancelOrderComfirmationComponent } from './_sharedComponents/cancel-order-comfirmation/cancel-order-comfirmation.component';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -41,7 +40,6 @@ import { FormsModule } from '@angular/forms';
 		AsideDynamicComponent,
 		HeaderMenuDynamicComponent,
 		ConfirmationDialogComponent,
-		CancelOrderComfirmationComponent,
 	],
 	imports: [
 		CommonModule,

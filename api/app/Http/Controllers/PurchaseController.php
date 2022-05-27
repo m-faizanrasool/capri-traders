@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Sale;
-use App\Models\SaleItem;
+use App\Models\Purchase;
+use App\Models\PurchaseItem;
 use Illuminate\Http\Request;
 
-class SaleController extends Controller
+class PurchaseController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -15,9 +16,9 @@ class SaleController extends Controller
      */
     public function index()
     {
-        $sales = Sale::with(['sale_items', 'company_head', 'party'])->get();
+        $purchases = Purchase::with(['purchase_items', 'company_head', 'party'])->get();
 
-        return response()->json(compact('sales'));
+        return response()->json(compact('purchases'));
     }
 
     /**
@@ -52,7 +53,7 @@ class SaleController extends Controller
             "object_items" =>'required'
         ]);
 
-        $sale = Sale::create(request([
+        $purchase = Purchase::create(request([
             "is_return",
             "bill_no",
             "company_head_id",
@@ -65,13 +66,13 @@ class SaleController extends Controller
             "remarks"
         ]));
 
-        // create Sale Items
-        foreach ($request->object_items as $sale_item) {
-            $sale->sale_items()->create([
-                "item_id" => $sale_item['item']['id'],
-                "rate" => $sale_item['rate'],
-                "unit_id" => $sale_item['item']['unit_id'],
-                "unit_quantity" => $sale_item['unit_quantity']
+        // create purchase Items
+        foreach ($request->object_items as $purchase_item) {
+            $purchase->purchase_items()->create([
+                "item_id" => $purchase_item['item']['id'],
+                "rate" => $purchase_item['rate'],
+                "unit_id" => $purchase_item['item']['unit_id'],
+                "unit_quantity" => $purchase_item['unit_quantity']
             ]);
         }
 
@@ -86,9 +87,9 @@ class SaleController extends Controller
      */
     public function show($id)
     {
-        $sale = Sale::with('sale_items')->find($id);
+        $purchase = Purchase::with('purchase_items')->find($id);
 
-        return response()->json(compact('sale'));
+        return response()->json(compact('purchase'));
     }
 
     /**
@@ -125,8 +126,8 @@ class SaleController extends Controller
             "object_items" =>'required'
         ]);
 
-        $sale = Sale::find($id);
-        $sale->update(request([
+        $purchase = Purchase::find($id);
+        $purchase->update(request([
             "is_return",
             "bill_no",
             "company_head_id",
@@ -139,19 +140,19 @@ class SaleController extends Controller
             "remarks"
         ]));
 
-        // create Sale Items
-        foreach ($request->object_items as $sale_item) {
-            $sale_item_data = [
-                "item_id" => $sale_item['item']['id'],
-                "rate" => $sale_item['rate'],
-                "unit_id" => $sale_item['item']['unit_id'],
-                "unit_quantity" => $sale_item['unit_quantity']
+        // create purchase Items
+        foreach ($request->object_items as $purchase_item) {
+            $purchase_item_data = [
+                "item_id" => $purchase_item['item']['id'],
+                "rate" => $purchase_item['rate'],
+                "unit_id" => $purchase_item['item']['unit_id'],
+                "unit_quantity" => $purchase_item['unit_quantity']
             ];
-            if (isset($sale_item['id'])) {
-                $sale_item = SaleItem::firstWhere('id', $sale_item['id']);
-                $sale_item->update($sale_item_data);
+            if (isset($purchase_item['id'])) {
+                $purchase_item = PurchaseItem::firstWhere('id', $purchase_item['id']);
+                $purchase_item->update($purchase_item_data);
             } else {
-                $sale->sale_items()->create($sale_item_data);
+                $purchase->purchase_items()->create($purchase_item_data);
             }
         }
 

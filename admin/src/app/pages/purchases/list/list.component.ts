@@ -3,8 +3,8 @@ import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { NavigateService } from 'src/app/services/navigate.service';
-import { SaleService } from './../../../services/sale.service';
 import { MatPaginator } from '@angular/material/paginator';
+import { PurchaseService } from 'src/app/services/purchase.service';
 
 @Component({
 	selector: 'app-list',
@@ -15,11 +15,11 @@ export class ListComponent implements OnInit {
 	@ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
 	loaded = false;
-	sales: any[] = [];
+	purchases: any[] = [];
 
 	pageIndex = 0;
 	pageSize = 20;
-	totalSales: number;
+	totalPurchases: number;
 
 	displayedColumns = [
 		'company_head',
@@ -40,31 +40,31 @@ export class ListComponent implements OnInit {
 		private router: Router,
 		private cdr: ChangeDetectorRef,
 		public navigateService: NavigateService,
-		private saleService: SaleService
+		private purchaseService: PurchaseService
 	) {}
 
 	ngOnInit(): void {
-		this.saleService.getAll().subscribe((data: any) => {
-			this.sales = data.sales;
-			this.totalSales = this.sales.length;
+		this.purchaseService.getAll().subscribe((data: any) => {
+			this.purchases = data.purchases;
+			this.totalPurchases = this.purchases.length;
 			this.loaded = true;
 			this.cdr.detectChanges();
 		});
 	}
 
-	addSale() {
-		this.router.navigate(['sales/add-or-edit', { type: 'Sale' }]);
+	addPurchase() {
+		this.router.navigate(['purchases/add-or-edit', { type: 'Purchase' }]);
 	}
 
-	editSale(sale_id) {
+	editPurchase(purchase_id) {
 		this.router.navigate([
-			'sales/add-or-edit',
+			'purchases/add-or-edit',
 			{
-				type: 'Sale',
-				type_id: sale_id,
+				type: 'Purchase',
+				type_id: purchase_id,
 			},
 		]);
 	}
 
-	deleteSale(sale_id, index) {}
+	deletePurchase(purchase_id, index) {}
 }

@@ -35,7 +35,6 @@ Route::middleware(PhoneFormat::class)->prefix('otp')->group(function () {
 
 Route::get('filtered-items', 'App\Http\Controllers\SharedController@items');
 Route::get('all-items', 'App\Http\Controllers\SharedController@allItems');
-Route::get('cart', 'App\Http\Controllers\CartController@index');
 
 Route::middleware(PhoneFormat::class)->post('users/reset-password', 'App\Http\Controllers\UserController@resetPassword');
 
@@ -53,6 +52,7 @@ Route::middleware(['auth:sanctum', PhoneFormat::class])->group(function () {
         'items' => 'App\Http\Controllers\ItemController',
         'users' => 'App\Http\Controllers\UserController',
         'sales' =>  'App\Http\Controllers\SaleController',
+        'purchases' =>  'App\Http\Controllers\PurchaseController',
         'company-heads' =>  'App\Http\Controllers\CompanyHeadController',
         'parties' =>  'App\Http\Controllers\PartyController',
     ]);
