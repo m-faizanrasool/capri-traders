@@ -8,7 +8,7 @@
 		</div>
 	</div>
 	<div>
-		<form class="form" #saleForm="ngForm">
+		<form class="form" #objectForm="ngForm">
 			<!-- Sales Form Start -->
 			<div class="card-body">
 				<div class="card-body-progress">
@@ -381,28 +381,31 @@
 				<div>
 					&nbsp;
 					<button
-						*ngIf="this.mode === 'ADD'"
+						*ngIf="
+							this.mode === 'ADD' || (this.mode === 'EDIT' && object.is_return)
+						"
 						type="submit"
 						mat-raised-button
 						color="primary"
 						class="mr-3"
-						[disabled]="saleForm.invalid || saleForm.pristine"
-						(click)="onSubmit(saleForm, true)"
+						[disabled]="objectForm.invalid || objectForm.pristine"
+						(click)="onSubmit(objectForm, true)"
 					>
-						{{ this.mode === 'ADD' ? 'Save' : 'Update' }} as Reutrn
+						{{ this.mode === 'EDIT' ? 'Update' : 'Save' }} as Reutrn
 					</button>
 					<button
+						*ngIf="!object.is_return"
 						type="submit"
 						mat-raised-button
 						color="primary"
 						[disabled]="
-							saleForm.invalid ||
-							saleForm.pristine ||
+							objectForm.invalid ||
+							objectForm.pristine ||
 							!object.object_items.length
 						"
-						(click)="onSubmit(saleForm, false)"
+						(click)="onSubmit(objectForm, false)"
 					>
-						{{ this.mode === 'ADD' ? 'Save' : 'Update' }}
+						{{ this.mode === 'EDIT' ? 'Update' : 'Save' }}
 					</button>
 				</div>
 			</div>

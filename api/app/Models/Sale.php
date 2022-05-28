@@ -19,7 +19,7 @@ class Sale extends Model
 
     public function ledger()
     {
-        return $this->hasOne(Ledger::class, 'type_id');
+        return $this->hasOne(Ledger::class);
     }
 
     public function company_head()
@@ -41,8 +41,7 @@ class Sale extends Model
             $sale->ledger()->create([
                 'company_head_id' => $sale->company_head_id,
                 'party_id' => $sale->party_id,
-                'type' => 'Sale',
-                'type_id' => $sale->id,
+                'sale_id' => $sale->id,
                 'date' => $sale->date,
             ]);
         });

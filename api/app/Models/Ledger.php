@@ -11,4 +11,14 @@ class Ledger extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+
+    public function sale()
+    {
+        return $this->belongsTo(Sale::class);
+    }
+
+    public function purchase()
+    {
+        return $this->belongsTo(Purchase::class);
+    }
 }
