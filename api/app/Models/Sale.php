@@ -12,6 +12,19 @@ class Sale extends Model
 
     protected $guarded = [];
 
+    public function getSubTotalAttribute()
+    {
+        return $this->sale_items->sum('rate');
+    }
+
+    public function getTotalAttribute()
+    {
+        if ($this->discount) {
+            return $this->sub_total - $this->discount;
+        }
+        return $this->sub_total;
+    }
+
     public function sale_items()
     {
         return $this->hasMany(SaleItem::class)->with('item');

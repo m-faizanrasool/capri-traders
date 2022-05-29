@@ -12,6 +12,19 @@ class Purchase extends Model
 
     protected $guarded = [];
 
+    public function getSubTotalAttribute()
+    {
+        return $this->purchase_items->sum('rate');
+    }
+
+    public function getTotalAttribute()
+    {
+        if ($this->discount) {
+            return $this->sub_total - $this->discount;
+        }
+        return $this->sub_total;
+    }
+
     public function purchase_items()
     {
         return $this->hasMany(PurchaseItem::class)->with('item');

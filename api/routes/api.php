@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LedgerController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Services\OTPService;
@@ -47,6 +48,8 @@ Route::middleware(['auth:sanctum', PhoneFormat::class])->group(function () {
     Route::patch('users', 'App\Http\Controllers\UserController@update');
 
     Route::post('items/toggle-visibility', 'App\Http\Controllers\ItemController@toggleVisibility');
+
+    Route::get('ledger', [LedgerController::class, 'get_ledger']);
 
     Route::resources([
         'items' => 'App\Http\Controllers\ItemController',
