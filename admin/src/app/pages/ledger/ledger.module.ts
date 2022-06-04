@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 
 import { LedgerComponent } from './ledger.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
 	declarations: [LedgerComponent],

@@ -15,7 +15,8 @@ class LedgerController extends Controller
         ->whereDate('date', '>=', $request->date_from)
         ->whereDate('date', '<=', $request->date_to)
         ->orderby('date')
-        ->get();
+        ->get()
+        ->append(['bill_no', 'debit', 'credit', 'pay_mode']);
 
         $balance = 0;
         foreach ($ledgers as $ledger) {

@@ -30,8 +30,8 @@ export class LedgerComponent implements OnInit, AfterViewInit {
 
 	date_from = new FormControl('2012-01-01');
 	date_to = new FormControl('2023-01-01');
-	company_head_id = new FormControl('');
-	party_id = new FormControl('');
+	company_head_id = new FormControl(1);
+	party_id = new FormControl(1);
 
 	constructor(
 		private ledgerService: LedgerService,

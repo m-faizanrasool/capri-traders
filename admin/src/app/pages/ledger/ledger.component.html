@@ -84,8 +84,33 @@
 <div *ngIf="ledger_loaded; else loader">
 	<div class="card card-custom mt-5">
 		<div class="card-body" *ngIf="ledger.length; else no_data">
-			<div *ngFor="let item of ledger">
-				{{ item.id }}
+			<div class="row border border-dark mb-3">
+				<div class="col font-weight-boldest">Date</div>
+				<div class="col font-weight-boldest">Pay Mode</div>
+				<div class="col font-weight-boldest">Bill/Ref No.</div>
+				<div class="col font-weight-boldest">Debit</div>
+				<div class="col font-weight-boldest">Credit</div>
+				<div class="col font-weight-boldest">Balnce</div>
+			</div>
+			<div class="row" *ngFor="let item of ledger">
+				<div class="col">
+					{{ item.date_formatted }}
+				</div>
+				<div class="col">
+					{{ item.pay_mode }}
+				</div>
+				<div class="col">
+					{{ item.bill_no }}
+				</div>
+				<div class="col">
+					{{ item.debit ? item.debit : 0 }}
+				</div>
+				<div class="col">
+					{{ item.credit ? item.credit : 0 }}
+				</div>
+				<div class="col">
+					{{ item.balance }}
+				</div>
 			</div>
 		</div>
 		<ng-template #no_data>
