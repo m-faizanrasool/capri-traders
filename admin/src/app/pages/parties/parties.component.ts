@@ -77,6 +77,7 @@ export class PartiesComponent implements OnInit {
 				(response: any) => {
 					party = res.party;
 					this.commonService.openSnackBar(response.message);
+					this.cdr.detectChanges();
 				},
 				({ error }) => {
 					this.commonService.openSnackBar(error.errors.name[0], 4000);

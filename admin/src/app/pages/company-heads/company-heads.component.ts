@@ -77,6 +77,7 @@ export class CompanyHeadsComponent implements OnInit {
 				(response: any) => {
 					company_head = res.company_head;
 					this.commonService.openSnackBar(response.message);
+					this.cdr.detectChanges();
 				},
 				({ error }) => {
 					this.commonService.openSnackBar(error.errors.name[0], 4000);

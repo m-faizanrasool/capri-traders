@@ -81,6 +81,7 @@ export class BrandsComponent implements OnInit {
 				(response: any) => {
 					Brand = res.brand;
 					this.commonService.openSnackBar(response.message);
+					this.cdr.detectChanges();
 				},
 				({ error }) => {
 					this.commonService.openSnackBar(error.errors.name[0], 4000);
