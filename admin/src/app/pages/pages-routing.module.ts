@@ -63,6 +63,12 @@ const routes: Routes = [
 					import('./purchases/purchases.module').then((m) => m.PurchasesModule),
 			},
 			{
+				path: 'payments',
+				canActivate: [RoleGuard],
+				loadChildren: () =>
+					import('./payments/payments.module').then((m) => m.PaymentsModule),
+			},
+			{
 				path: 'ledger',
 				canActivate: [RoleGuard],
 				loadChildren: () =>
