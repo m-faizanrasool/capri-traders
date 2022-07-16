@@ -25,8 +25,7 @@ class Ledger extends Model
     {
         if ($this->sale_id) {
             return $this->sale->bill_no;
-        }
-        if ($this->purchase_id) {
+        } elseif ($this->purchase_id) {
             return $this->purchase->bill_no;
         }
     }
@@ -37,9 +36,7 @@ class Ledger extends Model
             if (!$this->sale->is_return) {
                 return $this->sale->total;
             }
-        }
-
-        if ($this->purchase_id) {
+        } elseif ($this->purchase_id) {
             if ($this->purchase->is_retrun) {
                 return $this->purchase->total;
             }
@@ -54,9 +51,7 @@ class Ledger extends Model
             if ($this->sale->is_return) {
                 return $this->sale->total;
             }
-        }
-
-        if ($this->purchase_id) {
+        } elseif ($this->purchase_id) {
             if (!$this->purchase->is_retrun) {
                 return $this->purchase->total;
             }
@@ -69,8 +64,7 @@ class Ledger extends Model
     {
         if ($this->sale_id) {
             return $this->sale->pay_mode;
-        }
-        if ($this->purchase_id) {
+        } elseif ($this->purchase_id) {
             return $this->purchase->pay_mode;
         }
     }
