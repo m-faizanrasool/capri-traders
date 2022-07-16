@@ -13,19 +13,22 @@ export class PartiesService {
 		return this.httpClient.get(environment.apiUrl + 'parties');
 	}
 
-	// getCreateCompanyHeadParams() {
+	// getCreatePartyParams() {
 	// 	return this.httpClient.get(environment.apiUrl + 'company-heads/create');
 	// }
 
-	// addCompanyHead(companyHead) {
-	// 	return this.httpClient.post(`${environment.apiUrl}company-heads`, companyHead);
-	// }
+	addParty(party) {
+		return this.httpClient.post(`${environment.apiUrl}parties`, party);
+	}
 
-	// updateCompanyHead(companyHead) {
-	// 	return this.httpClient.patch(`${environment.apiUrl}company-heads/` + companyHead.id, companyHead);
-	// }
+	updateParty(party) {
+		return this.httpClient.patch(
+			`${environment.apiUrl}parties/` + party.id,
+			party
+		);
+	}
 
-	// deleteCompanyHead(id) {
-	// 	return this.httpClient.delete(`${environment.apiUrl}company-heads/` + id);
-	// }
+	deleteParty(id) {
+		return this.httpClient.delete(`${environment.apiUrl}parties/` + id);
+	}
 }

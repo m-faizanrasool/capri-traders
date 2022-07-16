@@ -17,15 +17,21 @@ export class CompanyHeadsService {
 	// 	return this.httpClient.get(environment.apiUrl + 'company-heads/create');
 	// }
 
-	// addCompanyHead(companyHead) {
-	// 	return this.httpClient.post(`${environment.apiUrl}company-heads`, companyHead);
-	// }
+	addCompanyHead(companyHead) {
+		return this.httpClient.post(
+			`${environment.apiUrl}company-heads`,
+			companyHead
+		);
+	}
 
-	// updateCompanyHead(companyHead) {
-	// 	return this.httpClient.patch(`${environment.apiUrl}company-heads/` + companyHead.id, companyHead);
-	// }
+	updateCompanyHead(companyHead) {
+		return this.httpClient.patch(
+			`${environment.apiUrl}company-heads/` + companyHead.id,
+			companyHead
+		);
+	}
 
-	// deleteCompanyHead(id) {
-	// 	return this.httpClient.delete(`${environment.apiUrl}company-heads/` + id);
-	// }
+	deleteCompanyHead(id) {
+		return this.httpClient.delete(`${environment.apiUrl}company-heads/` + id);
+	}
 }

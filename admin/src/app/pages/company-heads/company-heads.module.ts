@@ -1,3 +1,4 @@
+import { AddComponent } from './add/add.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CompanyHeadsComponent } from './company-heads.component';
@@ -13,7 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-	declarations: [CompanyHeadsComponent],
+	declarations: [CompanyHeadsComponent, AddComponent],
 	imports: [
 		CommonModule,
 		GeneralModule,

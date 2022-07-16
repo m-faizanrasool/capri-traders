@@ -11,9 +11,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AddComponent } from './add/add.component';
 
 @NgModule({
-	declarations: [PartiesComponent],
+	declarations: [PartiesComponent, AddComponent],
 	imports: [
 		CommonModule,
 		GeneralModule,
