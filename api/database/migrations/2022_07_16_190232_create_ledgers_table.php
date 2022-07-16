@@ -19,6 +19,7 @@ class CreateLedgersTable extends Migration
             $table->unsignedSmallInteger('party_id')->index();
             $table->unsignedBigInteger('sale_id')->nullable()->index();
             $table->unsignedBigInteger('purchase_id')->nullable()->index();
+            $table->unsignedBigInteger('payment_id')->nullable()->index();
             $table->timestamp('date')->index();
             $table->timestamps();
             $table->softDeletes();
@@ -27,6 +28,7 @@ class CreateLedgersTable extends Migration
             $table->foreign('party_id')->references('id')->on('parties');
             $table->foreign('sale_id')->references('id')->on('sales');
             $table->foreign('purchase_id')->references('id')->on('purchases');
+            $table->foreign('payment_id')->references('id')->on('payments');
         });
     }
 
