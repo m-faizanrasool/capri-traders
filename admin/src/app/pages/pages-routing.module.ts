@@ -19,6 +19,20 @@ const routes: Routes = [
 					import('./builder/builder.module').then((m) => m.BuilderModule),
 			},
 			{
+				path: 'company-heads',
+				canActivate: [RoleGuard],
+				loadChildren: () =>
+					import('./company-heads/company-heads.module').then(
+						(m) => m.CompanyHeadsModule
+					),
+			},
+			{
+				path: 'parties',
+				canActivate: [RoleGuard],
+				loadChildren: () =>
+					import('./parties/parties.module').then((m) => m.PartiesModule),
+			},
+			{
 				path: 'users',
 				canActivate: [RoleGuard],
 				loadChildren: () =>
