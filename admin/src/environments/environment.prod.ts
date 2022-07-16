@@ -3,4 +3,5 @@ export const environment = {
 	appVersion: 'v717demo1',
 	USERDATA_KEY: 'authf649fc9a5f55',
 	apiUrl: 'https://capritraders.com/api/public/api/',
+	// apiUrl: 'https://capri-traders.herokuapp.com/api/',
 };
