@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CompanyHead;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class CompanyHeadController extends Controller
@@ -37,7 +38,12 @@ class CompanyHeadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "name" => 'required|unique:company_heads'
+        ]);
+
+        $company_head = CompanyHead::create(request(['name']));
+        return response()->json(["message" => 'Company Head Added Successfully!', "company_head" => $company_head]);
     }
 
     /**
@@ -46,9 +52,10 @@ class CompanyHeadController extends Controller
      * @param  \App\Models\CompanyHead  $companyHead
      * @return \Illuminate\Http\Response
      */
-    public function show(CompanyHead $companyHead)
+    public function show($id)
     {
-        //
+        $company_head = CompanyHead::find($id);
+        return response()->json(compact('company_head'));
     }
 
     /**
@@ -69,9 +76,17 @@ class CompanyHeadController extends Controller
      * @param  \App\Models\CompanyHead  $companyHead
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CompanyHead $companyHead)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            "name" => 'required|unique:company_heads,name,' . $id
+        ]);
+
+        $company_head = CompanyHead::find($id);
+        $company_head->fill(request(['name']));
+        $company_head->save();
+
+        return response()->json(["message" => 'Company Head Updated Successfully!']);
     }
 
     /**
@@ -80,8 +95,13 @@ class CompanyHeadController extends Controller
      * @param  \App\Models\CompanyHead  $companyHead
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CompanyHead $companyHead)
+    public function destroy($id)
     {
-        //
+        try {
+            CompanyHead::find($id)->delete();
+            return response()->json(["message" => 'Company Head Deleted Successfully!']);
+        } catch (QueryException $e) {
+            return response()->json(["message" => 'Company Head cannot be deleted because we have a ledger associated with this.'], 500);
+        }
     }
 }

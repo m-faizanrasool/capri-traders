@@ -10,7 +10,7 @@
 					type="number"
 					class="form-control"
 					placeholder="Quantity"
-					[(ngModel)]="item.quantity"
+					[(ngModel)]="object_item.unit_quantity"
 					name="quantity"
 					required
 				/>
@@ -22,7 +22,7 @@
 					type="number"
 					class="form-control"
 					placeholder="Rate"
-					[(ngModel)]="item.rate"
+					[(ngModel)]="object_item.rate"
 					name="rate"
 					required
 				/>
@@ -34,9 +34,8 @@
 					type="text"
 					class="form-control"
 					placeholder="Description"
-					[(ngModel)]="item.description"
+					[(ngModel)]="object_item.description"
 					name="description"
-					required
 				/>
 			</div>
 		</div>

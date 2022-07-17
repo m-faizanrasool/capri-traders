@@ -3,15 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 
-import { EditComponent } from './../edit/edit.component';
-import { CommonService } from 'src/app/services/common.service';
-import { ItemQuery, ItemsService } from 'src/app/services/items.service';
-
 import { MatTableDataSource } from '@angular/material/table';
-
-import { AddItemDialogComponent } from './../../items/list/add-item-dialog/add-item-dialog.component';
-
-import { SalesService } from './../../../services/sales.service';
 
 import { NgForm } from '@angular/forms';
 import { CompanyHeadsService } from 'src/app/services/company-head.service';
@@ -20,12 +12,26 @@ import { PartiesService } from 'src/app/services/parties.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
+import { EditComponent } from './../edit/edit.component';
+import { ItemQuery, ItemsService } from 'src/app/services/items.service';
+
+import { AddItemDialogComponent } from 'src/app/pages/items/list/add-item-dialog/add-item-dialog.component';
+
+import { CommonService } from 'src/app/services/common.service';
+import { SaleService } from 'src/app/services/sale.service';
+import { PurchaseService } from 'src/app/services/purchase.service';
+
 @Component({
 	selector: 'app-add-or-edit',
 	templateUrl: './add-or-edit.component.html',
 	styleUrls: ['./add-or-edit.component.scss'],
 })
 export class AddOrEditComponent implements OnInit {
+	type: string;
+	type_id: number;
+	loaded: boolean = false;
+	mode: string = 'ADD';
+
 	itemData: any;
 	queryParams: ItemQuery;
 
@@ -37,7 +43,7 @@ export class AddOrEditComponent implements OnInit {
 	pay_modes: any = [{ name: 'CREDIT' }, { name: 'CASH' }];
 	pay_statuses: any = [{ name: 'PENDING' }, { name: 'DONE' }];
 
-	sale: any = {
+	object: any = {
 		is_return: false,
 		company_head_id: 1,
 		date: '2012-04-12',
@@ -48,7 +54,7 @@ export class AddOrEditComponent implements OnInit {
 		pay_mode: 'CASH',
 		remarks: 'testing',
 		pay_status: 'PENDING',
-		sale_items: [],
+		object_items: [],
 	};
 
 	selectedItem: any = {
@@ -76,11 +82,11 @@ export class AddOrEditComponent implements OnInit {
 	@ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
 
-	loaded: boolean = false;
 	constructor(
 		private activatedRoute: ActivatedRoute,
 		private itemsService: ItemsService,
-		private salesService: SalesService,
+		private saleService: SaleService,
+		private purchaseService: PurchaseService,
 		private companyHeadsService: CompanyHeadsService,
 		private partiesService: PartiesService,
 		private commonService: CommonService,
@@ -88,24 +94,46 @@ export class AddOrEditComponent implements OnInit {
 		public dialog: MatDialog
 	) {}
 
-	ngOnInit(): void {
+	async ngOnInit(): Promise<void> {
 		const routeSubscription = this.activatedRoute.params.subscribe(
 			async (params) => {
-				console.log(params);
-				if (params.sale_id) {
-					this.salesService
-						.getSale(params.sale_id)
-						.subscribe((response: any) => {
-							console.log(response);
-							this.sale = response.sale;
-							this.refreshDataSource();
-						});
+				this.type = params.type;
+				this.type_id = params.type_id;
+				if (params.type_id) {
+					this.mode = 'EDIT';
+					switch (params.type) {
+						case 'Sale':
+							if (params.type_id) {
+								await this.saleService
+									.get(params.type_id)
+									.toPromise()
+									.then((response: any) => {
+										this.object = response.sale;
+										this.object.object_items = response.sale.sale_items;
+									});
+							}
+							break;
+						case 'Purchase':
+							if (params.type_id) {
+								await this.purchaseService
+									.get(params.type_id)
+									.toPromise()
+									.then((response: any) => {
+										this.object = response.purchase;
+										this.object.object_items = response.purchase.purchase_items;
+									});
+							}
+							break;
+					}
 				}
+				this.refreshDataSource();
 			}
 		);
+
 		this.itemsService.getCreateItemParams().subscribe((response) => {
 			this.itemData = response;
 		});
+
 		this.itemsService.getAllItems().subscribe(this.handleResponse.bind(this));
 
 		this.companyHeadsService.getAllCompanyHeads().subscribe((response: any) => {
@@ -124,19 +152,24 @@ export class AddOrEditComponent implements OnInit {
 	}
 
 	onSubmit(form: NgForm, is_return: boolean) {
-		console.log(form);
-
 		if (form.invalid) {
 			return;
 		}
 
-		// Set Sale is return or not
-		this.sale.is_return = is_return;
+		this.object.is_return = is_return;
 
-		console.log('here', this.sale);
-		this.salesService.addSale(this.sale).subscribe((response) => {
-			console.log(response);
-		});
+		const service =
+			this.type === 'Sale' ? this.saleService : this.purchaseService;
+
+		if (this.mode === 'ADD') {
+			service.add(this.object).subscribe((response) => {
+				console.log(response);
+			});
+		} else {
+			service.update(this.object).subscribe((response) => {
+				console.log(response);
+			});
+		}
 	}
 
 	addItem() {
@@ -158,38 +191,38 @@ export class AddOrEditComponent implements OnInit {
 				(item: any) => item.id == this.selectedItem.id
 			);
 
-			let sale_item: any = {
+			let object_item: any = {
 				item,
 				rate: this.selectedItem.rate,
 				unit_quantity: this.selectedItem.unit_quantity,
 			};
 
-			this.sale.sale_items.push(JSON.parse(JSON.stringify(sale_item)));
+			this.object.object_items.push(JSON.parse(JSON.stringify(object_item)));
 
 			this.refreshDataSource();
 			this.cdr.detectChanges();
 
-			this.totalItems = this.sale.sale_items.length;
+			this.totalItems = this.object.object_items.length;
 			this.cdr.detectChanges();
 			this.loaded = true;
 		}
 	}
 
-	removeFromSaleItems(index) {
-		this.sale.sale_items.splice(index, 1);
+	removeFromObjectItems(index) {
+		this.object.object_items.splice(index, 1);
 		this.refreshDataSource();
 		this.cdr.detectChanges();
 	}
 
 	refreshDataSource() {
-		this.dataSource = new MatTableDataSource(this.sale.sale_items);
+		this.dataSource = new MatTableDataSource(this.object.object_items);
 		this.dataSource.paginator = this.paginator;
 		this.dataSource.sort = this.sort;
 	}
 
-	editSaleItemsItem(Item, index) {
+	editObjectItemsItem(object_item, index) {
 		const dialogRef = this.dialog.open(EditComponent, {
-			data: { item: Item, index: index },
+			data: { object_item, index: index },
 			width: '440px',
 			disableClose: true,
 		});
@@ -199,10 +232,11 @@ export class AddOrEditComponent implements OnInit {
 				return;
 			}
 
-			this.sale.sale_items[res.index].quantity = res.item.quantity;
-			this.sale.sale_items[res.index].rate = res.item.rate;
+			this.object.object_items[res.index].unit_quantity =
+				res.object_item.unit_quantity;
+			this.object.object_items[res.index].rate = res.object_item.rate;
 
-			this.dataSource.data = this.sale.sale_items;
+			this.dataSource.data = this.object.object_items;
 			this.cdr.detectChanges();
 		});
 	}

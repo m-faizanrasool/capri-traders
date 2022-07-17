@@ -8,7 +8,7 @@
 		</div>
 	</div>
 	<div>
-		<form class="form" #saleForm="ngForm">
+		<form class="form" #objectForm="ngForm">
 			<!-- Sales Form Start -->
 			<div class="card-body">
 				<div class="card-body-progress">
@@ -21,7 +21,7 @@
 							<mat-select
 								placeholder="Company Head"
 								name="company_head_id"
-								[(ngModel)]="sale.company_head_id"
+								[(ngModel)]="object.company_head_id"
 								required
 							>
 								<mat-option
@@ -45,7 +45,7 @@
 								matInput
 								placeholder="Date"
 								name="date"
-								[(ngModel)]="sale.date"
+								[(ngModel)]="object.date"
 								rewuired
 							/>
 							<mat-error>
@@ -62,7 +62,7 @@
 								matInput
 								placeholder="Bill/Ref#"
 								name="bill_no"
-								[(ngModel)]="sale.bill_no"
+								[(ngModel)]="object.bill_no"
 								required
 							/>
 							<mat-error>
@@ -79,7 +79,7 @@
 								matInput
 								placeholder="PO#"
 								name="po_no"
-								[(ngModel)]="sale.po_no"
+								[(ngModel)]="object.po_no"
 								required
 							/>
 							<mat-error>
@@ -96,7 +96,7 @@
 								matInput
 								placeholder="GRN"
 								name="grn"
-								[(ngModel)]="sale.grn"
+								[(ngModel)]="object.grn"
 								required
 							/>
 							<mat-error>
@@ -113,7 +113,7 @@
 							<mat-select
 								placeholder="Party"
 								name="party_id"
-								[(ngModel)]="sale.party_id"
+								[(ngModel)]="object.party_id"
 								required
 							>
 								<mat-option *ngFor="let party of parties" [value]="party.id">
@@ -132,7 +132,7 @@
 							<mat-select
 								placeholder="Pay Mode"
 								name="pay_mode"
-								[(ngModel)]="sale.pay_mode"
+								[(ngModel)]="object.pay_mode"
 								required
 							>
 								<mat-option
@@ -153,7 +153,7 @@
 							<mat-select
 								placeholder="Pay Status"
 								name="pay_status"
-								[(ngModel)]="sale.pay_status"
+								[(ngModel)]="object.pay_status"
 								required
 							>
 								<mat-option
@@ -176,7 +176,7 @@
 								type="text"
 								placeholder="Remarks"
 								name="remarks"
-								[(ngModel)]="sale.remarks"
+								[(ngModel)]="object.remarks"
 							/>
 						</mat-form-field>
 					</div>
@@ -189,7 +189,6 @@
 								[(ngModel)]="selectedItem.id"
 								placeholder="Enter Item"
 								name="item"
-								required
 							>
 								<mat-option *ngFor="let item of items" [value]="item.id">
 									{{ item.name }}
@@ -209,7 +208,6 @@
 								type="number"
 								placeholder="Quantity"
 								name="quantity"
-								required
 								[(ngModel)]="selectedItem.unit_quantity"
 							/>
 							<mat-error>
@@ -226,7 +224,6 @@
 								type="number"
 								placeholder="Rate"
 								name="rate"
-								required
 								[(ngModel)]="selectedItem.rate"
 							/>
 							<mat-error>
@@ -263,8 +260,8 @@
 						<mat-header-cell *matHeaderCellDef mat-sort-header>
 							Name
 						</mat-header-cell>
-						<mat-cell *matCellDef="let sale_item">
-							{{ sale_item.item.name }}
+						<mat-cell *matCellDef="let object_item">
+							{{ object_item.item.name }}
 						</mat-cell>
 					</ng-container>
 
@@ -272,8 +269,8 @@
 						<mat-header-cell *matHeaderCellDef mat-sort-header>
 							Brand
 						</mat-header-cell>
-						<mat-cell *matCellDef="let sale_item">
-							{{ sale_item.item.brand ? sale_item.item.brand.name : '' }}
+						<mat-cell *matCellDef="let object_item">
+							{{ object_item.item.brand ? object_item.item.brand.name : '' }}
 						</mat-cell>
 					</ng-container>
 
@@ -281,8 +278,8 @@
 						<mat-header-cell *matHeaderCellDef mat-sort-header>
 							Quantity
 						</mat-header-cell>
-						<mat-cell *matCellDef="let sale_item">
-							{{ sale_item.unit_quantity }}
+						<mat-cell *matCellDef="let object_item">
+							{{ object_item.unit_quantity }}
 						</mat-cell>
 					</ng-container>
 
@@ -290,8 +287,8 @@
 						<mat-header-cell *matHeaderCellDef mat-sort-header>
 							Rate
 						</mat-header-cell>
-						<mat-cell *matCellDef="let sale_item">
-							{{ sale_item.rate }}
+						<mat-cell *matCellDef="let object_item">
+							{{ object_item.rate }}
 						</mat-cell>
 					</ng-container>
 
@@ -299,8 +296,8 @@
 						<mat-header-cell *matHeaderCellDef mat-sort-header>
 							Discount
 						</mat-header-cell>
-						<mat-cell *matCellDef="let sale_item">
-							{{ sale_item.item.discount }}
+						<mat-cell *matCellDef="let object_item">
+							{{ object_item.item.discount }}
 						</mat-cell>
 					</ng-container>
 
@@ -308,8 +305,8 @@
 						<mat-header-cell *matHeaderCellDef mat-sort-header>
 							Description
 						</mat-header-cell>
-						<mat-cell *matCellDef="let sale_item">
-							{{ sale_item.item.description }}
+						<mat-cell *matCellDef="let object_item">
+							{{ object_item.item.description }}
 						</mat-cell>
 					</ng-container>
 
@@ -317,8 +314,8 @@
 						<mat-header-cell *matHeaderCellDef mat-sort-header>
 							Image
 						</mat-header-cell>
-						<mat-cell *matCellDef="let sale_item">
-							<img [src]="sale_item.item.image_url" class="img-fluid w-75" />
+						<mat-cell *matCellDef="let object_item">
+							<img [src]="object_item.item.image_url" class="img-fluid w-75" />
 						</mat-cell>
 					</ng-container>
 					<!-- Actions Column -->
@@ -326,18 +323,18 @@
 						<mat-header-cell *matHeaderCellDef mat-sort-header>
 							Actions
 						</mat-header-cell>
-						<mat-cell *matCellDef="let item; let index = index">
+						<mat-cell *matCellDef="let object_item; let index = index">
 							<a
 								mat-icon-button
 								color="primary"
-								(click)="editSaleItemsItem(item, index)"
+								(click)="editObjectItemsItem(object_item, index)"
 							>
 								<mat-icon>create</mat-icon></a
 							>&nbsp;
 							<a
 								mat-icon-button
 								color="warn"
-								(click)="removeFromSaleItems(index)"
+								(click)="removeFromObjectItems(index)"
 								type="button"
 							>
 								<mat-icon>delete</mat-icon>
@@ -384,23 +381,31 @@
 				<div>
 					&nbsp;
 					<button
+						*ngIf="
+							this.mode === 'ADD' || (this.mode === 'EDIT' && object.is_return)
+						"
 						type="submit"
 						mat-raised-button
 						color="primary"
 						class="mr-3"
-						[disabled]="saleForm.invalid || saleForm.pristine"
-						(click)="onSubmit(saleForm, true)"
+						[disabled]="objectForm.invalid || objectForm.pristine"
+						(click)="onSubmit(objectForm, true)"
 					>
-						Save as Reutrn
+						{{ this.mode === 'EDIT' ? 'Update' : 'Save' }} as Reutrn
 					</button>
 					<button
+						*ngIf="!object.is_return"
 						type="submit"
 						mat-raised-button
 						color="primary"
-						[disabled]="saleForm.invalid || saleForm.pristine"
-						(click)="onSubmit(saleForm, false)"
+						[disabled]="
+							objectForm.invalid ||
+							objectForm.pristine ||
+							!object.object_items.length
+						"
+						(click)="onSubmit(objectForm, false)"
 					>
-						Save
+						{{ this.mode === 'EDIT' ? 'Update' : 'Save' }}
 					</button>
 				</div>
 			</div>

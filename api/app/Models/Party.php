@@ -8,5 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Party extends Model
 {
+    protected $fillable = ['name'];
+    protected $hidden = ['created_at', 'updated_at'];
+
     use HasFactory, SoftDeletes;
 }

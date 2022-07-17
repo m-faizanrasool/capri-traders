@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PurchasesComponent } from './purchases.component';
-import { EditComponent } from './edit/edit.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
@@ -17,13 +16,15 @@ import {
 } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-dialog/confirmation-dialog.component';
+import { ListComponent } from './list/list.component';
 
 @NgModule({
-	declarations: [PurchasesComponent, EditComponent],
+	declarations: [PurchasesComponent, ListComponent],
 	imports: [
 		CommonModule,
 		MatButtonModule,
@@ -38,6 +39,7 @@ import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-d
 		MatButtonModule,
 		MatSelectModule,
 		MatInputModule,
+		MatSortModule,
 		NgSelectModule,
 		RouterModule.forChild([
 			{
@@ -46,7 +48,19 @@ import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-d
 				children: [
 					{
 						path: '',
+						redirectTo: 'list',
 						pathMatch: 'full',
+					},
+					{
+						path: 'list',
+						component: ListComponent,
+					},
+					{
+						path: 'add-or-edit',
+						loadChildren: () =>
+							import(
+								'src/app/components/sale-purchase-shared/sale-purchase-shared.module'
+							).then((m) => m.SalePurchaseSharedModule),
 					},
 				],
 			},
@@ -63,6 +77,6 @@ import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-d
 			},
 		},
 	],
-	entryComponents: [ConfirmationDialogComponent, EditComponent],
+	entryComponents: [ConfirmationDialogComponent],
 })
 export class PurchasesModule {}

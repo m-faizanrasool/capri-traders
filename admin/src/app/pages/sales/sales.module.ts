@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SalesComponent } from './sales.component';
-import { EditComponent } from './edit/edit.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
@@ -17,21 +16,15 @@ import {
 } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import { ConfirmationDialogComponent } from '../_sharedComponents/confirmation-dialog/confirmation-dialog.component';
-import { MatSortModule } from '@angular/material/sort';
 import { ListComponent } from './list/list.component';
-import { AddOrEditComponent } from './add-or-edit/add-or-edit.component';
 
 @NgModule({
-	declarations: [
-		SalesComponent,
-		EditComponent,
-		ListComponent,
-		AddOrEditComponent,
-	],
+	declarations: [SalesComponent, ListComponent],
 	imports: [
 		CommonModule,
 		MatButtonModule,
@@ -63,8 +56,11 @@ import { AddOrEditComponent } from './add-or-edit/add-or-edit.component';
 						component: ListComponent,
 					},
 					{
-						path: 'list/detail',
-						component: AddOrEditComponent,
+						path: 'add-or-edit',
+						loadChildren: () =>
+							import(
+								'src/app/components/sale-purchase-shared/sale-purchase-shared.module'
+							).then((m) => m.SalePurchaseSharedModule),
 					},
 				],
 			},
@@ -81,6 +77,6 @@ import { AddOrEditComponent } from './add-or-edit/add-or-edit.component';
 			},
 		},
 	],
-	entryComponents: [ConfirmationDialogComponent, EditComponent],
+	entryComponents: [ConfirmationDialogComponent],
 })
 export class SalesModule {}

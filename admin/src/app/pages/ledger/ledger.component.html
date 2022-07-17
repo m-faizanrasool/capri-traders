@@ -1,1 +1,130 @@
-<p>ledger works!</p>
+<div class="card card-custom">
+	<div class="card-header">
+		<div class="card-title">
+			<h3>Ledger</h3>
+		</div>
+		<div class="card-toolbar">
+			<button
+				class="btn btn-primary"
+				[disabled]="!loaded"
+				(click)="getLedger()"
+			>
+				Get Ledger
+			</button>
+		</div>
+	</div>
+	<div class="card-body">
+		<!-- start::FILTERS & GROUP ACTIONS -->
+		<div class="form mb-3">
+			<!-- start::FILTERS & GROUP ACTIONS -->
+			<div class="form mb-3">
+				<!-- start::FILTERS -->
+				<div class="form-filtration">
+					<div class="row align-items-center">
+						<div class="col-lg-3 kt-margin-bottom-10-mobile">
+							<mat-form-field class="mat-form-field-fluid">
+								<input
+									matInput
+									type="date"
+									placeholder="From"
+									[formControl]="date_from"
+								/>
+							</mat-form-field>
+						</div>
+
+						<div class="col-lg-3 kt-margin-bottom-10-mobile">
+							<mat-form-field class="mat-form-field-fluid">
+								<input
+									matInput
+									type="date"
+									placeholder="To"
+									[formControl]="date_to"
+								/>
+							</mat-form-field>
+						</div>
+
+						<div class="col-lg-3 kt-margin-bottom-10-mobile">
+							<mat-form-field class="mat-form-field-fluid">
+								<mat-select
+									placeholder="Company Head"
+									name="company_head_id"
+									[formControl]="company_head_id"
+								>
+									<mat-option
+										*ngFor="let company_head of company_heads"
+										[value]="company_head.id"
+									>
+										{{ company_head.name }}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+
+						<div class="col-lg-3 kt-margin-bottom-10-mobile">
+							<mat-form-field class="mat-form-field-fluid">
+								<mat-select
+									placeholder="Party"
+									name="party_id"
+									[formControl]="party_id"
+								>
+									<mat-option *ngFor="let party of parties" [value]="party.id">
+										{{ party.name }}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- end::FILTERS & GROUP ACTIONS -->
+		</div>
+	</div>
+</div>
+
+<div *ngIf="ledger_loaded; else loader">
+	<div class="card card-custom mt-5">
+		<div class="card-body" *ngIf="ledger.length; else no_data">
+			<div class="row border border-dark mb-3">
+				<div class="col font-weight-boldest">Date</div>
+				<div class="col font-weight-boldest">Pay Mode</div>
+				<div class="col font-weight-boldest">Bill/Ref No.</div>
+				<div class="col font-weight-boldest">Debit</div>
+				<div class="col font-weight-boldest">Credit</div>
+				<div class="col font-weight-boldest">Balnce</div>
+			</div>
+			<div class="row" *ngFor="let item of ledger">
+				<div class="col">
+					{{ item.date_formatted }}
+				</div>
+				<div class="col">
+					{{ item.pay_mode }}
+				</div>
+				<div class="col">
+					{{ item.bill_no }}
+				</div>
+				<div class="col">
+					{{ item.debit ? item.debit : 0 }}
+				</div>
+				<div class="col">
+					{{ item.credit ? item.credit : 0 }}
+				</div>
+				<div class="col">
+					{{ item.balance }}
+				</div>
+			</div>
+		</div>
+		<ng-template #no_data>
+			<div class="card-body">
+				<div class="text-center font-size-h4 font-weight-bolder">
+					No Records
+				</div>
+			</div>
+		</ng-template>
+	</div>
+</div>
+
+<ng-template #loader>
+	<div class="card-body-progress d-flex justify-content-center m-4">
+		<mat-spinner [diameter]="20"></mat-spinner>
+	</div>
+</ng-template>

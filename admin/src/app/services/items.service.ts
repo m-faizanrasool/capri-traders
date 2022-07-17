@@ -55,6 +55,5 @@ export interface ItemQuery {
 	page_index: number;
 	items_per_page: number;
 	search?: string;
-	categories?: string;
 	brands?: string;
 }

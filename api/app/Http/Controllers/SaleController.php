@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ledger;
 use App\Models\Sale;
+use App\Models\SaleItem;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -15,7 +15,9 @@ class SaleController extends Controller
      */
     public function index()
     {
-        //
+        $sales = Sale::with(['sale_items', 'company_head', 'party'])->get();
+
+        return response()->json(compact('sales'));
     }
 
     /**
@@ -47,7 +49,7 @@ class SaleController extends Controller
             "pay_status"=> 'required',
             "po_no"=> 'required',
             "remarks"=> 'required',
-            "sale_items" =>'required'
+            "object_items" =>'required'
         ]);
 
         $sale = Sale::create(request([
@@ -64,7 +66,7 @@ class SaleController extends Controller
         ]));
 
         // create Sale Items
-        foreach ($request->sale_items as $sale_item) {
+        foreach ($request->object_items as $sale_item) {
             $sale->sale_items()->create([
                 "item_id" => $sale_item['item']['id'],
                 "rate" => $sale_item['rate'],
@@ -85,6 +87,7 @@ class SaleController extends Controller
     public function show($id)
     {
         $sale = Sale::with('sale_items')->find($id);
+
         return response()->json(compact('sale'));
     }
 
@@ -108,7 +111,51 @@ class SaleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            "is_return"=> 'required',
+            "bill_no"=> 'required',
+            "company_head_id"=> 'required',
+            "date"=> 'required',
+            "grn"=> 'required',
+            "party_id"=> 'required',
+            "pay_mode"=> 'required',
+            "pay_status"=> 'required',
+            "po_no"=> 'required',
+            "remarks"=> 'required',
+            "object_items" =>'required'
+        ]);
+
+        $sale = Sale::find($id);
+        $sale->update(request([
+            "is_return",
+            "bill_no",
+            "company_head_id",
+            "date",
+            "grn",
+            "party_id",
+            "pay_mode",
+            "pay_status",
+            "po_no",
+            "remarks"
+        ]));
+
+        // create Sale Items
+        foreach ($request->object_items as $sale_item) {
+            $sale_item_data = [
+                "item_id" => $sale_item['item']['id'],
+                "rate" => $sale_item['rate'],
+                "unit_id" => $sale_item['item']['unit_id'],
+                "unit_quantity" => $sale_item['unit_quantity']
+            ];
+            if (isset($sale_item['id'])) {
+                $sale_item = SaleItem::firstWhere('id', $sale_item['id']);
+                $sale_item->update($sale_item_data);
+            } else {
+                $sale->sale_items()->create($sale_item_data);
+            }
+        }
+
+        return response()->json(["message" => 'Updated Successfully!']);
     }
 
     /**

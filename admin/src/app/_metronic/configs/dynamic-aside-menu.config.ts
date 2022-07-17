@@ -44,6 +44,22 @@ export const DynamicAsideMenuConfig = {
 		},
 		{ section: 'Accounts' },
 		{
+			title: 'Company Heads',
+			root: true,
+			show: true,
+			icon: 'flaticon2-world',
+			page: '/company-heads',
+			svg: './assets/media/svg/icons/General/User.svg',
+		},
+		{
+			title: 'Parties',
+			root: true,
+			show: true,
+			icon: 'flaticon2-world',
+			page: '/parties',
+			svg: './assets/media/svg/icons/General/User.svg',
+		},
+		{
 			title: 'Sales',
 			root: true,
 			show: true,
@@ -57,6 +73,14 @@ export const DynamicAsideMenuConfig = {
 			show: true,
 			icon: 'flaticon2-world',
 			page: '/purchases',
+			svg: './assets/media/svg/icons/Shopping/Price1.svg',
+		},
+		{
+			title: 'Payments',
+			root: true,
+			show: true,
+			icon: 'flaticon2-world',
+			page: '/payments',
 			svg: './assets/media/svg/icons/Shopping/Price1.svg',
 		},
 		{

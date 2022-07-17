@@ -19,6 +19,20 @@ const routes: Routes = [
 					import('./builder/builder.module').then((m) => m.BuilderModule),
 			},
 			{
+				path: 'company-heads',
+				canActivate: [RoleGuard],
+				loadChildren: () =>
+					import('./company-heads/company-heads.module').then(
+						(m) => m.CompanyHeadsModule
+					),
+			},
+			{
+				path: 'parties',
+				canActivate: [RoleGuard],
+				loadChildren: () =>
+					import('./parties/parties.module').then((m) => m.PartiesModule),
+			},
+			{
 				path: 'users',
 				canActivate: [RoleGuard],
 				loadChildren: () =>
@@ -47,6 +61,12 @@ const routes: Routes = [
 				canActivate: [RoleGuard],
 				loadChildren: () =>
 					import('./purchases/purchases.module').then((m) => m.PurchasesModule),
+			},
+			{
+				path: 'payments',
+				canActivate: [RoleGuard],
+				loadChildren: () =>
+					import('./payments/payments.module').then((m) => m.PaymentsModule),
 			},
 			{
 				path: 'ledger',
