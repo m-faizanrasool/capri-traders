@@ -40,6 +40,10 @@ class Ledger extends Model
             if ($this->purchase->is_retrun) {
                 return $this->purchase->total;
             }
+        } elseif ($this->payment_id) {
+            if (in_array($this->payment->action, ['RECEIVED', 'DEDUCTED'])) {
+                return $this->payment->amount;
+            }
         }
 
         return null;
@@ -55,6 +59,10 @@ class Ledger extends Model
             if (!$this->purchase->is_retrun) {
                 return $this->purchase->total;
             }
+        } elseif ($this->payment_id) {
+            if ($this->payment->action === 'SENT') {
+                return $this->payment->amount;
+            }
         }
 
         return null;
@@ -66,6 +74,8 @@ class Ledger extends Model
             return $this->sale->pay_mode;
         } elseif ($this->purchase_id) {
             return $this->purchase->pay_mode;
+        } elseif ($this->payment_id) {
+            return $this->payment->type;
         }
     }
 
@@ -77,5 +87,10 @@ class Ledger extends Model
     public function purchase()
     {
         return $this->belongsTo(Purchase::class);
+    }
+
+    public function payment()
+    {
+        return $this->belongsTo(Payment::class);
     }
 }

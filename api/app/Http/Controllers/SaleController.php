@@ -71,7 +71,8 @@ class SaleController extends Controller
                 "item_id" => $sale_item['item']['id'],
                 "rate" => $sale_item['rate'],
                 "unit_id" => $sale_item['item']['unit_id'],
-                "unit_quantity" => $sale_item['unit_quantity']
+                "unit_quantity" => $sale_item['unit_quantity'],
+                "total" => $sale_item['rate'] * $sale_item['unit_quantity'],
             ]);
         }
 
@@ -145,8 +146,10 @@ class SaleController extends Controller
                 "item_id" => $sale_item['item']['id'],
                 "rate" => $sale_item['rate'],
                 "unit_id" => $sale_item['item']['unit_id'],
-                "unit_quantity" => $sale_item['unit_quantity']
+                "unit_quantity" => $sale_item['unit_quantity'],
+                "total" => $sale_item['rate'] * $sale_item['unit_quantity'],
             ];
+
             if (isset($sale_item['id'])) {
                 $sale_item = SaleItem::firstWhere('id', $sale_item['id']);
                 $sale_item->update($sale_item_data);
@@ -167,5 +170,26 @@ class SaleController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function search(Request $request)
+    {
+        $sale = Sale::query()->with(['company_head', 'party']);
+
+        if ($request->bill_no) {
+            $sale = $sale->where('bill_no', $request->bill_no);
+        }
+        if ($request->company_head_id) {
+            $sale = $sale->where('company_head_id', $request->company_head_id);
+        }
+        if ($request->party_id) {
+            $sale =  $sale->where('party_id', $request->party_id);
+        }
+
+        $sale = $sale->get()->append(['sub_total', 'total']);
+
+        return $sale;
+
+        return response()->json(compact('sale'));
     }
 }

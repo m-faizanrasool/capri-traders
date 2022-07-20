@@ -17,6 +17,16 @@ export class SaleService {
 		return this.httpClient.get(`${environment.apiUrl}sales/${sale_id}`);
 	}
 
+	search(queryParams: any) {
+		const queryParamsString = new HttpParams({
+			fromObject: queryParams,
+		}).toString();
+
+		return this.httpClient.get(
+			`${environment.apiUrl}search_bills?${queryParamsString}`
+		);
+	}
+
 	add(sale) {
 		return this.httpClient.post(`${environment.apiUrl}sales`, sale);
 	}

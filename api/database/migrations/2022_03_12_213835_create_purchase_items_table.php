@@ -20,6 +20,7 @@ class CreatePurchaseItemsTable extends Migration
             $table->unsignedSmallInteger('unit_id');
             $table->unsignedDecimal('unit_quantity', 10, 2);
             $table->unsignedDecimal('rate', 10, 2);
+            $table->unsignedDecimal('total', 10, 2);
             $table->timestamps();
             $table->softDeletes();
 

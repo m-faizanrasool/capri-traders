@@ -72,7 +72,8 @@ class PurchaseController extends Controller
                 "item_id" => $purchase_item['item']['id'],
                 "rate" => $purchase_item['rate'],
                 "unit_id" => $purchase_item['item']['unit_id'],
-                "unit_quantity" => $purchase_item['unit_quantity']
+                "unit_quantity" => $purchase_item['unit_quantity'],
+                "total" => $purchase_item['rate'] * $purchase_item['unit_quantity'],
             ]);
         }
 
@@ -146,7 +147,8 @@ class PurchaseController extends Controller
                 "item_id" => $purchase_item['item']['id'],
                 "rate" => $purchase_item['rate'],
                 "unit_id" => $purchase_item['item']['unit_id'],
-                "unit_quantity" => $purchase_item['unit_quantity']
+                "unit_quantity" => $purchase_item['unit_quantity'],
+                "total" => $purchase_item['rate'] * $purchase_item['unit_quantity'],
             ];
             if (isset($purchase_item['id'])) {
                 $purchase_item = PurchaseItem::firstWhere('id', $purchase_item['id']);

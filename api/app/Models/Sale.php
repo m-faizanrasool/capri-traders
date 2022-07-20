@@ -14,7 +14,7 @@ class Sale extends Model
 
     public function getSubTotalAttribute()
     {
-        return $this->sale_items->sum('rate');
+        return $this->sale_items->sum('total');
     }
 
     public function getTotalAttribute()

@@ -1,1 +1,327 @@
-<p>add-or-edit works!</p>
+<div class="card card-custom">
+	<div class="card-header">
+		<div class="card-title">
+			<h3>Payments</h3>
+		</div>
+		<div class="card-toolbar">
+			<!-- <button class="btn btn-primary" (click)="addItem()">Add Item</button> -->
+		</div>
+	</div>
+	<div>
+		<form class="form" #paymentForm="ngForm">
+			<!-- Payments Form Start -->
+			<div class="card-body">
+				<div class="card-body-progress">
+					<mat-spinner [diameter]="20"></mat-spinner>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-7">
+						<div class="form-group row">
+							<div class="col-lg-12 kt-margin-bottom-20-mobile">
+								<mat-form-field class="mat-form-field-fluid">
+									<mat-select
+										placeholder="Company Head"
+										name="company_head_id"
+										[(ngModel)]="payment.company_head_id"
+										required
+									>
+										<mat-option
+											*ngFor="let company_head of company_heads"
+											[value]="company_head.id"
+										>
+											{{ company_head.name }}
+										</mat-option>
+									</mat-select>
+									<mat-error>
+										Company Head is
+										<strong>required</strong>
+									</mat-error>
+								</mat-form-field>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<div class="col-lg-6 kt-margin-bottom-20-mobile">
+								<mat-form-field class="mat-form-field-fluid">
+									<mat-select
+										placeholder="Type"
+										name="type"
+										[(ngModel)]="payment.type"
+										required
+									>
+										<mat-option
+											*ngFor="let pay_type of pay_types"
+											[value]="pay_type.name"
+										>
+											{{ pay_type.name }}
+										</mat-option>
+									</mat-select>
+									<mat-error>
+										<strong>required</strong>
+									</mat-error>
+								</mat-form-field>
+							</div>
+
+							<div class="col-lg-6 kt-margin-bottom-20-mobile">
+								<mat-form-field class="mat-form-field-fluid">
+									<input
+										type="date"
+										matInput
+										placeholder="Date"
+										name="date"
+										[(ngModel)]="payment.date"
+										required
+									/>
+									<mat-error>
+										Date is
+										<strong>required</strong>
+									</mat-error>
+								</mat-form-field>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<div class="col-lg-12 kt-margin-bottom-20-mobile">
+								<mat-form-field class="mat-form-field-fluid">
+									<textarea
+										matInput
+										type="text"
+										placeholder="Remarks"
+										name="narration"
+										[(ngModel)]="payment.narration"
+									></textarea>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+
+					<div class="col">
+						<h4>Find Bill</h4>
+						<div class="form-group row">
+							<div class="col-10 kt-margin-bottom-20-mobile">
+								<mat-form-field class="mat-form-field-fluid">
+									<input
+										#find_bill_no
+										matInput
+										type="number"
+										placeholder="Bill #"
+										name="bill_no"
+										[disabled]="!payment.party_id || !payment.company_head_id"
+										(input)="find_bill(find_bill_no.value)"
+									/>
+								</mat-form-field>
+							</div>
+						</div>
+
+						<div *ngIf="found_bills.length">
+							<h4>Searched Bills</h4>
+							<div class="overflow-auto max-height-100">
+								<div *ngFor="let bill of found_bills">
+									<div class="d-flex justify-content-between">
+										<div>
+											<div>
+												<strong>Company Head:</strong>
+												{{ bill.company_head.name }}
+											</div>
+											<div><strong>Party:</strong> {{ bill.party.name }}</div>
+											<div><strong>Total:</strong> {{ bill.total }}</div>
+										</div>
+										<div>
+											<span
+												class="btn btn-primary btn-sm"
+												(click)="addBill(bill)"
+											>
+												Add
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div *ngIf="attached_bills.length" class="mt-5">
+							<h4>Attached Bills</h4>
+							<div class="overflow-auto max-height-100">
+								<div *ngFor="let bill of attached_bills; let index = index">
+									<div class="d-flex justify-content-between">
+										<div>
+											<div>
+												<strong>Company Head:</strong>
+												{{ bill.company_head.name }}
+											</div>
+											<div><strong>Party:</strong> {{ bill.party.name }}</div>
+											<div><strong>Total:</strong> {{ bill.total }}</div>
+										</div>
+										<div>
+											<span
+												class="btn btn-danger btn-sm"
+												(click)="removeBill(index)"
+											>
+												<mat-icon>delete</mat-icon>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div></div>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<mat-select
+								placeholder="Party"
+								name="party_id"
+								[(ngModel)]="payment.party_id"
+								required
+							>
+								<mat-option *ngFor="let party of parties" [value]="party.id">
+									{{ party.name }}
+								</mat-option>
+							</mat-select>
+							<mat-error>
+								Party is
+								<strong>required</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input
+								matInput
+								type="text"
+								placeholder="Narration"
+								name="remarks"
+								[(ngModel)]="payment.remarks"
+							/>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div class="row" *ngIf="payment.type === 'CHEQUE'">
+					<div class="col-lg-2 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input
+								type="number"
+								matInput
+								placeholder="Cheque no"
+								name="cheque_no"
+								[(ngModel)]="payment.cheque_no"
+								required
+							/>
+							<mat-error>
+								Cheque no is
+								<strong>required</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-2 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input
+								type="date"
+								matInput
+								placeholder="Cheque Date"
+								name="date"
+								[(ngModel)]="payment.cheque_date"
+								required
+							/>
+							<mat-error>
+								Cheque Date is
+								<strong>required</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input
+								type="number"
+								matInput
+								placeholder="Amount"
+								name="amount"
+								[(ngModel)]="payment.amount"
+								required
+							/>
+							<mat-error>
+								Amount is
+								<strong>required</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-3 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input
+								type="number"
+								matInput
+								placeholder="Tax"
+								name="tax"
+								[(ngModel)]="payment.tax"
+							/>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-3 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input
+								#tax_percent_input
+								type="number"
+								min="0"
+								max="100"
+								matInput
+								placeholder="Tax Percent"
+								name="tax_percent"
+								(input)="calc_tax(tax_percent_input.value)"
+							/>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div class="separator separator-dashed my-6"></div>
+			</div>
+			<!-- Payments Form End -->
+		</form>
+
+		<div class="card-footer">
+			<div class="d-flex justify-content-between">
+				<div class="mr-2">
+					<button
+						*ngIf="
+							this.mode === 'ADD' ||
+							(this.mode === 'EDIT' && payment.action == 'RECEIVED')
+						"
+						type="submit"
+						mat-raised-button
+						color="primary"
+						class="mr-3"
+						[disabled]="paymentForm.invalid || paymentForm.pristine"
+						(click)="onSubmit(paymentForm, 'RECEIVED')"
+					>
+						{{ this.mode === 'EDIT' ? 'Update' : 'Save' }} as Received
+					</button>
+				</div>
+
+				<div>
+					<button
+						*ngIf="payment.action !== 'RECEIVED'"
+						type="submit"
+						mat-raised-button
+						color="primary"
+						[disabled]="paymentForm.invalid || paymentForm.pristine"
+						(click)="onSubmit(paymentForm, 'SENT')"
+					>
+						{{ this.mode === 'EDIT' ? 'Update' : 'Save' }} as Sent
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

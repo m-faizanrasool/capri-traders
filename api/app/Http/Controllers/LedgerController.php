@@ -20,20 +20,12 @@ class LedgerController extends Controller
 
         $balance = 0;
         foreach ($ledgers as $ledger) {
-            if ($ledger->sale_id) {
-                if (!$ledger->sale->is_return) {
-                    $balance += $ledger->sale->total;
-                } else {
-                    $balance -= $ledger->sale->total;
-                }
-            } elseif ($ledger->purchase_id) {
-                if (!$ledger->purchase->is_return) {
-                    $balance -= $ledger->purchase->total;
-                } else {
-                    $balance += $ledger->purchase->total;
-                }
-            } elseif ($ledger->payment_id) {
+            if ($ledger->debit) {
+                $balance += $ledger->debit;
+            } elseif ($ledger->credit) {
+                $balance -= $ledger->credit;
             }
+
             $ledger->balance = $balance;
         }
 

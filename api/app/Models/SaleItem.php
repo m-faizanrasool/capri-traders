@@ -36,12 +36,14 @@ class SaleItem extends Model
     protected static function booted()
     {
         static::creating(function ($sale_item) {
+            // Update Items unit quantity
             $item = $sale_item->item;
             $item->unit_quantity = CalcService::{$sale_item->methods['primary']}($item->unit_quantity, $sale_item->unit_quantity) ;
             $item->save();
         });
 
         static::updating(function ($sale_item) {
+            // Update Items unit quantity
             $dirtySaleItem = $sale_item->getDirty();
             $OriginalSaleItem = $sale_item->getOriginal();
 

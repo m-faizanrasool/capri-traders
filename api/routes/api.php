@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LedgerController;
+use App\Http\Controllers\SaleController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Services\OTPService;
@@ -50,6 +51,7 @@ Route::middleware(['auth:sanctum', PhoneFormat::class])->group(function () {
     Route::post('items/toggle-visibility', 'App\Http\Controllers\ItemController@toggleVisibility');
 
     Route::get('ledger', [LedgerController::class, 'get_ledger']);
+    Route::get('search_bills', [SaleController::class, 'search']);
 
     Route::resources([
         'items' => 'App\Http\Controllers\ItemController',
@@ -58,5 +60,6 @@ Route::middleware(['auth:sanctum', PhoneFormat::class])->group(function () {
         'purchases' =>  'App\Http\Controllers\PurchaseController',
         'company-heads' =>  'App\Http\Controllers\CompanyHeadController',
         'parties' =>  'App\Http\Controllers\PartyController',
+        'payments' =>  'App\Http\Controllers\PaymentController',
     ]);
 });

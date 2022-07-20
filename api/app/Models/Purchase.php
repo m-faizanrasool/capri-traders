@@ -14,7 +14,7 @@ class Purchase extends Model
 
     public function getSubTotalAttribute()
     {
-        return $this->purchase_items->sum('rate');
+        return $this->purchase_items->sum('total');
     }
 
     public function getTotalAttribute()
