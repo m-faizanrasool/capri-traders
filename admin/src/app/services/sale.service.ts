@@ -1,5 +1,11 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import {
+	HttpClient,
+	HttpErrorResponse,
+	HttpParams,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 
@@ -30,6 +36,12 @@ export class SaleService {
 	add(sale) {
 		return this.httpClient.post(`${environment.apiUrl}sales`, sale);
 	}
+	// maybe use in future
+	// add(sale) {
+	// 	return this.httpClient
+	// 		.post(`${environment.apiUrl}sales`, sale)
+	// 		.pipe(catchError(this.handleError));
+	// }
 
 	update(sale) {
 		return this.httpClient.patch(`${environment.apiUrl}sales/` + sale.id, sale);
@@ -37,5 +49,9 @@ export class SaleService {
 
 	delete(id) {
 		return this.httpClient.delete(`${environment.apiUrl}sales/` + id);
+	}
+
+	handleError(error: HttpErrorResponse) {
+		return throwError(error);
 	}
 }

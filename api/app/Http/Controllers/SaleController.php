@@ -43,12 +43,9 @@ class SaleController extends Controller
             "bill_no"=> 'required',
             "company_head_id"=> 'required',
             "date"=> 'required',
-            "grn"=> 'required',
             "party_id"=> 'required',
             "pay_mode"=> 'required',
             "pay_status"=> 'required',
-            "po_no"=> 'required',
-            "remarks"=> 'required',
             "object_items" =>'required'
         ]);
 
@@ -117,12 +114,9 @@ class SaleController extends Controller
             "bill_no"=> 'required',
             "company_head_id"=> 'required',
             "date"=> 'required',
-            "grn"=> 'required',
             "party_id"=> 'required',
             "pay_mode"=> 'required',
             "pay_status"=> 'required',
-            "po_no"=> 'required',
-            "remarks"=> 'required',
             "object_items" =>'required'
         ]);
 

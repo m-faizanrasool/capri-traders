@@ -80,7 +80,6 @@
 								placeholder="PO#"
 								name="po_no"
 								[(ngModel)]="object.po_no"
-								required
 							/>
 							<mat-error>
 								PO# is
@@ -97,7 +96,6 @@
 								placeholder="GRN"
 								name="grn"
 								[(ngModel)]="object.grn"
-								required
 							/>
 							<mat-error>
 								GRN is
@@ -133,6 +131,7 @@
 								placeholder="Pay Mode"
 								name="pay_mode"
 								[(ngModel)]="object.pay_mode"
+								(ngModelChange)="payModeChanged()"
 								required
 							>
 								<mat-option
@@ -233,7 +232,13 @@
 						</mat-form-field>
 					</div>
 					<div class="col-lg-2 kt-margin-bottom-20-mobile">
-						<a (click)="AddItemToSaleItems()" class="btn btn-primary"> Add </a>
+						<button
+							(click)="AddItemToObjectItems()"
+							class="btn btn-primary"
+							[disabled]="!selectedItem.unit_quantity || !selectedItem.rate"
+						>
+							Add
+						</button>
 					</div>
 				</div>
 
@@ -388,7 +393,12 @@
 						mat-raised-button
 						color="primary"
 						class="mr-3"
-						[disabled]="objectForm.invalid || objectForm.pristine"
+						[disabled]="
+							disabled ||
+							objectForm.invalid ||
+							objectForm.pristine ||
+							!object.object_items.length
+						"
 						(click)="onSubmit(objectForm, true)"
 					>
 						{{ this.mode === 'EDIT' ? 'Update' : 'Save' }} as Reutrn
@@ -399,6 +409,7 @@
 						mat-raised-button
 						color="primary"
 						[disabled]="
+							disabled ||
 							objectForm.invalid ||
 							objectForm.pristine ||
 							!object.object_items.length

@@ -21,6 +21,8 @@ import { CommonService } from 'src/app/services/common.service';
 import { SaleService } from 'src/app/services/sale.service';
 import { PurchaseService } from 'src/app/services/purchase.service';
 
+import { SalePurchaseModel } from 'src/app/models/SalePurchase.model';
+
 @Component({
 	selector: 'app-add-or-edit',
 	templateUrl: './add-or-edit.component.html',
@@ -30,6 +32,7 @@ export class AddOrEditComponent implements OnInit {
 	type: string;
 	type_id: number;
 	loaded: boolean = false;
+	disabled: boolean;
 	mode: string = 'ADD';
 
 	itemData: any;
@@ -43,19 +46,7 @@ export class AddOrEditComponent implements OnInit {
 	pay_modes: any = [{ name: 'CREDIT' }, { name: 'CASH' }];
 	pay_statuses: any = [{ name: 'PENDING' }, { name: 'DONE' }];
 
-	object: any = {
-		is_return: false,
-		company_head_id: 1,
-		date: '2012-04-12',
-		bill_no: 123,
-		po_no: 123,
-		grn: 123,
-		party_id: 1,
-		pay_mode: 'CASH',
-		remarks: 'testing',
-		pay_status: 'PENDING',
-		object_items: [],
-	};
+	object: SalePurchaseModel = new SalePurchaseModel();
 
 	selectedItem: any = {
 		id: '',
@@ -95,6 +86,17 @@ export class AddOrEditComponent implements OnInit {
 	) {}
 
 	async ngOnInit(): Promise<void> {
+		this.object.is_return = false;
+		this.object.company_head_id = 1;
+		// this.object.date = '';
+		this.object.bill_no = 123;
+		this.object.po_no = 123;
+		this.object.grn = 123;
+		this.object.party_id = 1;
+		this.object.pay_mode = 'CASH';
+		this.object.remarks = 'testing';
+		this.object.pay_status = 'PENDING';
+		this.object.object_items = [];
 		const routeSubscription = this.activatedRoute.params.subscribe(
 			async (params) => {
 				this.type = params.type;
@@ -151,8 +153,22 @@ export class AddOrEditComponent implements OnInit {
 		this.cdr.detectChanges();
 	}
 
-	onSubmit(form: NgForm, is_return: boolean) {
-		if (form.invalid) {
+	payModeChanged() {
+		switch (this.object.pay_mode) {
+			case 'CREDIT':
+				this.object.pay_status = 'PENDING';
+				break;
+			case 'CASH':
+				this.object.pay_status = 'DONE';
+				break;
+
+			default:
+				break;
+		}
+	}
+
+	async onSubmit(form: NgForm, is_return: boolean) {
+		if (this.disabled || form.invalid) {
 			return;
 		}
 
@@ -161,15 +177,32 @@ export class AddOrEditComponent implements OnInit {
 		const service =
 			this.type === 'Sale' ? this.saleService : this.purchaseService;
 
+		this.disabled = true;
+
 		if (this.mode === 'ADD') {
-			service.add(this.object).subscribe((response) => {
-				console.log(response);
-			});
+			await service
+				.add(this.object)
+				.toPromise()
+				.then(
+					(response: any) => {
+						this.object = new SalePurchaseModel();
+						this.refreshDataSource();
+						this.commonService.openSnackBar(response.message);
+					},
+					(error) => {
+						this.commonService.openSnackBar(error.error.message);
+					}
+				);
 		} else {
-			service.update(this.object).subscribe((response) => {
-				console.log(response);
-			});
+			await service
+				.update(this.object)
+				.toPromise()
+				.then((response: any) => {
+					this.commonService.openSnackBar(response.message);
+				});
 		}
+		this.disabled = false;
+		this.cdr.detectChanges();
 	}
 
 	addItem() {
@@ -185,7 +218,7 @@ export class AddOrEditComponent implements OnInit {
 		});
 	}
 
-	AddItemToSaleItems() {
+	AddItemToObjectItems() {
 		if (this.selectedItem.id) {
 			const item = this.items.find(
 				(item: any) => item.id == this.selectedItem.id
@@ -200,11 +233,8 @@ export class AddOrEditComponent implements OnInit {
 			this.object.object_items.push(JSON.parse(JSON.stringify(object_item)));
 
 			this.refreshDataSource();
-			this.cdr.detectChanges();
-
 			this.totalItems = this.object.object_items.length;
 			this.cdr.detectChanges();
-			this.loaded = true;
 		}
 	}
 

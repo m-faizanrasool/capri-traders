@@ -20,8 +20,8 @@ class CreatePurchasesTable extends Migration
             $table->unsignedSmallInteger('party_id')->index();
             $table->timestamp('date')->index();
             $table->integer('bill_no')->index();
-            $table->integer('po_no');
-            $table->integer('grn');
+            $table->integer('po_no')->nullable();
+            $table->integer('grn')->nullable();
             $table->enum('pay_mode', ['CREDIT', 'CASH'])->index();
             $table->enum('pay_status', ['PENDING', 'DONE'])->index();
             $table->string('remarks')->nullable();
