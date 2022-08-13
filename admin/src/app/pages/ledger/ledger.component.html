@@ -81,7 +81,7 @@
 	</div>
 </div>
 
-<div *ngIf="ledger_loaded; else loader">
+<div *ngIf="loaded; else loader">
 	<div class="card card-custom mt-5">
 		<div class="card-body" *ngIf="ledger.length; else no_data">
 			<div class="row border border-dark mb-3">

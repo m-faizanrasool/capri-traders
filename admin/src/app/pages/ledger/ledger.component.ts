@@ -24,7 +24,7 @@ export class LedgerComponent implements OnInit, AfterViewInit {
 	parties: any = [];
 
 	loaded: boolean;
-	ledger_loaded: boolean;
+
 	queryParams: LedgerQuery;
 	ledger: any = [];
 
@@ -61,8 +61,7 @@ export class LedgerComponent implements OnInit, AfterViewInit {
 	}
 
 	getLedger() {
-		this.ledger_loaded = false;
-		this.cdr.detectChanges();
+		this.loaded = false;
 
 		this.queryParams = {
 			company_head_id: this.company_head_id.value,
@@ -74,7 +73,7 @@ export class LedgerComponent implements OnInit, AfterViewInit {
 		this.ledgerService.get(this.queryParams).subscribe((response: any) => {
 			console.log('response', response);
 			this.ledger = response.ledger;
-			this.ledger_loaded = true;
+			this.loaded = true;
 			this.cdr.detectChanges();
 		});
 	}
