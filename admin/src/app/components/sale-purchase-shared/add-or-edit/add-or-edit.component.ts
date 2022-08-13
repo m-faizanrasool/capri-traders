@@ -1,11 +1,18 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
+import {
+	Component,
+	OnInit,
+	ChangeDetectorRef,
+	ViewChild,
+	OnDestroy,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 
 import { MatTableDataSource } from '@angular/material/table';
 
-import { NgForm } from '@angular/forms';
+import { FormControl, NgForm } from '@angular/forms';
 import { CompanyHeadsService } from 'src/app/services/company-head.service';
 import { PartiesService } from 'src/app/services/parties.service';
 
@@ -22,13 +29,14 @@ import { SaleService } from 'src/app/services/sale.service';
 import { PurchaseService } from 'src/app/services/purchase.service';
 
 import { SalePurchaseModel } from 'src/app/models/SalePurchase.model';
+import { map, startWith, takeUntil } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-add-or-edit',
 	templateUrl: './add-or-edit.component.html',
 	styleUrls: ['./add-or-edit.component.scss'],
 })
-export class AddOrEditComponent implements OnInit {
+export class AddOrEditComponent implements OnInit, OnDestroy {
 	type: string;
 	type_id: number;
 	loaded: boolean = false;
@@ -53,6 +61,10 @@ export class AddOrEditComponent implements OnInit {
 		unit_quantity: '',
 		rate: '',
 	};
+
+	filteredItems: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
+	filteredItemsCtrl: FormControl = new FormControl();
+	OnDestroy = new Subject<void>();
 
 	dataSource = new MatTableDataSource([]);
 
@@ -132,6 +144,12 @@ export class AddOrEditComponent implements OnInit {
 			}
 		);
 
+		this.filteredItemsCtrl.valueChanges
+			.pipe(takeUntil(this.OnDestroy))
+			.subscribe(() => {
+				this.filterItems();
+			});
+
 		this.itemsService.getCreateItemParams().subscribe((response) => {
 			this.itemData = response;
 		});
@@ -147,10 +165,38 @@ export class AddOrEditComponent implements OnInit {
 		});
 	}
 
+	ngOnDestroy(): void {
+		this.OnDestroy.next();
+		this.OnDestroy.complete();
+	}
+
 	handleResponse(response: any) {
 		this.items = response.items;
+		this.filteredItems.next(this.items.slice());
+
 		this.loaded = true;
 		this.cdr.detectChanges();
+	}
+
+	filterItems() {
+		if (!this.items) {
+			return;
+		}
+
+		let search = this.filteredItemsCtrl.value;
+
+		if (!search) {
+			this.filteredItems.next(this.items.slice());
+			return;
+		} else {
+			search = search.toLowerCase();
+		}
+
+		this.filteredItems.next(
+			this.items.filter(
+				(item) => item && item.name.toLowerCase().indexOf(search) > -1
+			)
+		);
 	}
 
 	payModeChanged() {

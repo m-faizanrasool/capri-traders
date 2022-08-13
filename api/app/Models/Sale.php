@@ -46,7 +46,7 @@ class Sale extends Model
         return $this->belongsTo(Party::class);
     }
 
-    public static function validateBillNo($party_id, $bill_no, $date, $sale_id = null)
+    public static function validateBillNo($party_id, $bill_no, $date, $is_return, $sale_id = null)
     {
         $sale = Sale::query();
 
@@ -54,7 +54,7 @@ class Sale extends Model
             $sale->where('id', '!=', $sale_id);
         }
 
-        $validation = Sale::where('party_id', $party_id)->where('bill_no', $bill_no)->whereDate('date', '=', $date)->exists();
+        $validation = Sale::where('party_id', $party_id)->where('bill_no', $bill_no)->whereDate('date', '=', $date)->where('is_return', $is_return)->exists();
 
         if ($validation) {
             throw new HttpException(400, 'Same Bill # for same Party for same Date cannot be added');
@@ -64,7 +64,7 @@ class Sale extends Model
     protected static function booted()
     {
         static::creating(function ($sale) {
-            self::validateBillNo($sale->party_id, $sale->bill_no, $sale->date, $sale->id);
+            self::validateBillNo($sale->party_id, $sale->bill_no, $sale->date, $sale->is_return, $sale->id);
         });
 
         static::created(function ($sale) {

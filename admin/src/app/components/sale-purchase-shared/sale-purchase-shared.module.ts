@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -31,6 +32,7 @@ import { EditComponent } from './edit/edit.component';
 		MatProgressSpinnerModule,
 		MatIconModule,
 		MatDialogModule,
+		NgxMatSelectSearchModule,
 		ReactiveFormsModule,
 		MatButtonModule,
 		MatSelectModule,
