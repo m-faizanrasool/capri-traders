@@ -25,6 +25,7 @@ import { ConfirmationDialogComponent } from './_sharedComponents/confirmation-di
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
+import { InvoiceComponent } from '../components/invoice/invoice.component';
 
 @NgModule({
 	declarations: [
@@ -40,6 +41,7 @@ import { FormsModule } from '@angular/forms';
 		AsideDynamicComponent,
 		HeaderMenuDynamicComponent,
 		ConfirmationDialogComponent,
+
 	],
 	imports: [
 		CommonModule,

@@ -11,6 +11,8 @@ export class SalePurchaseModel {
 	pay_mode: string;
 	remarks: string;
 	pay_status: string;
+	total: number = 0;
+	discount: number = 0;
 	object_items: any[];
 
 	constructor() {

@@ -18,16 +18,9 @@
 				<div class="form-group row">
 					<div class="col-lg-4 kt-margin-bottom-20-mobile">
 						<mat-form-field class="mat-form-field-fluid">
-							<mat-select
-								placeholder="Company Head"
-								name="company_head_id"
-								[(ngModel)]="object.company_head_id"
-								required
-							>
-								<mat-option
-									*ngFor="let company_head of company_heads"
-									[value]="company_head.id"
-								>
+							<mat-select placeholder="Company Head" name="company_head_id" [(ngModel)]="object.company_head_id"
+								required>
+								<mat-option *ngFor="let company_head of company_heads" [value]="company_head.id">
 									{{ company_head.name }}
 								</mat-option>
 							</mat-select>
@@ -40,14 +33,7 @@
 
 					<div class="col-lg-2 kt-margin-bottom-20-mobile">
 						<mat-form-field class="mat-form-field-fluid">
-							<input
-								type="date"
-								matInput
-								placeholder="Date"
-								name="date"
-								[(ngModel)]="object.date"
-								required
-							/>
+							<input type="date" matInput placeholder="Date" name="date" [(ngModel)]="object.date" required />
 							<mat-error>
 								Date is
 								<strong>required</strong>
@@ -57,14 +43,8 @@
 
 					<div class="col-lg-2 kt-margin-bottom-20-mobile">
 						<mat-form-field class="mat-form-field-fluid">
-							<input
-								type="number"
-								matInput
-								placeholder="Bill/Ref#"
-								name="bill_no"
-								[(ngModel)]="object.bill_no"
-								required
-							/>
+							<input type="number" matInput placeholder="Bill/Ref#" name="bill_no" [(ngModel)]="object.bill_no"
+								required />
 							<mat-error>
 								Bill no is
 								<strong>required</strong>
@@ -74,13 +54,7 @@
 
 					<div class="col-lg-2 kt-margin-bottom-20-mobile">
 						<mat-form-field class="mat-form-field-fluid">
-							<input
-								type="number"
-								matInput
-								placeholder="PO#"
-								name="po_no"
-								[(ngModel)]="object.po_no"
-							/>
+							<input type="number" matInput placeholder="PO#" name="po_no" [(ngModel)]="object.po_no" />
 							<mat-error>
 								PO# is
 								<strong>required</strong>
@@ -90,13 +64,7 @@
 
 					<div class="col-lg-2 kt-margin-bottom-20-mobile">
 						<mat-form-field class="mat-form-field-fluid">
-							<input
-								type="number"
-								matInput
-								placeholder="GRN"
-								name="grn"
-								[(ngModel)]="object.grn"
-							/>
+							<input type="number" matInput placeholder="GRN" name="grn" [(ngModel)]="object.grn" />
 							<mat-error>
 								GRN is
 								<strong>required</strong>
@@ -108,12 +76,7 @@
 				<div class="form-group row">
 					<div class="col-lg-4 kt-margin-bottom-20-mobile">
 						<mat-form-field class="mat-form-field-fluid">
-							<mat-select
-								placeholder="Party"
-								name="party_id"
-								[(ngModel)]="object.party_id"
-								required
-							>
+							<mat-select placeholder="Party" name="party_id" [(ngModel)]="object.party_id" required>
 								<mat-option *ngFor="let party of parties" [value]="party.id">
 									{{ party.name }}
 								</mat-option>
@@ -127,17 +90,9 @@
 
 					<div class="col-lg-2 kt-margin-bottom-20-mobile">
 						<mat-form-field class="mat-form-field-fluid">
-							<mat-select
-								placeholder="Pay Mode"
-								name="pay_mode"
-								[(ngModel)]="object.pay_mode"
-								(ngModelChange)="payModeChanged()"
-								required
-							>
-								<mat-option
-									*ngFor="let pay_mode of pay_modes"
-									[value]="pay_mode.name"
-								>
+							<mat-select placeholder="Pay Mode" name="pay_mode" [(ngModel)]="object.pay_mode"
+								(ngModelChange)="payModeChanged()" required>
+								<mat-option *ngFor="let pay_mode of pay_modes" [value]="pay_mode.name">
 									{{ pay_mode.name }}
 								</mat-option>
 							</mat-select>
@@ -149,16 +104,8 @@
 
 					<div class="col-lg-2 kt-margin-bottom-20-mobile">
 						<mat-form-field class="mat-form-field-fluid">
-							<mat-select
-								placeholder="Pay Status"
-								name="pay_status"
-								[(ngModel)]="object.pay_status"
-								required
-							>
-								<mat-option
-									*ngFor="let pay_status of pay_statuses"
-									[value]="pay_status.name"
-								>
+							<mat-select placeholder="Pay Status" name="pay_status" [(ngModel)]="object.pay_status" required>
+								<mat-option *ngFor="let pay_status of pay_statuses" [value]="pay_status.name">
 									{{ pay_status.name }}
 								</mat-option>
 							</mat-select>
@@ -168,15 +115,16 @@
 						</mat-form-field>
 					</div>
 
+					<div class="col-lg-2 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput type="number" placeholder="Discount" name="discount" [(ngModel)]="object.discount"
+								(ngModelChange)="calculate()" />
+						</mat-form-field>
+					</div>
+
 					<div class="col-lg-4 kt-margin-bottom-20-mobile">
 						<mat-form-field class="mat-form-field-fluid">
-							<input
-								matInput
-								type="text"
-								placeholder="Remarks"
-								name="remarks"
-								[(ngModel)]="object.remarks"
-							/>
+							<textarea matInput type="text" placeholder="Remarks" name="remarks" [(ngModel)]="object.remarks" ></textarea>
 						</mat-form-field>
 					</div>
 				</div>
@@ -184,38 +132,12 @@
 				<div class="form-group row">
 					<div class="col-lg-3 kt-margin-bottom-20-mobile">
 						<mat-form-field class="mat-form-field-fluid">
-							<!-- <mat-label>Item</mat-label>
-							<input
-								type="text"
-								placeholder="Pick one"
-								matInput
-								[formControl]="selectedItemControl"
-								[matAutocomplete]="auto"
-							/>
-							<mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-								<mat-option
-									*ngFor="let item of filteredItems | async"
-									[value]="item"
-								>
-									{{ item.name }}
-								</mat-option>
-							</mat-autocomplete> -->
-							<mat-select
-								[(ngModel)]="selectedItem.id"
-								placeholder="Enter Item"
-								name="item"
-							>
+							<mat-select [(ngModel)]="selectedItem.id" placeholder="Enter Item" name="item">
 								<mat-option>
-									<ngx-mat-select-search
-										[formControl]="filteredItemsCtrl"
-										placeholderLabel="Search Items"
-										noEntriesFoundLabel="'no matching Item found'"
-									></ngx-mat-select-search>
+									<ngx-mat-select-search [formControl]="filteredItemsCtrl" placeholderLabel="Search Items"
+										noEntriesFoundLabel="'no matching Item found'"></ngx-mat-select-search>
 								</mat-option>
-								<mat-option
-									*ngFor="let item of filteredItems | async"
-									[value]="item.id"
-								>
+								<mat-option *ngFor="let item of filteredItems | async" [value]="item.id">
 									{{ item.name }}
 								</mat-option>
 							</mat-select>
@@ -228,13 +150,8 @@
 
 					<div class="col-lg-2 kt-margin-bottom-20-mobile">
 						<mat-form-field class="mat-form-field-fluid">
-							<input
-								matInput
-								type="number"
-								placeholder="Quantity"
-								name="quantity"
-								[(ngModel)]="selectedItem.unit_quantity"
-							/>
+							<input matInput type="number" placeholder="Quantity" name="quantity"
+								[(ngModel)]="selectedItem.unit_quantity" />
 							<mat-error>
 								Quantity is
 								<strong>required</strong>
@@ -244,46 +161,29 @@
 
 					<div class="col-lg-2 kt-margin-bottom-20-mobile">
 						<mat-form-field class="mat-form-field-fluid">
-							<input
-								matInput
-								type="number"
-								placeholder="Rate"
-								name="rate"
-								[(ngModel)]="selectedItem.rate"
-							/>
+							<input matInput type="number" placeholder="Rate" name="rate" [(ngModel)]="selectedItem.rate" />
 							<mat-error>
 								Rate is
 								<strong>required</strong>
 							</mat-error>
 						</mat-form-field>
 					</div>
+
 					<div class="col-lg-2 kt-margin-bottom-20-mobile">
-						<button
-							(click)="AddItemToObjectItems()"
-							class="btn btn-primary"
-							[disabled]="!selectedItem.unit_quantity || !selectedItem.rate"
-						>
+						<button (click)="AddItemToObjectItems()" class="btn btn-primary"
+							[disabled]="!selectedItem.unit_quantity || !selectedItem.rate">
 							Add
 						</button>
 					</div>
 				</div>
-
-				<div class="separator separator-dashed my-6"></div>
 			</div>
 			<!-- Sales Form End -->
 		</form>
 		<!-- Item Details Table Start -->
-		<div class="card-body">
+		<div class="card-body pt-0">
 			<div class="mat-table-wrapper">
-				<mat-table
-					#table
-					[dataSource]="dataSource"
-					matSort
-					#sort1="matSort"
-					matSortActive="date_str"
-					matSortDirection="desc"
-					matSortDisableClear
-				>
+				<mat-table #table [dataSource]="dataSource" matSort #sort1="matSort" matSortActive="date_str"
+					matSortDirection="desc" matSortDisableClear>
 					<!--- Note that these columns can be defined in any order.
 			The actual rendered columns are set as a property on the row definition" -->
 					<!-- Name Column -->
@@ -323,21 +223,21 @@
 						</mat-cell>
 					</ng-container>
 
-					<ng-container matColumnDef="discount">
+					<!-- <ng-container matColumnDef="discount">
 						<mat-header-cell *matHeaderCellDef mat-sort-header>
 							Discount
 						</mat-header-cell>
 						<mat-cell *matCellDef="let object_item">
-							{{ object_item.item.discount }}
+							{{ object_item.discount }}
 						</mat-cell>
-					</ng-container>
+					</ng-container> -->
 
 					<ng-container matColumnDef="description">
 						<mat-header-cell *matHeaderCellDef mat-sort-header>
 							Description
 						</mat-header-cell>
 						<mat-cell *matCellDef="let object_item">
-							{{ object_item.item.description }}
+							{{ object_item.description }}
 						</mat-cell>
 					</ng-container>
 
@@ -355,19 +255,10 @@
 							Actions
 						</mat-header-cell>
 						<mat-cell *matCellDef="let object_item; let index = index">
-							<a
-								mat-icon-button
-								color="primary"
-								(click)="editObjectItemsItem(object_item, index)"
-							>
-								<mat-icon>create</mat-icon></a
-							>&nbsp;
-							<a
-								mat-icon-button
-								color="warn"
-								(click)="removeFromObjectItems(index)"
-								type="button"
-							>
+							<a mat-icon-button color="primary" (click)="editObjectItemsItem(object_item, index)">
+								<mat-icon>create</mat-icon>
+							</a>&nbsp;
+							<a mat-icon-button color="warn" (click)="removeFromObjectItems(index)" type="button">
 								<mat-icon>delete</mat-icon>
 							</a>
 						</mat-cell>
@@ -378,16 +269,10 @@
 				</mat-table>
 
 				<!-- Message for empty data  -->
-				<div
-					class="mat-table-message"
-					*ngIf="loaded && dataSource.data.length == 0"
-				>
+				<div class="mat-table-message" *ngIf="loaded && dataSource.data.length == 0">
 					No records found
 				</div>
-				<div
-					class="mat-table-message"
-					*ngIf="!loaded && !dataSource.data.length"
-				>
+				<div class="mat-table-message" *ngIf="!loaded && !dataSource.data.length">
 					Please wait....
 				</div>
 			</div>
@@ -398,50 +283,41 @@
 				<mat-spinner [diameter]="20" *ngIf="!loaded"></mat-spinner>
 				<!-- MATERIAL PAGINATOR | Binded to dasources -->
 				<!-- See off.documentations 'https://material.angular.io/components/paginator/overview' -->
-				<mat-paginator
-					[pageSize]="pageSize"
-					[showFirstLastButtons]="true"
-					[length]="totalItems"
-				></mat-paginator>
+				<mat-paginator [pageSize]="pageSize" [showFirstLastButtons]="true" [length]="totalItems"></mat-paginator>
 			</div>
 		</div>
 		<!-- Item Details Table End -->
+		<div class="d-flex justify-content-end mx-5">
+			<div class="mx-3">
+				<div *ngIf="object.discount">
+					<h4>Discount: {{object.discount}} Rs</h4>
+				</div>
+			</div>
+			<div class="mx-3">
+				<h4>Total: {{object.total}} Rs</h4>
+			</div>
+		</div>
 		<div class="card-footer">
 			<div class="d-flex justify-content-between">
 				<div class="mr-2"></div>
 				<div>
 					&nbsp;
-					<button
-						*ngIf="
+					<button *ngIf="
 							this.mode === 'ADD' || (this.mode === 'EDIT' && object.is_return)
-						"
-						type="submit"
-						mat-raised-button
-						color="primary"
-						class="mr-3"
-						[disabled]="
+						" type="submit" mat-raised-button color="primary" class="mr-3" [disabled]="
 							disabled ||
 							objectForm.invalid ||
 							objectForm.pristine ||
 							!object.object_items.length
-						"
-						(click)="onSubmit(objectForm, true)"
-					>
+						" (click)="onSubmit(objectForm, true)">
 						{{ this.mode === 'EDIT' ? 'Update' : 'Save' }} as Reutrn
 					</button>
-					<button
-						*ngIf="!object.is_return"
-						type="submit"
-						mat-raised-button
-						color="primary"
-						[disabled]="
+					<button *ngIf="!object.is_return" type="submit" mat-raised-button color="primary" [disabled]="
 							disabled ||
 							objectForm.invalid ||
 							objectForm.pristine ||
 							!object.object_items.length
-						"
-						(click)="onSubmit(objectForm, false)"
-					>
+						" (click)="onSubmit(objectForm, false)">
 						{{ this.mode === 'EDIT' ? 'Update' : 'Save' }}
 					</button>
 				</div>

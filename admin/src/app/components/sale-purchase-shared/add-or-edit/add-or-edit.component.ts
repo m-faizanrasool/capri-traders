@@ -76,7 +76,7 @@ export class AddOrEditComponent implements OnInit, OnDestroy {
 		'brand',
 		'quantity',
 		'rate',
-		'discount',
+		// 'discount',
 		'description',
 		'image',
 		'actions',
@@ -95,7 +95,7 @@ export class AddOrEditComponent implements OnInit, OnDestroy {
 		private commonService: CommonService,
 		private cdr: ChangeDetectorRef,
 		public dialog: MatDialog
-	) {}
+	) { }
 
 	async ngOnInit(): Promise<void> {
 		this.object.is_return = false;
@@ -278,22 +278,22 @@ export class AddOrEditComponent implements OnInit, OnDestroy {
 
 			this.object.object_items.push(JSON.parse(JSON.stringify(object_item)));
 
-			this.refreshDataSource();
 			this.totalItems = this.object.object_items.length;
-			this.cdr.detectChanges();
+			this.refreshDataSource();
 		}
 	}
 
 	removeFromObjectItems(index) {
 		this.object.object_items.splice(index, 1);
 		this.refreshDataSource();
-		this.cdr.detectChanges();
 	}
 
 	refreshDataSource() {
 		this.dataSource = new MatTableDataSource(this.object.object_items);
 		this.dataSource.paginator = this.paginator;
 		this.dataSource.sort = this.sort;
+		this.calculate()
+		this.cdr.detectChanges();
 	}
 
 	editObjectItemsItem(object_item, index) {
@@ -308,12 +308,20 @@ export class AddOrEditComponent implements OnInit, OnDestroy {
 				return;
 			}
 
+			// wasn't requitred
 			this.object.object_items[res.index].unit_quantity =
 				res.object_item.unit_quantity;
 			this.object.object_items[res.index].rate = res.object_item.rate;
+			this.object.object_items[res.index].description = res.object_item.description;
 
-			this.dataSource.data = this.object.object_items;
-			this.cdr.detectChanges();
+			this.refreshDataSource();
 		});
+	}
+
+	calculate() {
+		const total = this.object.object_items.reduce((accumulator, item) => {
+			return accumulator + (item.rate * item.unit_quantity);
+		}, 0);
+		this.object.total = total - this.object.discount;
 	}
 }

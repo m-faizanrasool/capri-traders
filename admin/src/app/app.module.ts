@@ -18,6 +18,7 @@ import { InterceptService } from './_metronic/core/services/intercept.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
+
 function appInitializer(authService: AuthService) {
 	return () => {
 		return new Promise((resolve) => {
