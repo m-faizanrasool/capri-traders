@@ -99,10 +99,10 @@ th {
 }
 
 @media print {
-	* {
-		visibility: hidden;
+	.no-print {
+		visibility: hidden !important;
 	}
-	.print{
+	.print {
 		visibility: visible !important;
 	}
 }

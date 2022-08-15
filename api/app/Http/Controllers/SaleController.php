@@ -168,21 +168,25 @@ class SaleController extends Controller
 
     public function search(Request $request)
     {
-        $sale = Sale::query()->with(['company_head', 'party']);
+        $sales = Sale::query()->with(['company_head', 'party']);
 
         if ($request->bill_no) {
-            $sale = $sale->where('bill_no', $request->bill_no);
+            $sales = $sales->where('bill_no', $request->bill_no);
         }
         if ($request->company_head_id) {
-            $sale = $sale->where('company_head_id', $request->company_head_id);
+            $sales = $sales->where('company_head_id', $request->company_head_id);
         }
         if ($request->party_id) {
-            $sale =  $sale->where('party_id', $request->party_id);
+            $sales =  $sales->where('party_id', $request->party_id);
+        }
+        if ($request->pay_status) {
+            $sales =  $sales->where('pay_status', $request->pay_status);
         }
 
-        $sale = $sale->get()->append(['sub_total', 'total']);
 
-        return $sale;
+        $sales = $sales->get()->append(['sub_total', 'total']);
+
+        return $sales;
 
         return response()->json(compact('sale'));
     }

@@ -88,6 +88,7 @@ export class AddOrEditComponent implements OnInit {
 			bill_no,
 			company_head_id: this.payment.company_head_id,
 			party_id: this.payment.party_id,
+			pay_status: 'PENDING',
 		};
 
 		this.saleService.search(queryParams).subscribe((response: any) => {

@@ -77,4 +77,9 @@ export class LedgerComponent implements OnInit, AfterViewInit {
 			this.cdr.detectChanges();
 		});
 	}
+
+	print() {
+		window.print();
+	}
+	change() {}
 }

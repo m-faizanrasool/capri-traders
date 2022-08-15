@@ -46,7 +46,7 @@ class Sale extends Model
         return $this->belongsTo(Party::class);
     }
 
-    public static function validateBillNo($party_id, $bill_no, $date, $is_return, $sale_id = null)
+    public static function validateBill($party_id, $bill_no, $date, $is_return, $sale_id = null)
     {
         $sale = Sale::query();
 
@@ -64,7 +64,7 @@ class Sale extends Model
     protected static function booted()
     {
         static::creating(function ($sale) {
-            self::validateBillNo($sale->party_id, $sale->bill_no, $sale->date, $sale->is_return, $sale->id);
+            self::validateBill($sale->party_id, $sale->bill_no, $sale->date, $sale->is_return, $sale->id);
         });
 
         static::created(function ($sale) {
@@ -77,6 +77,7 @@ class Sale extends Model
         });
 
         static::updating(function ($sale) {
+            self::validateBill($sale->party_id, $sale->bill_no, $sale->date, $sale->is_return, $sale->id);
             $dirty_sale = $sale->getDirty();
             if (isset($dirty_sale['date'])) {
                 $sale->ledger()->update(['date', $sale->date]);

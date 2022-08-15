@@ -34,8 +34,21 @@ class Payment extends Model
 
         static::created(function ($payment) {
             if (!empty($payment->sale_ids)) {
-                Sale::whereIn('id', $payment->sale_ids)->update(['payment_id' => $payment->id]);
+                Sale::whereIn('id', $payment->sale_ids)->update(['payment_id' => $payment->id, 'pay_status' => 'DONE']);
             }
+
+            if (!empty($payment->tax)) {
+                Payment::create([
+                    'parent_id' => $payment->id,
+                    'company_head_id' => $payment->company_head_id,
+                    'party_id' => $payment->party_id,
+                    'type' => 'TAX',
+                    'action' => 'TAX_DEDUCTED',
+                    'amount' => $payment->tax,
+                    'date' => $payment->date,
+                ]);
+            }
+
 
             $payment->ledger()->create([
                 'company_head_id' => $payment->company_head_id,

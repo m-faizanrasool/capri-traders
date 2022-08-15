@@ -41,7 +41,7 @@ class Ledger extends Model
                 return $this->purchase->total;
             }
         } elseif ($this->payment_id) {
-            if (in_array($this->payment->action, ['RECEIVED', 'DEDUCTED'])) {
+            if (in_array($this->payment->action, ['RECEIVED', 'TAX_DEDUCTED'])) {
                 return $this->payment->amount;
             }
         }

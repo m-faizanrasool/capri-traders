@@ -19,8 +19,8 @@ class CreatePaymentsTable extends Migration
             $table->unsignedSmallInteger('company_head_id')->index();
             $table->unsignedSmallInteger('party_id')->index();
             $table->json('sale_ids')->nullable();
-            $table->enum('action', ['SENT', 'RECEIVED', 'DEDUCTED']);
-            $table->enum('type', ['CASH', 'CHEQUE'])->index();
+            $table->enum('action', ['SENT', 'RECEIVED', 'DEDUCTED', 'TAX_DEDUCTION']);
+            $table->enum('type', ['CASH', 'CHEQUE', 'TAX'])->index();
             $table->timestamp('date');
             $table->string('remarks')->nullable();
             $table->string('narration')->nullable();

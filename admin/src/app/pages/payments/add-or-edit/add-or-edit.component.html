@@ -108,7 +108,7 @@
 										placeholder="Bill #"
 										name="bill_no"
 										[disabled]="!payment.party_id || !payment.company_head_id"
-										(input)="find_bill(find_bill_no.value)"
+										(keyup)="find_bill(find_bill_no.value)"
 									/>
 								</mat-form-field>
 							</div>
