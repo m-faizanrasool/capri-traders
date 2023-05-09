@@ -49,6 +49,7 @@
 									placeholder="Company Head"
 									name="company_head_id"
 									[formControl]="company_head_id"
+									(valueChange)="change()"
 								>
 									<mat-option
 										*ngFor="let company_head of company_heads"
@@ -85,7 +86,7 @@
 	<div class="card card-custom mt-5">
 		<div class="card-header">
 			<div class="card-title">
-				<!-- <h3>Ledger</h3> -->
+				<h3>Ledger</h3>
 			</div>
 			<div class="card-toolbar">
 				<button class="btn btn-primary" [disabled]="!loaded" (click)="print()">
